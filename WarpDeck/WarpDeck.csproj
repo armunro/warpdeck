@@ -1,0 +1,32 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <EnableDefaultContentItems>false</EnableDefaultContentItems>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.1.0" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+      <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+      <PackageReference Include="OpenMacroBoard.SDK" Version="2.1.0" />
+      <PackageReference Include="StreamDeckSharp" Version="2.2.0" />
+      <PackageReference Include="Svg" Version="3.2.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Presentation\**">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="Untitled.svg">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
+</Project>

@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+        <ApplicationIcon>icon.ico</ApplicationIcon>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WarpDeck.Application\WarpDeck.Application.csproj" />
+      <ProjectReference Include="..\WarpDeck.Domain\WarpDeck.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="icon.ico">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+</Project>

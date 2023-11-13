@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Library</OutputType>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <UseWindowsForms>true</UseWindowsForms>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Reference Include="WarpDeck.Application, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\WarpDeckForms\bin\Debug\net5.0-windows\WarpDeck.Application.dll</HintPath>
+      </Reference>
+      <Reference Include="WarpDeck.Domain, Version=1.0.0.0, Culture=neutral, PublicKeyToken=null">
+        <HintPath>..\WarpDeckForms\bin\Debug\net5.0-windows\WarpDeck.Domain.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="WindowsInput" Version="6.3.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\WarpDeck\WarpDeck.csproj" />
+      <ProjectReference Include="..\WarpDeck.Presentation\WarpDeck.Presentation.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Folder Include="Actions\Launcher" />
+      <Folder Include="Actions\Macro" />
+      <Folder Include="Actions\Window\Hwnd" />
+      <Folder Include="Behaviors" />
+      <Folder Include="Icon" />
+      <Folder Include="Monitor\Action" />
+      <Folder Include="Monitor\Criteria" />
+    </ItemGroup>
+
+</Project>

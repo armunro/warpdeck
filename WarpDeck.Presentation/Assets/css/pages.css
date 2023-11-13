@@ -1,0 +1,13 @@
+.keyMapKey{
+    cursor: pointer;
+    background:#000;
+    //border: 3px solid transparent;
+}
+.keyMapKey.active{
+    border-color: #0a53be;
+}
+#propertiesCard{display:none}
+#propertiesCard.active{display:block}
+
+#createKeyCard{display:none}
+#createKeyCard.active{display:block}
