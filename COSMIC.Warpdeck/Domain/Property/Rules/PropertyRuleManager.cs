@@ -27,7 +27,7 @@ namespace COSMIC.Warpdeck.Domain.Property.Rules
                 var criteriaParameters = ruleModel.Criteria.Parameters.Select(x => new NamedParameter(x.Key, x.Value))
                     .ToArray();
                 IPropertyRule propertyRule =
-                    WarpDeckApp.Container.ResolveNamed<IPropertyRule>(ruleModel.Criteria.Type, criteriaParameters);
+                    WarpdeckApp.Container.ResolveNamed<IPropertyRule>(ruleModel.Criteria.Type, criteriaParameters);
                 if (propertyRule.IsMetBy(key.Properties))
                     return ruleModel.TargetTagValue;
             }

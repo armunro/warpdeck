@@ -34,7 +34,7 @@ namespace COSMIC.Warpdeck.Domain.Key.Behavior
 
             try
             {
-                KeyAction keyAction = WarpDeckApp.Container.ResolveNamed<KeyAction>(actionModel.Type,
+                KeyAction keyAction = WarpdeckApp.Container.ResolveNamed<KeyAction>(actionModel.Type,
                     new NamedParameter("parameters", actionModel.Parameters));
                 keyAction.StartAction();
             }

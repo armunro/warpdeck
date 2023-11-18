@@ -52,7 +52,7 @@ namespace COSMIC.Warpdeck.Domain.Monitor
             unmetActions.ForEach(x => x.ActionWhenFalse());
             metActions.ForEach(x => x.ActionWhenTrue());
             // This sucks
-            WarpDeckApp.Container.Resolve<DeviceManager>().RedrawDevices();
+            WarpdeckApp.Container.Resolve<DeviceManager>().RedrawDevices();
                 
         }
 
@@ -65,14 +65,14 @@ namespace COSMIC.Warpdeck.Domain.Monitor
             var criteriaParams =
                 ruleModel.Criteria.Parameters.Select(x => new NamedParameter(x.Key, x.Value)).ToArray();
             newRule.Criteria =
-                WarpDeckApp.Container.ResolveNamed<MonitorCondition>(ruleModel.Criteria.CriteriaType,
+                WarpdeckApp.Container.ResolveNamed<MonitorCondition>(ruleModel.Criteria.CriteriaType,
                     criteriaParams);
 
             foreach (MonitorRuleActionModel modelAction in ruleModel.Actions)
             {
                 var actionParams = modelAction.Parameters.Select(x => new NamedParameter(x.Key, x.Value));
                 IMonitorRuleAction action =
-                    WarpDeckApp.Container.ResolveNamed<IMonitorRuleAction>(modelAction.ActionType, actionParams);
+                    WarpdeckApp.Container.ResolveNamed<IMonitorRuleAction>(modelAction.ActionType, actionParams);
                 newRule.Actions.Add(action);
             }
             Guid monitorId = Guid.NewGuid();

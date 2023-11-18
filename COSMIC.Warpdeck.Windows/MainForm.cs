@@ -8,7 +8,7 @@ namespace COSMIC.Warpdeck.Windows
 {
     public partial class MainForm : Form
     {
-        private readonly WarpDeckApp _app;
+        private readonly WarpdeckApp _app;
         private readonly WarpDeckWindowsApp _windowsApp;
 
         public MainForm(string[] args)
@@ -16,7 +16,7 @@ namespace COSMIC.Warpdeck.Windows
             InitializeComponent();
             _windowsApp = new WarpDeckWindowsApp(args);
             _app = new();
-            WarpDeckApp.Container = WarpDeckWindowsApp.Container;
+            WarpdeckApp.Container = WarpDeckWindowsApp.Container;
             _windowsApp.RegisterDependencies();
             _app.LoadDevices();
             _windowsApp.StartPresentation();

@@ -59,7 +59,7 @@ namespace COSMIC.Warpdeck.Domain.Device
             _monitorManagers.Add(deviceModel.DeviceId, new MonitorManager());
             _propertyRuleManagers.Add(deviceModel.DeviceId, new PropertyRuleManager());
             _monitorManagers[deviceModel.DeviceId]
-                .AddMonitor(WarpDeckApp.Container.ResolveNamed<IMonitor>(nameof(ActiveWindowMonitor)));
+                .AddMonitor(WarpdeckApp.Container.ResolveNamed<IMonitor>(nameof(ActiveWindowMonitor)));
             deviceModel.MonitorRules.Rules.ForEach(x => _monitorManagers[deviceModel.DeviceId].AddMonitorRule(x));
             deviceModel.PropertyRules.ForEach(x => _propertyRuleManagers[deviceModel.DeviceId].Rules.Add(x));
             ClearDevice(deviceModel.DeviceId);
@@ -125,7 +125,7 @@ namespace COSMIC.Warpdeck.Domain.Device
                     key.History.LastUp = DateTime.Now;
 
                 string behaviorTypeName = device.KeyStates[keyId].Behavior.Type;
-                KeyBehavior behavior = WarpDeckApp.Container.ResolveNamed<KeyBehavior>(behaviorTypeName);
+                KeyBehavior behavior = WarpdeckApp.Container.ResolveNamed<KeyBehavior>(behaviorTypeName);
 
 
                 if (isDown)
@@ -173,7 +173,7 @@ namespace COSMIC.Warpdeck.Domain.Device
 
             if (_cache.DoesCacheHaveIcon(keyModel) && !skipCache) return _cache.GetIcon(keyModel).ToBitmap();
 
-            IconTemplate template = WarpDeckApp.Container.ResolveNamed<IconTemplate>(keyModel.Behavior.Type);
+            IconTemplate template = WarpdeckApp.Container.ResolveNamed<IconTemplate>(keyModel.Behavior.Type);
             template.PropertyRule = _propertyRuleManagers[deviceId];
 
             return _cache.SetIcon(keyModel, template.GenerateIcon(keyModel)).ToBitmap();

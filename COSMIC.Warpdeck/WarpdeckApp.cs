@@ -9,7 +9,7 @@ using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck
 {
-    public class WarpDeckApp
+    public class WarpdeckApp
     {
         public static IContainer Container;
 
