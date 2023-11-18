@@ -20,7 +20,16 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function(event) { 
+    function key_pressed(key) {
+        console.log("pressed:" + key);
+    }
+    function key_held(key) {
+        console.log("Held:" + key);
+    }
+    
     window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true});
+    window.keyGrid.registerKeyClickCallback(key_pressed);
+    window.keyGrid.registerKeyHoldCallback(key_held);
     window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")
 });
 </script>

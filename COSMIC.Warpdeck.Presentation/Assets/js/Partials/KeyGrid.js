@@ -11,6 +11,7 @@ class KeyGrid {
         this.activeGridKey = null;
         this.gridRows = 4;
         this.gridColumns = 8;
+        this.timerId = null;
         this.loadGrid();
 
     }
@@ -91,21 +92,22 @@ class KeyGrid {
     }
 
     onMouseDown(event) {
-        this.mouseDown = true;
-        this.mouseDownTime = Date.now();
-        this.mouseDownKey = event.target.parentNode;
-        console.log("mouse down" + this.mouseDownKey)
+        if (this.keyPressCallback)
+            this.timerId = setTimeout(()=> {
+                this.keyHoldCallback(this.activeGridKey);
+                this.timerId = null;
+                
+            } ,1000, this.activeGridKey); // 1000ms = 1 second
 
     }
-    
+
     onMouseUp(event) {
-        this.mouseDown = false;
-        this.mouseDownTime = 0;
-        console.log("mouse up" + this.mouseDownKey)
-        this.mouseDownKey = null;
-        
-
-
+        if (this.timerId) {
+            clearTimeout(this.timerId);
+            if (this.keyPressCallback) {
+                this.keyPressCallback(this.activeGridKey);
+            }
+        }
     }
 
     onKeyDrop(event) {
