@@ -10,223 +10,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="1819936e-b12c-44e4-a623-63be4f15cfb0" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/PropertyRule/AlwaysRule.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/IHasActions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/ChatGPTCopilotChannelManager.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/indexLayout.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/misc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/AspNetCoreStartup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/AspNetCoreStartup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/css/device.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/css/device.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/css/layout.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/css/layout.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/css/pages.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/css/pages.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/js/Pages/Device.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Pages/Device.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/js/Pages/EditLayer.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Pages/EditLayer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/js/Pages/NewDevice.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Pages/NewDevice.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/js/Partials/KeyGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Partials/KeyGrid.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/js/Partials/NewLayerModal.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Partials/NewLayerModal.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-grid.rtl.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-reboot.rtl.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap-utilities.rtl.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/css/bootstrap.rtl.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.esm.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/bootstrap.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/popper.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/popper.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/boostrap-5.1.3/js/popper.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/boostrap-5.1.3/js/popper.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Assets/vendor/handlebars-runtime-4.7.7/handlebars.runtime.min-v4.7.7.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/vendor/handlebars-runtime-4.7.7/handlebars.runtime.min-v4.7.7.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/ActionController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/ActionController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/BehaviorController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/BehaviorController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/ConfigController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/ConfigController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/DeviceController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/DeviceController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/DeviceLayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/DeviceLayerController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/DeviceLayerKeyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/DeviceLayerKeyController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/HardwareController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/HardwareController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/BehaviorResponseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/BehaviorResponseModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/DeviceResponseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/DeviceResponseModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/KeyResponseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/KeyResponseModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/LayerResponseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/LayerResponseModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/NewDeviceRequestModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/NewDeviceRequestModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/PropertyResponseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/PropertyResponseModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/Models/TypePropertiesResponseModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/Models/TypePropertiesResponseModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/PropertyController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/PropertyController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/RenderController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/RenderController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Controllers/TypeController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Controllers/TypeController.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Defaults.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Defaults.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Device.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Device.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Device.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Device.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/DeviceBare.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/DeviceBare.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/DeviceBare.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/DeviceBare.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Index.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Index.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Index.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Index.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Layer.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Layer.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Layer.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Layer.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Monitor.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Monitor.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Monitor.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Monitor.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/NewDevice.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/NewDevice.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/NewDevice.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/NewDevice.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/NewLayerModalPartial.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/NewLayerModalPartial.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/NewLayerModalPartial.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/NewLayerModalPartial.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Properties.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Properties.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Properties.cshtml.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Properties.cshtml.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Shared/_Layout.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Shared/_Layout.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Pages/Shared/_LeftNavigation.cshtml" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Pages/Shared/_LeftNavigation.cshtml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/Properties/launchSettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Properties/launchSettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/WarpDeck.Presentation.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/COSMIC.Warpdeck.Presentation.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/WarpDeckFrontend.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/WarpDeckFrontend.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/appsettings.Development.json" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/appsettings.Development.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Presentation/appsettings.json" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/appsettings.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Dependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Dependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/MainForm.Designer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/MainForm.Designer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/MainForm.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/MainForm.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Launcher/LauncherAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Launcher/LauncherAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Launcher/LauncherActionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Launcher/LauncherActionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Macro/KeyMacro.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Macro/KeyMacro.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Macro/KeyMacroModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Macro/KeyMacroModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/Hwnd/HwndInterface.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/Hwnd/HwndInterface.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/Hwnd/PositioningFlags.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/Hwnd/PositioningFlags.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/Hwnd/RECT.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/Hwnd/RECT.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/Hwnd/WM.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/Hwnd/WM.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/Hwnd/WindowHandle.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/Hwnd/WindowHandle.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/ManageWindowAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/ManageWindowAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Plugins/Actions/Window/WindowManageModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Plugins/Actions/Window/WindowManageModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/Program.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/Program.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/WarpDeck.Windows.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/COSMIC.Warpdeck.Windows.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/WarpDeckWindowsApp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/WarpDeckWindowsApp.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.Windows/icon.ico" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Windows/icon.ico" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck.sln" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.sln" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Configuration/FileDeviceReaderWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Configuration/FileDeviceReaderWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Hardware/AttachedHardwareProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Hardware/AttachedHardwareProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Hardware/VirtualBoard.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Hardware/VirtualBoard.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Icon/InMemoryIconCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Icon/InMemoryIconCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Icon/TemplateFileProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Icon/TemplateFileProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Monitor/ActiveWindowMonitor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Monitor/ActiveWindowMonitor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Monitor/AdHocMonitor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Monitor/AdHocMonitor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/Monitor/WinEventDelegate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/Monitor/WinEventDelegate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/PropertyRule/AlwaysRule.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Adapter/PropertyRule/PropertyEqualsRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Adapter/PropertyRule/PropertyEqualsRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/CoreDependencies.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/CoreDependencies.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Configuration/IDeviceReader.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Configuration/IDeviceReader.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Configuration/IDeviceWriter.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Configuration/IDeviceWriter.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Device/DeviceInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Device/DeviceInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Device/DeviceManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Device/DeviceManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Device/DeviceModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Device/DeviceModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Device/DeviceModelList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Device/DeviceModelList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Device/Exceptions/DeviceAlreadyExistsException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Device/Exceptions/DeviceAlreadyExistsException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Device/Exceptions/DeviceNotFoundFoundException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Device/Exceptions/DeviceNotFoundFoundException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Hardware/HardwareInfo.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Hardware/HardwareInfo.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Hardware/HardwareNotFoundException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Hardware/HardwareNotFoundException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Hardware/IHardwareProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Hardware/IHardwareProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Icon/IIconCache.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Icon/IIconCache.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Icon/ITemplateDocumentProvider.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Icon/ITemplateDocumentProvider.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Icon/IconTemplate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Icon/IconTemplate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Icon/KeyIcon.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Icon/KeyIcon.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/ActionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/ActionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/Descriptors/ActionDescriptor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/Descriptors/ActionDescriptor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/Descriptors/ActionDescriptorSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/Descriptors/ActionDescriptorSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/Descriptors/ActionParamDescriptor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/Descriptors/ActionParamDescriptor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/Descriptors/ActionParamDescriptorSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/Descriptors/ActionParamDescriptorSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/Exceptions/ActionNotFoundException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/Exceptions/ActionNotFoundException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/IHasActionParameters.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/IHasActionParameters.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/IHasActions.cs" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Action/KeyAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Action/KeyAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/ActionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/ActionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Behavior/BehaviorModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Behavior/BehaviorModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/Behavior/KeyBehavior.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/Behavior/KeyBehavior.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/CreateLayerKeyRequestModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/CreateLayerKeyRequestModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/KeyHistoryModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/KeyHistoryModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/KeyMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/KeyMap.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/KeyModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/KeyModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Key/KeyTimer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Key/KeyTimer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Layer/Exceptions/LayerDoesNotExistException.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Layer/Exceptions/LayerDoesNotExistException.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Layer/LayerMap.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Layer/LayerMap.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Layer/LayerModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Layer/LayerModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/IMonitor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/IMonitor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/MonitorChangeEventArgs.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/MonitorChangeEventArgs.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/MonitorChangeEventDelegate.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/MonitorChangeEventDelegate.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/MonitorManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/MonitorManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/IMonitorRuleAction.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/IMonitorRuleAction.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/MonitorCondition.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/MonitorCondition.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/MonitorRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/MonitorRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/MonitorRuleActionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/MonitorRuleActionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/MonitorRuleCriteriaModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/MonitorRuleCriteriaModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/MonitorRuleList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/MonitorRuleList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Monitor/Rules/MonitorRuleModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Monitor/Rules/MonitorRuleModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Descriptors/PropertyDescriptor.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Descriptors/PropertyDescriptor.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Descriptors/PropertyDescriptorSet.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Descriptors/PropertyDescriptorSet.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/IHasProperties.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/IHasProperties.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/PropertyLookup.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/PropertyLookup.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/PropertyType.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/PropertyType.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/PropertyValueModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/PropertyValueModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Rules/IPropertyRule.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Rules/IPropertyRule.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Rules/PropertyRuleConditionModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Rules/PropertyRuleConditionModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Rules/PropertyRuleManager.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Rules/PropertyRuleManager.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Rules/PropertyRuleModel.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Rules/PropertyRuleModel.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Domain/Property/Rules/PropertyRuleModelList.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Domain/Property/Rules/PropertyRuleModelList.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Extensions/BitmapExtensions.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Extensions/BitmapExtensions.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Helpers/IconHelpers.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Helpers/IconHelpers.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Behaviors/Press.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Behaviors/Press.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Behaviors/PressAndHold.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Behaviors/PressAndHold.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Icon/Press.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Icon/Press.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Icon/PressAndHold.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Icon/PressAndHold.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Monitor/Action/ActivateLayer.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Monitor/Action/ActivateLayer.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Monitor/Criteria/Always.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Monitor/Criteria/Always.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Monitor/Criteria/AppPathMatches.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Monitor/Criteria/AppPathMatches.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Plugins/Monitor/Criteria/WindowTitleMatches.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Plugins/Monitor/Criteria/WindowTitleMatches.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/Untitled.svg" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/Untitled.svg" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Device/CreateDeviceUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Device/CreateDeviceUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Device/UpdateDeviceUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Device/UpdateDeviceUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/DeviceLayer/ActivateDeviceLayerUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/DeviceLayer/ActivateDeviceLayerUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/DeviceLayer/DeactivateDeviceLayerUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/DeviceLayer/DeactivateDeviceLayerUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/DeviceLayer/RedrawDeviceLayersUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/DeviceLayer/RedrawDeviceLayersUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Hardware/GetHardwareUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Hardware/GetHardwareUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Key/CreateKeyUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Key/CreateKeyUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Key/DuplicateKeyUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Key/DuplicateKeyUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Key/MoveKeyUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Key/MoveKeyUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Layer/NewLayerUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Layer/NewLayerUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/UseCase/Property/GetTypePropertyUseCase.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/UseCase/Property/GetTypePropertyUseCase.cs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/WarpDeck.csproj" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/COSMIC.Warpdeck.csproj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/WarpDeck/WarpDeckApp.cs" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck/WarpDeckApp.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.WarpDeck/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Partials/KeyGrid.js" beforeDir="false" afterPath="$PROJECT_DIR$/COSMIC.Warpdeck.Presentation/Assets/js/Partials/KeyGrid.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -253,27 +38,28 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "git-widget-placeholder": "master",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "vue.rearranger.settings.migration": "true"
   },
-  &quot;keyToStringList&quot;: {
-    &quot;rider.external.source.directories&quot;: [
-      &quot;C:\\Users\\andrewm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache&quot;,
-      &quot;C:\\Users\\andrewm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache&quot;,
-      &quot;C:\\Users\\andrewm\\AppData\\Local\\Symbols\\src&quot;
+  "keyToStringList": {
+    "rider.external.source.directories": [
+      "C:\\Users\\andrewm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\DecompilerCache",
+      "C:\\Users\\andrewm\\AppData\\Roaming\\JetBrains\\Rider2023.2\\resharper-host\\SourcesCache",
+      "C:\\Users\\andrewm\\AppData\\Local\\Symbols\\src"
     ]
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected=".NET Project.WarpDeck.Windows">
     <configuration name="WarpDeck.Windows" type="DotNetProject" factoryName=".NET Project">
       <option name="EXE_PATH" value="$PROJECT_DIR$/WarpDeck.Windows/bin/Debug/net5.0-windows/WarpDeck.Windows.exe" />
@@ -356,7 +142,7 @@
       <workItem from="1696345782247" duration="476000" />
       <workItem from="1699816177990" duration="6759000" />
       <workItem from="1700066717120" duration="9712000" />
-      <workItem from="1700340496014" duration="1957000" />
+      <workItem from="1700340496014" duration="3282000" />
     </task>
     <task id="LOCAL-00001" summary="Quick fix">
       <created>1689806589530</created>
@@ -373,7 +159,23 @@
       <option name="project" value="LOCAL" />
       <updated>1690079304145</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="COSMIC rebrand">
+      <option name="closed" value="true" />
+      <created>1700342867691</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1700342867691</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add idea stuff">
+      <option name="closed" value="true" />
+      <created>1700343014719</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1700343014719</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -396,7 +198,9 @@
     <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
     <MESSAGE value="Quick fix" />
     <MESSAGE value="Fixed layer ordering." />
-    <option name="LAST_COMMIT_MESSAGE" value="Fixed layer ordering." />
+    <MESSAGE value="COSMIC rebrand" />
+    <MESSAGE value="Add idea stuff" />
+    <option name="LAST_COMMIT_MESSAGE" value="Add idea stuff" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -425,5 +229,9 @@
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

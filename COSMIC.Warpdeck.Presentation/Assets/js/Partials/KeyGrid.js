@@ -16,7 +16,11 @@ class KeyGrid {
     }
 
     registerKeyClickCallback(callback) {
-        this.keyPressCallback = callback
+        this.keyPressCallback = callback;
+    }
+
+    registerKeyHoldCallback(callback) {
+        this.keyHoldCallback = callback;
     }
 
     registerKeyDragDropCallback(callback) {
@@ -30,9 +34,8 @@ class KeyGrid {
     calculateLayerKeysUri() {
         return "/api/device/" + this.deviceId + "/layer/" + this.layerId + "/key"
     }
-    
-    calculateLayerKeyUri(keyId)
-    {
+
+    calculateLayerKeyUri(keyId) {
         return "/api/device/" + this.deviceId + "/layer/" + this.layerId + "/key/" + keyId
     }
 
@@ -53,7 +56,7 @@ class KeyGrid {
                 this.gridElement.appendChild(rowElem);
             }
         });
-    }    
+    }
 
     updateKey(keyId) {
         let originalKey = this.gridElement.querySelector("#key_" + keyId);
@@ -85,6 +88,24 @@ class KeyGrid {
         event.dataTransfer.setData("device", keyDiv.dataset.deviceid);
         event.dataTransfer.setData("layer", keyDiv.dataset.layerid);
         event.dataTransfer.setData("key", keyDiv.dataset.keyid);
+    }
+
+    onMouseDown(event) {
+        this.mouseDown = true;
+        this.mouseDownTime = Date.now();
+        this.mouseDownKey = event.target.parentNode;
+        console.log("mouse down" + this.mouseDownKey)
+
+    }
+    
+    onMouseUp(event) {
+        this.mouseDown = false;
+        this.mouseDownTime = 0;
+        console.log("mouse up" + this.mouseDownKey)
+        this.mouseDownKey = null;
+        
+
+
     }
 
     onKeyDrop(event) {
@@ -133,6 +154,9 @@ class KeyGrid {
             keyElem.addEventListener('dragstart', event => this.onKeyDragStart(event));
             keyElem.addEventListener('drop', event => this.onKeyDrop(event));
             keyElem.addEventListener('dragover', event => this.onKeyDragOver(event));
+            keyElem.addEventListener('mousedown', event => this.onMouseDown(event));
+            keyElem.addEventListener('mouseup', event => this.onMouseUp(event));
+
         }
         return keyElem;
     }
