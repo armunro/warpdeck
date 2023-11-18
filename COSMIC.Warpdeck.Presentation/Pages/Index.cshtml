@@ -1,0 +1,22 @@
+@page
+@model COSMIC.Warpdeck.Presentation.Pages.Index
+
+@{
+    Layout = "_Layout";
+}
+
+<script src="/js/Partials/KeyGrid.js"></script>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Device: @Model.Device.DeviceId</h1>
+</div>
+<div class="mx-auto w-75">
+    <div class="container-fluid" id="keymapGrid">
+    </div>
+</div>
+<script>
+document.addEventListener("DOMContentLoaded", function(event) { 
+    window.keyGrid = new KeyGrid("keymapGrid","@(Model.Device.DeviceId)","active", {disableSelection: true});
+    setInterval(() => window.keyGrid.updateKeys(),2000);
+    
+});
+</script>

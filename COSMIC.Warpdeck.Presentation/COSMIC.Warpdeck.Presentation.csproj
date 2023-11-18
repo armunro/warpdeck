@@ -1,0 +1,284 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0-windows</TargetFramework>
+        <OutputType>Library</OutputType>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Autofac" Version="6.1.0" />
+      <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+      <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="Assets\css\device.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\css\layout.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\css\pages.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\js\Pages\Device.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\js\Pages\EditLayer.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\js\Pages\NewDevice.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\js\Partials\KeyGrid.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\js\Partials\NewLayerModal.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.rtl.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.rtl.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.rtl.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.rtl.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.rtl.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.rtl.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.rtl.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-reboot.rtl.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.rtl.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.rtl.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.rtl.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-utilities.rtl.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.rtl.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.rtl.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.rtl.min.css">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap.rtl.min.css.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.bundle.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.bundle.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.bundle.min.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.bundle.min.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.esm.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.esm.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.esm.min.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.esm.min.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.min.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\bootstrap.min.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\popper.min.js">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\vendor\boostrap-5.1.3\js\popper.min.js.map">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\ActionController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\BehaviorController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\ConfigController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\DeviceController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\DeviceLayerController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\DeviceLayerKeyController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\HardwareController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\BehaviorResponseModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\DeviceResponseModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\KeyResponseModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\LayerResponseModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\NewDeviceRequestModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\PropertyResponseModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\Models\TypePropertiesResponseModel.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\PropertyController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\RenderController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Controllers\TypeController.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\Device.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\Device.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\Index.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\Index.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\Layer.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\Layer.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\Monitor.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\Monitor.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\NewDevice.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\NewDevice.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\NewLayerModalPartial.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\NewLayerModalPartial.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="Pages\Properties.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Pages\Properties.cshtml.cs">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <Content Update="appsettings.Development.json">
+        <DependentUpon>appsettings.json</DependentUpon>
+      </Content>
+      <Content Update="Pages\DeviceBare.cshtml">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\COSMIC.Warpdeck\COSMIC.Warpdeck.csproj" />
+    </ItemGroup>
+
+</Project>

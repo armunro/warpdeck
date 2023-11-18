@@ -1,0 +1,48 @@
+@page "/device/{deviceId}/monitor"
+@model COSMIC.Warpdeck.Presentation.Pages.Monitor
+
+@{
+    Layout = "_Layout";
+}
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">Monitor Type</th>
+        <th scope="col">Criteria</th>
+        <th scope="col">Criteria Parameters</th>
+        <th scope="col">Actions</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{ int counter = 0; }
+    @foreach (var ruleModel in Model.MonitorRules.Rules)
+    {
+        <tr>
+            <th scope="row">@(counter + 1) </th>
+            <td>@ruleModel.MonitorType</td>
+            <td>@ruleModel.Criteria.CriteriaType</td>
+            <td>
+                @foreach (var param in @ruleModel.Criteria.Parameters)
+                {
+                    <span>@(param.Key): @(param.Value)</span>
+                }
+            </td>
+            <td>
+                @foreach (var action in @ruleModel.Actions)
+                {
+                    <span>@action.ActionType</span>
+
+                    @foreach (var actionParam in @action.Parameters)
+                    {
+                        <span>@(actionParam.Key): @(actionParam.Value)</span>
+                    }
+                }
+            </td>
+        </tr>
+        counter += 1;
+    }
+    </tbody>
+</table>
