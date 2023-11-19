@@ -15,8 +15,8 @@ using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Rules;
-using COSMIC.Warpdeck.Plugins.Monitor.Action;
-using COSMIC.Warpdeck.Plugins.Monitor.Criteria;
+using COSMIC.Warpdeck.Monitor.Action;
+using COSMIC.Warpdeck.Monitor.Criteria;
 using COSMIC.Warpdeck.UseCase.Device;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
 using COSMIC.Warpdeck.UseCase.Hardware;
@@ -50,7 +50,7 @@ namespace COSMIC.Warpdeck.Windows
             {
                 builder.RegisterType<TemplateDocumentFileProvider>()
                     .As<ITemplateDocumentProvider>()
-                    .WithParameter(new NamedParameter("filePath", "Untitled.svg"));
+                    .WithParameter(new NamedParameter("filePath", "DefaultIconTemplate.svg"));
                 builder.RegisterType<DefaultIconTemplate>().As<IconTemplate>().As<IHasProperties>();
                 builder.RegisterType<InMemoryIconCache>().As<IIconCache>();
 

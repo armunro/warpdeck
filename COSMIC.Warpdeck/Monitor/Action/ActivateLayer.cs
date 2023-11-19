@@ -3,7 +3,7 @@ using System.Linq;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
 
-namespace COSMIC.Warpdeck.Plugins.Monitor.Action
+namespace COSMIC.Warpdeck.Monitor.Action
 {
     public class ActivateLayer : IMonitorRuleAction
     {

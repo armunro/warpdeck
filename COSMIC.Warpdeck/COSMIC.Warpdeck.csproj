@@ -24,13 +24,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="Untitled.svg">
+      <None Update="DefaultIconTemplate.svg">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Plugins\Icon\" />
     </ItemGroup>
 
 </Project>
