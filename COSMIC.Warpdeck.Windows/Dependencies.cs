@@ -98,7 +98,7 @@ namespace COSMIC.Warpdeck.Windows
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<COSMIC.Warpdeck.Presentation.WarpDeckFrontend>();
+                builder.RegisterType<COSMIC.Warpdeck.Web.WarpDeckFrontend>();
                 base.Load(builder);
             }
         }

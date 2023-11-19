@@ -1,0 +1,43 @@
+@page "/device/{deviceId}/property"
+@model COSMIC.Warpdeck.Web.Pages.Properties
+
+@{
+    Layout = "_Layout";
+}
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">#</th>
+        <th scope="col">When</th>
+        <th scope="col">Criteria</th>
+        <th scope="col">Property Name</th>
+        <th scope="col">Property Value</th>
+    </tr>
+    </thead>
+    <tbody>
+    @{ int counter = 0; }
+    @foreach (var ruleModel in Model.PropertyRules)
+    {
+        <tr>
+            <td scope="row">@(counter + 1) </td>
+            <td>@ruleModel.Criteria.Type</td>
+            <td>
+                @foreach (var param in @ruleModel.Criteria.Parameters)
+                {
+                    <span>@(param.Key): @(param.Value)&nbsp;</span>
+                    
+                }
+            </td>
+            <td>
+                @ruleModel.TargetTagName
+            </td>
+            <td>
+                @ruleModel.TargetTagValue
+            </td>
+        </tr>
+        counter += 1;
+    }
+    </tbody>
+</table>

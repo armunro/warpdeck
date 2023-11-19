@@ -37,13 +37,13 @@ namespace COSMIC.Warpdeck.Windows
 
             Container = builder.Build();
             WarpdeckApp.Container = Container;
-            COSMIC.Warpdeck.Presentation.WarpDeckFrontend.Container = Container;
+            COSMIC.Warpdeck.Web.WarpDeckFrontend.Container = Container;
         }
 
 
         public void StartPresentation()
         {
-            COSMIC.Warpdeck.Presentation.WarpDeckFrontend.StartAsync(_commandLineArgs);
+            COSMIC.Warpdeck.Web.WarpDeckFrontend.StartAsync(_commandLineArgs);
         }
     }
 }

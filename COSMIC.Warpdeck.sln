@@ -4,7 +4,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck", "COSMIC.W
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Windows", "COSMIC.Warpdeck.Windows\COSMIC.Warpdeck.Windows.csproj", "{1BF4D14F-0352-4758-ABEE-711069F4774B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Presentation", "COSMIC.Warpdeck.Presentation\COSMIC.Warpdeck.Presentation.csproj", "{5C69E04A-2A79-4C43-81B0-0B5DA8CE889B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Web", "COSMIC.Warpdeck.Web\COSMIC.Warpdeck.Web.csproj", "{5C69E04A-2A79-4C43-81B0-0B5DA8CE889B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

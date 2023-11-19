@@ -1,0 +1,27 @@
+@model COSMIC.Warpdeck.Web.Pages.NewLayerModalPartial
+
+<div class="modal fade" id="newLayerModal" tabindex="-1" aria-labelledby="newLayerModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="newLayerModalLabel">Create New Layer on Device: @(Model.DeviceId)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <div class="form-group">
+                            <label for="newLayerName">Layer Name</label>
+                            <input type="text" class="form-control" id="newLayerName" aria-describedby="emailHelp">
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button id="newLayerCreateSubmit" type="button" class="btn btn-primary">Create</button>
+            </div>
+        </div>
+    </div>
+</div>

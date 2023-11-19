@@ -20,7 +20,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\COSMIC.Warpdeck\COSMIC.Warpdeck.csproj" />
-      <ProjectReference Include="..\COSMIC.Warpdeck.Presentation\COSMIC.Warpdeck.Presentation.csproj" />
+      <ProjectReference Include="..\COSMIC.Warpdeck.Web\COSMIC.Warpdeck.Web.csproj" />
     </ItemGroup>
 
 </Project>
