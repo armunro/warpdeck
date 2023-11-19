@@ -23,13 +23,8 @@ namespace COSMIC.Warpdeck
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<Plugins.Behaviors.Press>()
-                    .Named<KeyBehavior>(nameof(Plugins.Behaviors.Press))
-                    .As<KeyBehavior>()
-                    .As<IHasProperties>()
-                    .As<IHasActions>().InstancePerDependency();
-                builder.RegisterType<Plugins.Behaviors.PressAndHold>()
-                    .Named<KeyBehavior>(nameof(Plugins.Behaviors.PressAndHold))
+                
+                builder.RegisterType<KeyBehavior>()
                     .As<KeyBehavior>()
                     .As<IHasProperties>()
                     .As<IHasActions>().InstancePerDependency();

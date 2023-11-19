@@ -15,7 +15,6 @@ using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Rules;
-using COSMIC.Warpdeck.Plugins.Icon;
 using COSMIC.Warpdeck.Plugins.Monitor.Action;
 using COSMIC.Warpdeck.Plugins.Monitor.Criteria;
 using COSMIC.Warpdeck.UseCase.Device;
@@ -52,12 +51,7 @@ namespace COSMIC.Warpdeck.Windows
                 builder.RegisterType<TemplateDocumentFileProvider>()
                     .As<ITemplateDocumentProvider>()
                     .WithParameter(new NamedParameter("filePath", "Untitled.svg"));
-                builder.RegisterType<PressAndHold>()
-                    .Named<IconTemplate>(nameof(COSMIC.Warpdeck.Plugins.Behaviors.PressAndHold))
-                    .As<IHasProperties>();
-                builder.RegisterType<Press>()
-                    .Named<IconTemplate>(nameof(COSMIC.Warpdeck.Plugins.Behaviors.Press))
-                    .As<IHasProperties>();
+                builder.RegisterType<DefaultIconTemplate>().As<IconTemplate>().As<IHasProperties>();
                 builder.RegisterType<InMemoryIconCache>().As<IIconCache>();
 
                 base.Load(builder);

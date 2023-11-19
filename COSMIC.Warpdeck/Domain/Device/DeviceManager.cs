@@ -106,7 +106,7 @@ namespace COSMIC.Warpdeck.Domain.Device
             }
         }
 
-
+        //TODO: START here for injecting click and hold events 
         private void BoardOnKeyStateChanged(DeviceModel device, int keyId, bool isDown)
         {
             try
@@ -125,7 +125,7 @@ namespace COSMIC.Warpdeck.Domain.Device
                     key.History.LastUp = DateTime.Now;
 
                 string behaviorTypeName = device.KeyStates[keyId].Behavior.Type;
-                KeyBehavior behavior = WarpdeckApp.Container.ResolveNamed<KeyBehavior>(behaviorTypeName);
+                KeyBehavior behavior = WarpdeckApp.Container.Resolve<KeyBehavior>();
 
 
                 if (isDown)
@@ -173,7 +173,7 @@ namespace COSMIC.Warpdeck.Domain.Device
 
             if (_cache.DoesCacheHaveIcon(keyModel) && !skipCache) return _cache.GetIcon(keyModel).ToBitmap();
 
-            IconTemplate template = WarpdeckApp.Container.ResolveNamed<IconTemplate>(keyModel.Behavior.Type);
+            IconTemplate template = WarpdeckApp.Container.Resolve<IconTemplate>();
             template.PropertyRule = _propertyRuleManagers[deviceId];
 
             return _cache.SetIcon(keyModel, template.GenerateIcon(keyModel)).ToBitmap();

@@ -9,8 +9,9 @@ using COSMIC.Warpdeck.Domain.Property.Descriptors;
 
 namespace COSMIC.Warpdeck.Domain.Key.Behavior
 {
-    public abstract class KeyBehavior : IHasProperties, IHasActions
+    public  class KeyBehavior : IHasProperties, IHasActions
     {
+        private readonly int _holdDelay = 250;
         public PropertyDescriptor Category = PropertyDescriptor.Text("key.category")
             .Named("Category")
             .Described("For categorizing keys. Useful when using property rules.")
@@ -22,6 +23,12 @@ namespace COSMIC.Warpdeck.Domain.Key.Behavior
 
         protected readonly KeyTimer KeyTimer;
 
+        
+        public KeyBehavior()
+        {
+            
+        }
+        
         protected KeyBehavior(KeyTimer keyTimer)
         {
             KeyTimer = keyTimer;
@@ -45,11 +52,23 @@ namespace COSMIC.Warpdeck.Domain.Key.Behavior
 
            
         }
+        
+        
+        public  void OnKeyDown(DeviceModel device, int key, BehaviorModel behavior, KeyHistoryModel keyHistory)
+        {
+        }
 
-        public abstract void OnKeyDown(DeviceModel device, int key, BehaviorModel behavior, KeyHistoryModel keyHistory);
-        public abstract void OnKeyUp(DeviceModel device, int key, BehaviorModel behavior, KeyHistoryModel keyHistory);
+        public  void OnKeyUp(DeviceModel device, int key, BehaviorModel behavior, KeyHistoryModel keyHistory)
+        {
+            FireEvent(behavior,
+                keyHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "hold" : "press");
+        }
 
-        public abstract ActionDescriptorSet SpecifyActions();
+      
+
+        public ActionDescriptorSet SpecifyActions() => ActionDescriptorSet.New(nameof(KeyBehavior))
+            .Action(ActionDescriptor.New("press"))
+            .Action(ActionDescriptor.New("hold"));
 
     }
 }

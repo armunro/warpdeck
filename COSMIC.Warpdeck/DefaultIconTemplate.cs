@@ -5,9 +5,9 @@ using COSMIC.Warpdeck.Domain.Property.Descriptors;
 using COSMIC.Warpdeck.Domain.Property.Rules;
 using COSMIC.Warpdeck.Helpers;
 
-namespace COSMIC.Warpdeck.Plugins.Icon
+namespace COSMIC.Warpdeck
 {
-    public class PressAndHold : IconTemplate
+    public class DefaultIconTemplate : Domain.Icon.IconTemplate
     {
         public static PropertyDescriptor BackgroundColor = PropertyDescriptor.Color("background.fillColor")
             .Named("Background Color")
@@ -42,7 +42,7 @@ namespace COSMIC.Warpdeck.Plugins.Icon
             AccentColor
         );
 
-        public PressAndHold(ITemplateDocumentProvider templateDocumentProvider,
+        public DefaultIconTemplate(ITemplateDocumentProvider templateDocumentProvider,
             PropertyRuleManager propertyRuleManager)
             : base(templateDocumentProvider, propertyRuleManager)
         {
