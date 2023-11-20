@@ -93,7 +93,19 @@ namespace COSMIC.Warpdeck.Domain.Device
                 ClearDevice(devicesKey);
             }
         }
+        public void FireActionOnActiveDevice(string deviceId, int keyId, string action)
+        {
+            var orderedLayers = Devices[deviceId]
+                .ActiveLayers
+                .OrderBy(x => x.Value.Level)
+                .Select(x => x.Key);
+            KeyBehavior behavior = WarpdeckApp.Container.Resolve<KeyBehavior>();
+            
+            behavior.FireEvent(Devices[deviceId].KeyStates[keyId].Behavior, action);
+            
+        }
 
+        
         private void DrawLayerOnBoard(string layerId, string deviceId)
         {
             _timer.UnregisterAllRepeatable();

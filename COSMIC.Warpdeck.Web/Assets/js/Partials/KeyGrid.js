@@ -93,11 +93,12 @@ class KeyGrid {
 
     onMouseDown(event) {
         if (this.keyPressCallback)
-            var x = event.clientX;
-        var y = event.clientY;
-        var elementUnder = document.elementFromPoint(x, y);
+        
 
         this.timerId = setTimeout(() => {
+            var x = event.clientX;
+            var y = event.clientY;
+            var elementUnder = document.elementFromPoint(x, y);
             this.keyHoldCallback(elementUnder);
             this.timerId = null;
 
@@ -106,13 +107,12 @@ class KeyGrid {
     }
 
     onMouseUp(event) {
-        var x = event.clientX;
-        var y = event.clientY;
-        var elementUnder = document.elementFromPoint(x, y);
-
         if (this.timerId) {
             clearTimeout(this.timerId);
             if (this.keyPressCallback) {
+                var x = event.clientX;
+                var y = event.clientY;
+                var elementUnder = document.elementFromPoint(x, y);
                 this.keyPressCallback(elementUnder);
             }
         }

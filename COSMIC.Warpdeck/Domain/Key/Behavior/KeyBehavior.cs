@@ -37,6 +37,7 @@ namespace COSMIC.Warpdeck.Domain.Key.Behavior
 
         public void FireEvent(BehaviorModel behaviorModel, string eventName)
         {
+            //Null check
             ActionModel actionModel = behaviorModel.Actions[eventName];
 
             try
