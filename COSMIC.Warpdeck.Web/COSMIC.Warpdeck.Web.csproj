@@ -179,9 +179,6 @@
       <Content Include="Controllers\ActionController.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="Controllers\BehaviorController.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <Content Include="Controllers\ConfigController.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>

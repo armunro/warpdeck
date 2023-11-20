@@ -93,19 +93,27 @@ class KeyGrid {
 
     onMouseDown(event) {
         if (this.keyPressCallback)
-            this.timerId = setTimeout(()=> {
-                this.keyHoldCallback(this.activeGridKey);
-                this.timerId = null;
-                
-            } ,1000, this.activeGridKey); // 1000ms = 1 second
+            var x = event.clientX;
+        var y = event.clientY;
+        var elementUnder = document.elementFromPoint(x, y);
+
+        this.timerId = setTimeout(() => {
+            this.keyHoldCallback(elementUnder);
+            this.timerId = null;
+
+        }, 1000); // 1000ms = 1 second
 
     }
 
     onMouseUp(event) {
+        var x = event.clientX;
+        var y = event.clientY;
+        var elementUnder = document.elementFromPoint(x, y);
+
         if (this.timerId) {
             clearTimeout(this.timerId);
             if (this.keyPressCallback) {
-                this.keyPressCallback(this.activeGridKey);
+                this.keyPressCallback(elementUnder);
             }
         }
     }

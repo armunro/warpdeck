@@ -132,6 +132,7 @@ namespace COSMIC.Warpdeck.Domain.Device
                     behavior.OnKeyDown(device, keyId, key.Behavior, key.History);
                 else
                     behavior.OnKeyUp(device, keyId, key.Behavior, key.History);
+                
             }
             catch (Exception e)
             {
