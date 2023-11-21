@@ -24,7 +24,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <None Update="DefaultIconTemplate.svg">
+      <None Update="PressAndHold.svg">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </None>
     </ItemGroup>

@@ -1,7 +1,7 @@
 .keyMapKey{
     cursor: pointer;
     background:#000;
-    //border: 3px solid transparent;
+    
 }
 .keyMapKey.active{
     border-color: #0a53be;

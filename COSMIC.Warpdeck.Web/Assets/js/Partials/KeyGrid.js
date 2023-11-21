@@ -156,7 +156,7 @@ class KeyGrid {
         keyElem.dataset.keybound = (keyModel !== undefined && keyModel !== null).toString();
         keyElem.draggable = true;
         let ms = Date.now();
-        keyElem.innerHTML = "<img class=\"img-fluid p-0 keyMapKeyImage\" style=\"border-radius: 0rem\" src='" + this.calculateIconUrl() + "/" + keyId + "?ms=" + ms + "'/>";
+        keyElem.innerHTML = "<img class=\"img-fluid me-2 mb-2 keyMapKeyImage\" style=\"border-radius: 1rem\" src='" + this.calculateIconUrl() + "/" + keyId + "?ms=" + ms + "'/>";
         if (!this.options.disableSelection) {
             keyElem.addEventListener('click', () => this.onKeyClickInternal(keyElem))
         }

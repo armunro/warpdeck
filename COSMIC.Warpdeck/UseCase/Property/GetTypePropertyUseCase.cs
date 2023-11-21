@@ -16,8 +16,7 @@ namespace COSMIC.Warpdeck.UseCase.Property
 
         public PropertyDescriptorSet Invoke(string parentType, string typeName)
         {
-            return _typesWithProperties.First(x => x.GetType().BaseType.Name == parentType &&
-                                                   x.GetType().Name == typeName).SpecifyProperties();
+            return _typesWithProperties.First(x=> x.GetType().Name == typeName).SpecifyProperties();
         }
     }
 }

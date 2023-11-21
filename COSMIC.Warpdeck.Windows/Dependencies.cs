@@ -50,8 +50,8 @@ namespace COSMIC.Warpdeck.Windows
             {
                 builder.RegisterType<TemplateDocumentFileProvider>()
                     .As<ITemplateDocumentProvider>()
-                    .WithParameter(new NamedParameter("filePath", "DefaultIconTemplate.svg"));
-                builder.RegisterType<DefaultIconTemplate>().As<IconTemplate>().As<IHasProperties>();
+                    .WithParameter(new NamedParameter("filePath", "PressAndHold.svg"));
+                builder.RegisterType<PressAndHold>().As<IconTemplate>().As<IHasProperties>();
                 builder.RegisterType<InMemoryIconCache>().As<IIconCache>();
 
                 base.Load(builder);
