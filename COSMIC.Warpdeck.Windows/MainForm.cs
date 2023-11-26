@@ -27,7 +27,7 @@ namespace COSMIC.Warpdeck.Windows
 
 
         private void NotifyIcon_Menu_OpenUI_OnClick(object? sender, EventArgs e) =>
-            Process.Start(new ProcessStartInfo("http://localhost:5000") { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo("http://localhost:4300") { UseShellExecute = true });
 
         private void NotifyIcon_Menu_Reload_OnClick(object? sender, EventArgs e) =>
             _app.Reload();
