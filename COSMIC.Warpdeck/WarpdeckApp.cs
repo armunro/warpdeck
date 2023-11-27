@@ -23,15 +23,24 @@ namespace COSMIC.Warpdeck
 
             List<IStreamDeckRefHandle> deckRefHandles = StreamDeck.EnumerateDevices().ToList();
 
-            var deviceModel = deviceModels.First();
-            foreach (IStreamDeckRefHandle streamDeckRefHandle in deckRefHandles)
-            {
-                deviceModel.Info.HardwareId = streamDeckRefHandle.DevicePath;
-                deviceManager.BindDevice(streamDeckRefHandle.Open(), deviceModel);
-            }
 
-            Container.Resolve<RedrawDeviceLayersUseCase>().Invoke(deviceModel.DeviceId);
-            
+            foreach (DeviceModel deviceModel in deviceModels)
+            {
+                if (deviceModel.Info.HardwareId != "virtual")
+                {
+                    var hardwareMatch = deckRefHandles.FirstOrDefault(x => x.DevicePath == deviceModel.Info.HardwareId);
+                    if (hardwareMatch != null)
+                    {
+                        deviceManager.BindDevice(hardwareMatch.Open(), deviceModel);
+                    }
+                }
+                else
+                {
+                    deviceManager.BindDevice(deviceModel);
+                }
+
+                Container.Resolve<RedrawDeviceLayersUseCase>().Invoke(deviceModel.DeviceId);
+            }
         }
 
         public void Reload()

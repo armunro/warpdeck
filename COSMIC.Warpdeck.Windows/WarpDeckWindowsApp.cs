@@ -1,3 +1,4 @@
+using System.Windows.Forms;
 using Autofac;
 using COSMIC.Warpdeck.UseCase.Device;
 
@@ -37,13 +38,14 @@ namespace COSMIC.Warpdeck.Windows
 
             Container = builder.Build();
             WarpdeckApp.Container = Container;
-            COSMIC.Warpdeck.Web.WarpDeckFrontend.Container = Container;
+            Web.WarpDeckFrontend.Container = Container;
+            
         }
 
 
         public void StartPresentation()
         {
-            COSMIC.Warpdeck.Web.WarpDeckFrontend.StartAsync(_commandLineArgs);
+            Web.WarpDeckFrontend.StartAsync(_commandLineArgs);
         }
     }
 }

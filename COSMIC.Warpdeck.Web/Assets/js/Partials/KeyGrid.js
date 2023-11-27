@@ -1,5 +1,5 @@
 class KeyGrid {
-    constructor(gridElement, deviceId, layerId, data) {
+    constructor(gridElement, deviceId, layerId, data, rows=4, columns=8) {
         let dataDefaults = {
             disableSelection: false,
             disableDragDrop: false
@@ -9,8 +9,8 @@ class KeyGrid {
         this.options = {...dataDefaults, ...data}
         this.gridElement = document.getElementById(gridElement)
         this.activeGridKey = null;
-        this.gridRows = 4;
-        this.gridColumns = 8;
+        this.gridRows = rows;
+        this.gridColumns = columns;
         this.timerId = null;
         this.loadGrid();
 
