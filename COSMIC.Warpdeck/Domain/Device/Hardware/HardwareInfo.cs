@@ -1,4 +1,4 @@
-namespace COSMIC.Warpdeck.Domain.Hardware
+namespace COSMIC.Warpdeck.Domain.Device.Hardware
 {
     public class HardwareInfo
     {

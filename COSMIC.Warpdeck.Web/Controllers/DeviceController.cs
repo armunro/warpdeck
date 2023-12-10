@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Hardware;
+using COSMIC.Warpdeck.Domain.Device.Hardware;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.UseCase.Device;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;

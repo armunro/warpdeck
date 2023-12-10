@@ -28,7 +28,6 @@ namespace COSMIC.Warpdeck.Windows
             builder.RegisterModule<CoreDependencies.Property>();
             builder.RegisterModule<CoreDependencies.DevicesModule>();
            
-          
             //Register Windows dependencies
             builder.RegisterModule<Dependencies.BoardModule>();
             builder.RegisterModule<Dependencies.IconsModule>();
@@ -39,7 +38,6 @@ namespace COSMIC.Warpdeck.Windows
             Container = builder.Build();
             WarpdeckApp.Container = Container;
             Web.WarpDeckFrontend.Container = Container;
-            
         }
 
 

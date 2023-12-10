@@ -4,6 +4,7 @@ using Autofac;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.UseCase.Device;
+using COSMIC.Warpdeck.Windows.Forms;
 
 namespace COSMIC.Warpdeck.Windows
 {

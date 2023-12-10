@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace COSMIC.Warpdeck.Domain.Key
 {
-    public class KeyTimer
+    public class ActionTimer
     {
         private Dictionary<Tuple<string, int>, Timer> KeyTimers { get; } = new();
 

@@ -19,7 +19,7 @@ namespace COSMIC.Warpdeck.Domain.Device
 {
     public class DeviceManager : IDisposable
     {
-        private readonly KeyTimer _timer;
+        private readonly ActionTimer _timer;
         private readonly IIconCache _cache;
         private readonly Dictionary<string, MonitorManager> _monitorManagers = new();
         private readonly Dictionary<string, PropertyRuleManager> _propertyRuleManagers = new();
@@ -27,7 +27,7 @@ namespace COSMIC.Warpdeck.Domain.Device
         private Dictionary<string, IMacroBoard> Boards { get; } = new();
 
 
-        public DeviceManager(KeyTimer timer, IIconCache cache)
+        public DeviceManager(ActionTimer timer, IIconCache cache)
         {
             _timer = timer;
             _cache = cache;

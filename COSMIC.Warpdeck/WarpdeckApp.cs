@@ -13,17 +13,18 @@ namespace COSMIC.Warpdeck
     {
         public static IContainer Container;
 
-
+ 
+        public void LoadClipboardPatterns()
+        {
+            
+        }
+        
         public void LoadDevices()
         {
             IDeviceReader deviceReader = Container.Resolve<IDeviceReader>();
-
             var deviceManager = Container.Resolve<DeviceManager>();
             DeviceModelList deviceModels = deviceReader.ReadDevices();
-
             List<IStreamDeckRefHandle> deckRefHandles = StreamDeck.EnumerateDevices().ToList();
-
-
             foreach (DeviceModel deviceModel in deviceModels)
             {
                 if (deviceModel.Info.HardwareId != "virtual")

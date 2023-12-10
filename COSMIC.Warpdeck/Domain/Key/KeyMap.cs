@@ -8,8 +8,6 @@ namespace COSMIC.Warpdeck.Domain.Key
         {
             this[keyId] = keyModel;
         }
-
-
         public bool IsKeyMapped(int keyId) => ContainsKey(keyId);
     }
 }

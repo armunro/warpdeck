@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace COSMIC.Warpdeck.Windows
+namespace COSMIC.Warpdeck.Windows.Forms
 {
     partial class MainForm
     {

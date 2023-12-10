@@ -58,7 +58,7 @@ namespace COSMIC.Warpdeck
                 builder.RegisterType<UpdateDeviceUseCase>().AsSelf();
                 builder.RegisterType<MoveKeyUseCase>().AsSelf();
                 builder.RegisterType<DuplicateKeyUseCase>().AsSelf();
-                builder.RegisterType<KeyTimer>().SingleInstance();
+                builder.RegisterType<ActionTimer>().SingleInstance();
 
                 base.Load(builder);
             }

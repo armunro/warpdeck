@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using COSMIC.Warpdeck.Domain.Hardware;
+using COSMIC.Warpdeck.Domain.Device.Hardware;
 
 namespace COSMIC.Warpdeck.Adapter.Hardware
 {

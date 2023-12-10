@@ -6,7 +6,7 @@ using COSMIC.Warpdeck.Adapter.Icon;
 using COSMIC.Warpdeck.Adapter.Monitor;
 using COSMIC.Warpdeck.Adapter.PropertyRule;
 using COSMIC.Warpdeck.Domain.Configuration;
-using COSMIC.Warpdeck.Domain.Hardware;
+using COSMIC.Warpdeck.Domain.Device.Hardware;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Key.Action;
@@ -62,16 +62,11 @@ namespace COSMIC.Warpdeck.Windows
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<KeyMacro>()
-                    .Named<KeyAction>(nameof(KeyMacro))
+                builder.RegisterType<KeyMacro>().Named<KeyAction>(nameof(KeyMacro)).As<IHasActionParameters>();
+                builder.RegisterType<LauncherAction>().Named<KeyAction>(nameof(LauncherAction))
                     .As<IHasActionParameters>();
-                builder.RegisterType<LauncherAction>()
-                    .Named<KeyAction>(nameof(LauncherAction))
+                builder.RegisterType<ManageWindowAction>().Named<KeyAction>(nameof(ManageWindowAction))
                     .As<IHasActionParameters>();
-                builder.RegisterType<ManageWindowAction>()
-                    .Named<KeyAction>(nameof(ManageWindowAction))
-                    .As<IHasActionParameters>();
-
                 base.Load(builder);
             }
         }
@@ -81,15 +76,12 @@ namespace COSMIC.Warpdeck.Windows
             protected override void Load(ContainerBuilder builder)
             {
                 builder.RegisterType<MonitorManager>().SingleInstance();
-                builder.RegisterType<ActiveWindowMonitor>().Named<IMonitor>(nameof(ActiveWindowMonitor)).SingleInstance();
+                builder.RegisterType<ActiveWindowMonitor>().Named<IMonitor>(nameof(ActiveWindowMonitor))
+                    .SingleInstance();
                 builder.RegisterType<ActivateLayer>().Named<IMonitorRuleAction>(nameof(ActivateLayer));
-
-                //criteria
                 builder.RegisterType<Always>().Named<MonitorCondition>(nameof(Always));
                 builder.RegisterType<AppPathMatches>().Named<MonitorCondition>(nameof(AppPathMatches));
                 builder.RegisterType<WindowTitleMatches>().Named<MonitorCondition>(nameof(WindowTitleMatches));
-
-
                 base.Load(builder);
             }
         }
@@ -98,11 +90,9 @@ namespace COSMIC.Warpdeck.Windows
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<COSMIC.Warpdeck.Web.WarpDeckFrontend>();
+                builder.RegisterType<Web.WarpDeckFrontend>();
                 base.Load(builder);
             }
         }
-
-    
     }
 }

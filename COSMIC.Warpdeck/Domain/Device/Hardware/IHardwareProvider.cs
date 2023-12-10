@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace COSMIC.Warpdeck.Domain.Hardware
+namespace COSMIC.Warpdeck.Domain.Device.Hardware
 {
     public interface IHardwareProvider
     {

@@ -3,8 +3,7 @@ using System;
 using System.Diagnostics;
 using System.Windows.Forms;
 
-
-namespace COSMIC.Warpdeck.Windows
+namespace COSMIC.Warpdeck.Windows.Forms
 {
     public partial class MainForm : Form
     {
@@ -14,9 +13,9 @@ namespace COSMIC.Warpdeck.Windows
         public MainForm(string[] args)
         {
             InitializeComponent();
-            _windowsApp = new WarpDeckWindowsApp(args);
             _app = new();
             WarpdeckApp.Container = WarpDeckWindowsApp.Container;
+            _windowsApp = new WarpDeckWindowsApp(args);
             _windowsApp.RegisterDependencies();
             _windowsApp.StartPresentation();
             _app.LoadDevices();
@@ -53,8 +52,8 @@ namespace COSMIC.Warpdeck.Windows
 
         private void NotifyIcon_Menu_OpenClipboard_OnClick(object? sender, EventArgs e)
         {
-            ClipboardForm clipboardForm = new();
-            clipboardForm.Show();
+            
+            
         }
     }
 }

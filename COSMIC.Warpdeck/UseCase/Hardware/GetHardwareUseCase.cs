@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Hardware;
+using COSMIC.Warpdeck.Domain.Device.Hardware;
 using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck.UseCase.Hardware

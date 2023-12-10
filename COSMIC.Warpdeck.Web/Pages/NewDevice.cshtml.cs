@@ -1,6 +1,6 @@
 using System.Collections.Generic;
+using COSMIC.Warpdeck.Domain.Device.Hardware;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using COSMIC.Warpdeck.Domain.Hardware;
 using COSMIC.Warpdeck.UseCase.Hardware;
 
 namespace COSMIC.Warpdeck.Web.Pages

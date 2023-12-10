@@ -22,16 +22,16 @@ namespace COSMIC.Warpdeck.Domain.Key.Behavior
             .Named("Key Properties")
             .Has(Category);
 
-        protected readonly KeyTimer KeyTimer;
+        protected readonly ActionTimer ActionTimer;
 
 
         public KeyBehavior()
         {
         }
 
-        protected KeyBehavior(KeyTimer keyTimer)
+        protected KeyBehavior(ActionTimer actionTimer)
         {
-            KeyTimer = keyTimer;
+            ActionTimer = actionTimer;
         }
 
 
