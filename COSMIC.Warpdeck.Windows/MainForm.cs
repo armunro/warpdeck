@@ -18,8 +18,8 @@ namespace COSMIC.Warpdeck.Windows
             _app = new();
             WarpdeckApp.Container = WarpDeckWindowsApp.Container;
             _windowsApp.RegisterDependencies();
-            _app.LoadDevices();
             _windowsApp.StartPresentation();
+            _app.LoadDevices();
             Visible = false;
             Hide();
             Focus();
@@ -49,6 +49,12 @@ namespace COSMIC.Warpdeck.Windows
                 ShowInTaskbar = false;
                 e.Cancel = true;
             }
+        }
+
+        private void NotifyIcon_Menu_OpenClipboard_OnClick(object? sender, EventArgs e)
+        {
+            ClipboardForm clipboardForm = new();
+            clipboardForm.Show();
         }
     }
 }

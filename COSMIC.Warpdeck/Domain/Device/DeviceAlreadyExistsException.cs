@@ -1,6 +1,6 @@
 using System;
 
-namespace COSMIC.Warpdeck.Domain.Device.Exceptions
+namespace COSMIC.Warpdeck.Domain.Device
 {
     public class DeviceAlreadyExistsException : Exception
     {

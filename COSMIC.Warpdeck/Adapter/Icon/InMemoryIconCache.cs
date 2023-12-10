@@ -9,7 +9,7 @@ namespace COSMIC.Warpdeck.Adapter.Icon
     
     public class InMemoryIconCache : IIconCache
     {
-        private Dictionary<string, KeyIcon> _cache = new Dictionary<string, KeyIcon>();
+        private Dictionary<string, KeyIcon> _cache = new();
         
         public bool DoesCacheHaveIcon(KeyModel keyModel)
         {

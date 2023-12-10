@@ -19,8 +19,6 @@ namespace COSMIC.Warpdeck.Domain.Icon
         public IconTemplate(ITemplateDocumentProvider templateDocumentProvider, PropertyRuleManager propertyRuleManager)
         {
             _templateDocumentProvider = templateDocumentProvider;
-
-
             PropertyRule = propertyRuleManager;
         }
 

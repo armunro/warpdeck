@@ -5,7 +5,6 @@ using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Adapter.Hardware;
 using COSMIC.Warpdeck.Adapter.Monitor;
-using COSMIC.Warpdeck.Domain.Device.Exceptions;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Key.Behavior;

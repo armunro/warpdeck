@@ -39,7 +39,7 @@ namespace COSMIC.Warpdeck
                     deviceManager.BindDevice(deviceModel);
                 }
 
-                Container.Resolve<RedrawDeviceLayersUseCase>().Invoke(deviceModel.DeviceId);
+                //Container.Resolve<RedrawDeviceLayersUseCase>().Invoke(deviceModel.DeviceId);
             }
         }
 
