@@ -4,11 +4,11 @@ using System.Text.RegularExpressions;
 
 namespace COSMIC.Warpdeck.Domain.Clipboard
 {
-    public class ClipboardPattern
+    public class ClipPattern
     {
         public string Name { get; set; }
         public Regex Regex;
-        public Func<ClipboardPattern, Match, IEnumerable<ClipSuggestion>> SuggestionFactory;
+        public Func<ClipPattern, Match, IEnumerable<ClipSuggestion>> SuggestionFactory;
 
         public List<ClipSuggestion> OfferSuggestions(string? text)
         {
@@ -28,10 +28,10 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
             return suggestions;
         }
 
-        public static ClipboardPattern Create(string name, string pattern,
-            Func<ClipboardPattern, Match, IEnumerable<ClipSuggestion>> suggestionFactory)
+        public static ClipPattern Create(string name, string pattern,
+            Func<ClipPattern, Match, IEnumerable<ClipSuggestion>> suggestionFactory)
         {
-            return new ClipboardPattern
+            return new ClipPattern
             {
                 Name = name,
                 Regex = new Regex(pattern),

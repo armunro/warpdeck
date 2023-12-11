@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using COSMIC.Warpdeck.Domain.Clipboard;
+using COSMIC.Warpdeck.Domain.Configuration;
 using WK.Libraries.SharpClipboardNS;
 
 namespace COSMIC.Warpdeck.Windows.Adapter
@@ -8,15 +9,31 @@ namespace COSMIC.Warpdeck.Windows.Adapter
     public class WindowsClipboardManager : IClipboardManager
     {
         private readonly SharpClipboard _clipboardMonitor = new();
-        public List<Clip> Clips = new();
-        
+        private readonly List<Clip> _clips = new();
+        private readonly List<ClipPattern> _patterns = new();
 
-        public WindowsClipboardManager()
+
+        public WindowsClipboardManager(IClipPatternReader clipPatternReader)
         {
+            _patterns = clipPatternReader.ReadPatterns();
             _clipboardMonitor.ClipboardChanged += OnClipboardMonitorOnClipboardChanged;
-
         }
-        
+
+        public List<Clip> GetClips()
+        {
+            return _clips;
+        }
+
+        public void StartMonitoring()
+        {
+            _clipboardMonitor.StartMonitoring();
+        }
+
+        public void StopMonitoring()
+        {
+            _clipboardMonitor.StopMonitoring();
+        }
+
 
         private void OnClipboardMonitorOnClipboardChanged(object? sender, SharpClipboard.ClipboardChangedEventArgs args)
         {
@@ -30,47 +47,24 @@ namespace COSMIC.Warpdeck.Windows.Adapter
             {
                 case SharpClipboard.ContentTypes.Text:
                     var textSuggestions = ProcessCopiedTextSuggestions(args);
-                    if(textSuggestions.Count > 0)
-                        newClip.Suggestions = textSuggestions;
+                    newClip.Suggestions = textSuggestions;
                     break;
                 default:
-                    Console.WriteLine("\t ???");
                     break;
             }
-            Clips.Add(newClip);
+
+            _clips.Add(newClip);
         }
 
         private List<ClipSuggestion> ProcessCopiedTextSuggestions(SharpClipboard.ClipboardChangedEventArgs args)
         {
             List<ClipSuggestion> returnSuggestion = new();
-            
-            foreach (ClipboardPattern pattern in MyPatterns.Patterns)
+            foreach (ClipPattern pattern in _patterns)
             {
-                List<ClipSuggestion> suggestions = pattern.OfferSuggestions(args.Content.ToString());
-                foreach (ClipSuggestion suggestion in suggestions)
-                {
-                    returnSuggestion.Add(suggestion);
-
-                }
+                returnSuggestion.AddRange(pattern.OfferSuggestions(args.Content.ToString()));
             }
 
             return returnSuggestion;
         }
-
-        public List<Clip> GetClips()
-        {
-            return Clips;
-        }
-
-        public void StartMonitoring()
-        {
-            _clipboardMonitor.StartMonitoring();
-        }
-
-        public void StopMonitoring()
-        {
-           _clipboardMonitor.StopMonitoring();
-        }
-        
     }
 }

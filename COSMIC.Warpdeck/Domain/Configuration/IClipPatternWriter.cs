@@ -3,8 +3,8 @@ using COSMIC.Warpdeck.Domain.Clipboard;
 
 namespace COSMIC.Warpdeck.Domain.Configuration
 {
-    public interface IClipboardPatternReader
+    public interface IClipPatternWriter
     {
-        List<ClipboardPattern> ReadPatterns();
+        void WritePatterns(List<ClipPattern> patterns);
     }
 }

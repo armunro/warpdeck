@@ -1,5 +1,6 @@
 using System;
 using Autofac;
+using COSMIC.Warpdeck.Adapter;
 using COSMIC.Warpdeck.Adapter.Configuration;
 using COSMIC.Warpdeck.Adapter.PropertyRule;
 using COSMIC.Warpdeck.Domain.Configuration;
@@ -81,6 +82,10 @@ namespace COSMIC.Warpdeck
                 builder.RegisterType<FileDeviceReaderWriter>()
                     .As<IDeviceReader>()
                     .As<IDeviceWriter>()
+                    .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
+                    .SingleInstance();
+                builder.RegisterType<ClipPatternFileReader>()
+                    .As<IClipPatternReader>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
                     .SingleInstance();
 
