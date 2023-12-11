@@ -6,18 +6,18 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
 {
     public class ClipboardPattern
     {
-        public string Name;
+        public string Name { get; set; }
         public Regex Regex;
-        public Func<ClipboardPattern, Match, IEnumerable<ClipboardSuggestion>> SuggestionFactory;
+        public Func<ClipboardPattern, Match, IEnumerable<ClipSuggestion>> SuggestionFactory;
 
-        public List<ClipboardSuggestion> OfferSuggestions(string? text)
+        public List<ClipSuggestion> OfferSuggestions(string? text)
         {
-            List<ClipboardSuggestion> suggestions = new List<ClipboardSuggestion>();
+            List<ClipSuggestion> suggestions = new List<ClipSuggestion>();
             MatchCollection matches = Regex.Matches(text);
             foreach (Match match in matches)
             {
-                IEnumerable<ClipboardSuggestion> newSuggestions = SuggestionFactory(this, match);
-                foreach (ClipboardSuggestion tSuggest in newSuggestions)
+                IEnumerable<ClipSuggestion> newSuggestions = SuggestionFactory(this, match);
+                foreach (ClipSuggestion tSuggest in newSuggestions)
                 {
                     tSuggest.Match = match.Value;
                     tSuggest.PatternName = Name;
@@ -29,7 +29,7 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
         }
 
         public static ClipboardPattern Create(string name, string pattern,
-            Func<ClipboardPattern, Match, IEnumerable<ClipboardSuggestion>> suggestionFactory)
+            Func<ClipboardPattern, Match, IEnumerable<ClipSuggestion>> suggestionFactory)
         {
             return new ClipboardPattern
             {

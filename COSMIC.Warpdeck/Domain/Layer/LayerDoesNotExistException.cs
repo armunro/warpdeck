@@ -1,6 +1,6 @@
 using System;
 
-namespace COSMIC.Warpdeck.Domain.Layer.Exceptions
+namespace COSMIC.Warpdeck.Domain.Layer
 {
     public class LayerDoesNotExistException : Exception
     {

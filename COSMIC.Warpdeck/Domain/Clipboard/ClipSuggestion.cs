@@ -1,7 +1,7 @@
 ﻿namespace COSMIC.Warpdeck.Domain.Clipboard
 {
 
-    public class ClipboardSuggestion
+    public class ClipSuggestion
     {
         public string PatternName { get; set; } = null!;
         public string Type { get; set; } = null!;

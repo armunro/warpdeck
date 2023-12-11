@@ -4,6 +4,7 @@ using Autofac;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.UseCase.Device;
+using COSMIC.Warpdeck.Windows.Adapter;
 using COSMIC.Warpdeck.Windows.Forms;
 
 namespace COSMIC.Warpdeck.Windows
@@ -18,8 +19,8 @@ namespace COSMIC.Warpdeck.Windows
             Application.SetCompatibleTextRenderingDefault(false);
             Application.ThreadExit += (_, _) =>
             {
-                WarpDeckWindowsApp.Container.Resolve<MonitorManager>().StopListening();
-                WarpDeckWindowsApp.Container.Resolve<DeviceManager>().ClearDevices();
+                WindowsWarpdeckApp.Container.Resolve<MonitorManager>().StopListening();
+                WindowsWarpdeckApp.Container.Resolve<DeviceManager>().ClearDevices();
             };
             Application.Run(new MainForm(args));
         }

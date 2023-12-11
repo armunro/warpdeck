@@ -1,17 +1,15 @@
-using System.Windows.Forms;
 using Autofac;
-using COSMIC.Warpdeck.UseCase.Device;
 
-namespace COSMIC.Warpdeck.Windows
+namespace COSMIC.Warpdeck.Windows.Adapter
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class WarpDeckWindowsApp
+    public class WindowsWarpdeckApp
     {
         private readonly string[] _commandLineArgs;
         public static IContainer Container;
         
 
-        public WarpDeckWindowsApp(string[] commandLineArgs)
+        public WindowsWarpdeckApp(string[] commandLineArgs)
         {
             _commandLineArgs = commandLineArgs;
         }
@@ -34,6 +32,7 @@ namespace COSMIC.Warpdeck.Windows
             builder.RegisterModule<Dependencies.ActionsModule>();
             builder.RegisterModule<Dependencies.PresentationModule>();
             builder.RegisterModule<Dependencies.MonitorsModule>();
+            builder.RegisterModule<Dependencies.ClipboardModule>();
 
             Container = builder.Build();
             WarpdeckApp.Container = Container;

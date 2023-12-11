@@ -2,7 +2,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
-using COSMIC.Warpdeck.Domain.Layer.Exceptions;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property.Rules;
 

@@ -2,22 +2,27 @@
 using System;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Autofac;
+using COSMIC.Warpdeck.Domain.Clipboard;
+using COSMIC.Warpdeck.Windows.Adapter;
 
 namespace COSMIC.Warpdeck.Windows.Forms
 {
     public partial class MainForm : Form
     {
         private readonly WarpdeckApp _app;
-        private readonly WarpDeckWindowsApp _windowsApp;
+        private readonly WindowsWarpdeckApp _windowsWarpdeckApp;
 
         public MainForm(string[] args)
         {
             InitializeComponent();
             _app = new();
-            WarpdeckApp.Container = WarpDeckWindowsApp.Container;
-            _windowsApp = new WarpDeckWindowsApp(args);
-            _windowsApp.RegisterDependencies();
-            _windowsApp.StartPresentation();
+            WarpdeckApp.Container = WindowsWarpdeckApp.Container;
+            _windowsWarpdeckApp = new WindowsWarpdeckApp(args);
+            _windowsWarpdeckApp.RegisterDependencies();
+            _windowsWarpdeckApp.StartPresentation();
+            WindowsWarpdeckApp.Container.Resolve<IClipboardManager>().StartMonitoring();
+            
             _app.LoadDevices();
             Visible = false;
             Hide();
@@ -49,11 +54,6 @@ namespace COSMIC.Warpdeck.Windows.Forms
                 e.Cancel = true;
             }
         }
-
-        private void NotifyIcon_Menu_OpenClipboard_OnClick(object? sender, EventArgs e)
-        {
-            
-            
-        }
+        
     }
 }

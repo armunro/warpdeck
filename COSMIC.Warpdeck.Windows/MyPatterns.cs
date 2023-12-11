@@ -9,21 +9,21 @@ public class MyPatterns
     {
         ClipboardPattern.Create(
             "JIRA-Identifier", @"((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)",
-            (pattern, match) => new []{ new ClipboardSuggestion
+            (pattern, match) => new []{ new ClipSuggestion
             {
                 Type = "BROWSE",
                 Value = "https://jira.ysi.yardi.com/browse/" + match.Value
             }}),
         ClipboardPattern.Create(
             "STELLAR-CaseID", @"\d{6,9}",
-            (pattern, match) => new [] {new ClipboardSuggestion
+            (pattern, match) => new [] {new ClipSuggestion
             {
                 Type = "BROWSE",
                 Value = "https://stellar.yardiapp.com/prod/Pages/stellar_caseaction.aspx?CaseId=" + match.Value
             }}),
         ClipboardPattern.Create(
             "YCRM-TRID", @"TR-\d{6,9}",
-            (pattern, match) => new[]{ new ClipboardSuggestion
+            (pattern, match) => new[]{ new ClipSuggestion
             {
                 Type = "BROWSE",
                 Value = "https://ycrm.yardiapp.com/prod/?trid=" + match.Value
