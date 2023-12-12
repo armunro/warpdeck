@@ -3,9 +3,9 @@ using System.Linq;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
 
-namespace COSMIC.Warpdeck.Monitor.Action
+namespace COSMIC.Warpdeck.Adapter.Monitor
 {
-    public class ActivateLayer : IMonitorRuleAction
+    public class ActivateLayerMonitorAction : IMonitorRuleAction
     {
         private readonly string _deviceId;
         private readonly string _layerIds;
@@ -13,7 +13,7 @@ namespace COSMIC.Warpdeck.Monitor.Action
         private readonly DeactivateDeviceLayerUseCase _deactivateLayer;
         private readonly RedrawDeviceLayersUseCase _redrawDeviceLayersUseCase;
 
-        public ActivateLayer(string deviceId, string layerIds,
+        public ActivateLayerMonitorAction(string deviceId, string layerIds,
             ActivateDeviceLayerUseCase activateLayer,
             DeactivateDeviceLayerUseCase deactivateLayer,
             RedrawDeviceLayersUseCase redrawDeviceLayersUseCase)

@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Configuration;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck.Web.Controllers
 {

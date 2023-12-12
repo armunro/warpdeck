@@ -2,7 +2,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Key.Action;
-using COSMIC.Warpdeck.Domain.Key.Behavior;
 using Microsoft.AspNetCore.Mvc;
 
 namespace COSMIC.Warpdeck.Web.Controllers

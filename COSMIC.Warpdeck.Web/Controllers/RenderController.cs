@@ -5,7 +5,6 @@ using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Extensions;
 using COSMIC.Warpdeck.Helpers;
-using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck.Web.Controllers
 {

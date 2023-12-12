@@ -3,7 +3,6 @@ using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Device.Hardware;
-using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck.Web.Controllers
 {

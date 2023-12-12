@@ -2,11 +2,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using COSMIC.Warpdeck.Domain.Device;
+using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
-using COSMIC.Warpdeck.UseCase.Device;
 
-namespace COSMIC.Warpdeck.Domain.Monitor
+namespace COSMIC.Warpdeck
 {
     public class MonitorManager
     {

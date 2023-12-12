@@ -5,13 +5,13 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
     public class ClipPattern
     {
         public string Name { get; set; }
-        public Regex Regex {get; set;}
+        public string RegexPattern {get; set;}
         public Func<ClipPattern, Match, IEnumerable<ClipSuggestion>> SuggestionFactory;
 
         public List<ClipSuggestion> OfferSuggestions(string? text)
         {
             List<ClipSuggestion> suggestions = new List<ClipSuggestion>();
-            MatchCollection matches = Regex.Matches(text);
+            MatchCollection matches = new Regex(RegexPattern).Matches(text);
             foreach (Match match in matches)
             {
                 IEnumerable<ClipSuggestion> newSuggestions = SuggestionFactory(this, match);
@@ -32,7 +32,7 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
             return new ClipPattern
             {
                 Name = name,
-                Regex = new Regex(pattern),
+                RegexPattern = pattern,
                 SuggestionFactory = suggestionFactory
             };
         }

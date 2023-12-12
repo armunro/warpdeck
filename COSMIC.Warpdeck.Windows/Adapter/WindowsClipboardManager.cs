@@ -11,8 +11,6 @@ namespace COSMIC.Warpdeck.Windows.Adapter
         private readonly SharpClipboard _clipboardMonitor = new();
         private readonly List<Clip> _clips = new();
         
-
-
         public WindowsClipboardManager(IClipPatternReader clipPatternReader)
         {
             Patterns = clipPatternReader.ReadPatterns();
@@ -50,8 +48,6 @@ namespace COSMIC.Warpdeck.Windows.Adapter
                 case SharpClipboard.ContentTypes.Text:
                     var textSuggestions = ProcessCopiedTextSuggestions(args);
                     newClip.Suggestions = textSuggestions;
-                    break;
-                default:
                     break;
             }
 

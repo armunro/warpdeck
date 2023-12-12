@@ -2,7 +2,6 @@ using System.Text.Json;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
-using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck.UseCase.Key
 {

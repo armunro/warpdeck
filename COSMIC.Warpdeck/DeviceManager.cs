@@ -5,17 +5,16 @@ using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Adapter.Hardware;
 using COSMIC.Warpdeck.Adapter.Monitor;
+using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
-using COSMIC.Warpdeck.Domain.Key.Behavior;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor;
-using COSMIC.Warpdeck.Domain.Property.Rules;
 using COSMIC.Warpdeck.Helpers;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 
-namespace COSMIC.Warpdeck.Domain.Device
+namespace COSMIC.Warpdeck
 {
     public class DeviceManager : IDisposable
     {

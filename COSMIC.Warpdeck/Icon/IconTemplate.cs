@@ -3,7 +3,6 @@ using System.IO;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
-using COSMIC.Warpdeck.Domain.Property.Rules;
 using Svg;
 using Svg.Transforms;
 

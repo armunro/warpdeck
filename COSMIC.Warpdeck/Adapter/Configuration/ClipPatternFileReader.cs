@@ -5,7 +5,7 @@ using System.Text.Json;
 using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Configuration;
 
-namespace COSMIC.Warpdeck.Adapter
+namespace COSMIC.Warpdeck.Adapter.Configuration
 {
     public class ClipPatternFileReader : IClipPatternReader,IClipPatternWriter
     {

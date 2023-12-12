@@ -1,7 +1,7 @@
 using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 
-namespace COSMIC.Warpdeck.Monitor.Criteria
+namespace COSMIC.Warpdeck.Adapter.Monitor.Criteria
 {
     public class AppPathMatches : MonitorCondition
     {

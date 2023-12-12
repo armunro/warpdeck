@@ -4,9 +4,7 @@ using Autofac;
 using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Configuration;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.UseCase.DeviceLayer;
 using StreamDeckSharp;
-using COSMIC.Warpdeck.UseCase.Device;
 
 namespace COSMIC.Warpdeck
 {
