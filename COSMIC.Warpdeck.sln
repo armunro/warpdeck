@@ -6,6 +6,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Windows", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Web", "COSMIC.Warpdeck.Web\COSMIC.Warpdeck.Web.csproj", "{5C69E04A-2A79-4C43-81B0-0B5DA8CE889B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Domain", "COSMIC.Warpdeck.Domain\COSMIC.Warpdeck.Domain.csproj", "{0F6E5E69-2369-4123-B650-C32EBC1199F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{5C69E04A-2A79-4C43-81B0-0B5DA8CE889B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5C69E04A-2A79-4C43-81B0-0B5DA8CE889B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5C69E04A-2A79-4C43-81B0-0B5DA8CE889B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

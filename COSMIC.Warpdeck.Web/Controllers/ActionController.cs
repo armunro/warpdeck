@@ -1,10 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using Microsoft.AspNetCore.Mvc;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Key.Action;
 using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
+using Microsoft.AspNetCore.Mvc;
 
 namespace COSMIC.Warpdeck.Web.Controllers
 {

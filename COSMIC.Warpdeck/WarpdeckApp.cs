@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
+using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Configuration;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
@@ -52,6 +53,9 @@ namespace COSMIC.Warpdeck
 
         public void Save()
         {
+            var clipPatternWriter = Container.Resolve<IClipPatternWriter>();
+            clipPatternWriter.WritePatterns(Container.Resolve<IClipboardManager>().Patterns);
+            
             var deviceManager = Container.Resolve<DeviceManager>();
             var deviceWriter = Container.Resolve<IDeviceWriter>();
             foreach (var deviceModel in deviceManager.GetAllDevices())

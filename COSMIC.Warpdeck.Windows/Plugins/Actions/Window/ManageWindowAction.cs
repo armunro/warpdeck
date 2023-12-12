@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Key.Action;
 using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
 using COSMIC.Warpdeck.Windows.Plugins.Actions.Window.Hwnd;

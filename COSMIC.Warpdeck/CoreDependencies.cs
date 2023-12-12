@@ -86,6 +86,7 @@ namespace COSMIC.Warpdeck
                     .SingleInstance();
                 builder.RegisterType<ClipPatternFileReader>()
                     .As<IClipPatternReader>()
+                    .As<IClipPatternWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
                     .SingleInstance();
 

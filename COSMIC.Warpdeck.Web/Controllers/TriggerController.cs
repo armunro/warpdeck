@@ -4,8 +4,6 @@ using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Device;
 using Microsoft.AspNetCore.Mvc;
-using COSMIC.Warpdeck.Domain.Key;
-using COSMIC.Warpdeck.Domain.Key.Behavior;
 
 namespace COSMIC.Warpdeck.Web.Controllers
 {

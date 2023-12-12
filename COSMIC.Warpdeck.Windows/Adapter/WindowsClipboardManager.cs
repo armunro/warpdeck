@@ -10,14 +10,16 @@ namespace COSMIC.Warpdeck.Windows.Adapter
     {
         private readonly SharpClipboard _clipboardMonitor = new();
         private readonly List<Clip> _clips = new();
-        private readonly List<ClipPattern> _patterns = new();
+        
 
 
         public WindowsClipboardManager(IClipPatternReader clipPatternReader)
         {
-            _patterns = clipPatternReader.ReadPatterns();
+            Patterns = clipPatternReader.ReadPatterns();
             _clipboardMonitor.ClipboardChanged += OnClipboardMonitorOnClipboardChanged;
         }
+
+        public List<ClipPattern> Patterns { get; set; }
 
         public List<Clip> GetClips()
         {
@@ -59,7 +61,7 @@ namespace COSMIC.Warpdeck.Windows.Adapter
         private List<ClipSuggestion> ProcessCopiedTextSuggestions(SharpClipboard.ClipboardChangedEventArgs args)
         {
             List<ClipSuggestion> returnSuggestion = new();
-            foreach (ClipPattern pattern in _patterns)
+            foreach (ClipPattern pattern in Patterns)
             {
                 returnSuggestion.AddRange(pattern.OfferSuggestions(args.Content.ToString()));
             }
