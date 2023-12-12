@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Web", "COSM
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "COSMIC.Warpdeck.Domain", "COSMIC.Warpdeck.Domain\COSMIC.Warpdeck.Domain.csproj", "{0F6E5E69-2369-4123-B650-C32EBC1199F0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{4A299C81-65A6-44F1-9899-BED981D8AF2A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,9 @@ Global
 		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0F6E5E69-2369-4123-B650-C32EBC1199F0}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5378F82A-A97B-4B27-907E-E824610157B0} = {4A299C81-65A6-44F1-9899-BED981D8AF2A}
+		{1BF4D14F-0352-4758-ABEE-711069F4774B} = {4A299C81-65A6-44F1-9899-BED981D8AF2A}
 	EndGlobalSection
 EndGlobal
