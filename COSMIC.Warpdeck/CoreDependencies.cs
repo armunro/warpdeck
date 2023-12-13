@@ -9,6 +9,7 @@ using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Key.Action;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Rules;
+using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.Device;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
 using COSMIC.Warpdeck.UseCase.Key;
@@ -83,7 +84,7 @@ namespace COSMIC.Warpdeck
                     .As<IDeviceWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
                     .SingleInstance();
-                builder.RegisterType<ClipPatternFileReader>()
+                builder.RegisterType<ClipPatternFileReaderWriter>()
                     .As<IClipPatternReader>()
                     .As<IClipPatternWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])

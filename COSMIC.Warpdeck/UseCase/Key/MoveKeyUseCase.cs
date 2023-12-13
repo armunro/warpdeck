@@ -1,6 +1,7 @@
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
+using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
 
 namespace COSMIC.Warpdeck.UseCase.Key

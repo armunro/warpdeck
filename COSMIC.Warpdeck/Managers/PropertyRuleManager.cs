@@ -4,7 +4,7 @@ using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
 using COSMIC.Warpdeck.Domain.Property.Rules;
 
-namespace COSMIC.Warpdeck
+namespace COSMIC.Warpdeck.Managers
 {
     public class PropertyRuleManager
     {
@@ -28,6 +28,7 @@ namespace COSMIC.Warpdeck
                 var criteriaParameters = ruleModel.Criteria.Parameters.Select(x => new NamedParameter(x.Key, x.Value))
                     .ToArray();
                 IPropertyRule propertyRule =
+                    //TODO: Cannot move this to Domain package because WarpdeckApp will not be available
                     WarpdeckApp.Container.ResolveNamed<IPropertyRule>(ruleModel.Criteria.Type, criteriaParameters);
                 if (propertyRule.IsMetBy(key.Properties))
                     return ruleModel.TargetTagValue;

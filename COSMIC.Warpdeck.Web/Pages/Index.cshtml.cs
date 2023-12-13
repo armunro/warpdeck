@@ -1,6 +1,7 @@
 using System.Linq;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using COSMIC.Warpdeck.Domain.Device;
+using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck.Web.Pages
 {

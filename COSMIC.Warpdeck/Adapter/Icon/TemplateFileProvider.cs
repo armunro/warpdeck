@@ -1,4 +1,5 @@
 using COSMIC.Warpdeck.Domain.Icon;
+using COSMIC.Warpdeck.Icon;
 using Svg;
 
 namespace COSMIC.Warpdeck.Adapter.Icon

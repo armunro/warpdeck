@@ -1,8 +1,7 @@
-using System;
 using System.Drawing;
 using System.Globalization;
 
-namespace COSMIC.Warpdeck.Helpers
+namespace COSMIC.Warpdeck.Domain.Icon
 {
     public class IconHelpers
     {

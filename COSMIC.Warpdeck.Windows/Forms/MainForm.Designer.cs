@@ -39,7 +39,7 @@ namespace COSMIC.Warpdeck.Windows.Forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Text = "COSMIC.Warpdeck";
-            this.Icon = new Icon("icon.ico");
+            this.Icon = new System.Drawing.Icon("icon.ico");
             this.BackColor = Color.FromArgb(255, 56, 59, 63);
             this.FormClosing += OnFormClosing;
             this.DoubleBuffered = true;

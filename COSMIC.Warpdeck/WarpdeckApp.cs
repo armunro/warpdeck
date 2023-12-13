@@ -4,6 +4,7 @@ using Autofac;
 using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Configuration;
 using COSMIC.Warpdeck.Domain.Device;
+using COSMIC.Warpdeck.Managers;
 using StreamDeckSharp;
 
 namespace COSMIC.Warpdeck
@@ -12,18 +13,17 @@ namespace COSMIC.Warpdeck
     {
         public static IContainer Container;
 
- 
+
         public void LoadClipboardPatterns()
         {
-            
         }
-        
+
         public void LoadDevices()
         {
             IDeviceReader deviceReader = Container.Resolve<IDeviceReader>();
             var deviceManager = Container.Resolve<DeviceManager>();
             DeviceModelList deviceModels = deviceReader.ReadDevices();
-            List<IStreamDeckRefHandle> deckRefHandles = StreamDeck.EnumerateDevices().ToList();
+            IEnumerable<IStreamDeckRefHandle> deckRefHandles = StreamDeck.EnumerateDevices();
             foreach (DeviceModel deviceModel in deviceModels)
             {
                 if (deviceModel.Info.HardwareId != "virtual")
@@ -36,10 +36,8 @@ namespace COSMIC.Warpdeck
                 }
                 else
                 {
-                    deviceManager.BindDevice(deviceModel);
+                    deviceManager.BindVirtualDevice(deviceModel);
                 }
-
-                //Container.Resolve<RedrawDeviceLayersUseCase>().Invoke(deviceModel.DeviceId);
             }
         }
 
@@ -53,7 +51,7 @@ namespace COSMIC.Warpdeck
         {
             var clipPatternWriter = Container.Resolve<IClipPatternWriter>();
             clipPatternWriter.WritePatterns(Container.Resolve<IClipboardManager>().Patterns);
-            
+
             var deviceManager = Container.Resolve<DeviceManager>();
             var deviceWriter = Container.Resolve<IDeviceWriter>();
             foreach (var deviceModel in deviceManager.GetAllDevices())

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Monitor;
+using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.Windows.Adapter;
 using COSMIC.Warpdeck.Windows.Forms;
 

@@ -1,4 +1,5 @@
 using COSMIC.Warpdeck.Domain.Device;
+using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck.UseCase.Device
 {
@@ -18,7 +19,7 @@ namespace COSMIC.Warpdeck.UseCase.Device
 
             //TODO: Should be changed to updatedevicemodel
             _deviceManager.UnbindDevice(deviceId);
-            _deviceManager.BindDevice(device);
+            _deviceManager.BindVirtualDevice(device);
 
         }   
     }

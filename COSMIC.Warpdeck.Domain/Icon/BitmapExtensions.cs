@@ -1,8 +1,7 @@
 using System.Drawing;
 using System.Drawing.Imaging;
-using System.IO;
 
-namespace COSMIC.Warpdeck.Extensions
+namespace COSMIC.Warpdeck.Domain.Icon
 {
     public static class BitmapExtensions
     {

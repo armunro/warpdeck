@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Device.Hardware;
 using COSMIC.Warpdeck.Domain.Layer;
+using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.Device;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
 using COSMIC.Warpdeck.Web.Controllers.Models;

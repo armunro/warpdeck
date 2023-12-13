@@ -1,20 +1,19 @@
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Drawing;
 using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Adapter.Hardware;
-using COSMIC.Warpdeck.Adapter.Monitor;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
-using COSMIC.Warpdeck.Domain.Monitor;
-using COSMIC.Warpdeck.Helpers;
+using COSMIC.Warpdeck.Icon;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 
-namespace COSMIC.Warpdeck
+namespace COSMIC.Warpdeck.Managers
 {
     public class DeviceManager : IDisposable
     {
@@ -32,7 +31,7 @@ namespace COSMIC.Warpdeck
             _cache = cache;
         }
 
-        public void BindDevice(DeviceModel newDevice)
+        public void BindVirtualDevice(DeviceModel newDevice)
         {
             if (newDevice.Info.HardwareId == "virtual")
             {
@@ -50,14 +49,22 @@ namespace COSMIC.Warpdeck
         public void BindDevice(IMacroBoard macroBoard, DeviceModel deviceModel)
         {
             macroBoard.KeyStateChanged += (_, args) => BoardOnKeyStateChanged(deviceModel, args.Key, args.IsDown);
+            macroBoard.ConnectionStateChanged += (_, args) =>
+            {
+                if (args.NewConnectionState)
+                {
+                    macroBoard.SetBrightness(100);
+                    RedrawDevice(deviceModel.DeviceId);
+                }
+            };
             macroBoard.SetBrightness(100);
             Devices.Add(deviceModel.DeviceId, deviceModel);
             Boards.Add(deviceModel.DeviceId, macroBoard);
 
-            _monitorManagers.Add(deviceModel.DeviceId, new MonitorManager());
+
+            
             _propertyRuleManagers.Add(deviceModel.DeviceId, new PropertyRuleManager());
-            _monitorManagers[deviceModel.DeviceId]
-                .AddMonitor(WarpdeckApp.Container.ResolveNamed<IMonitor>(nameof(ActiveWindowMonitor)));
+            
             deviceModel.MonitorRules.Rules.ForEach(x => _monitorManagers[deviceModel.DeviceId].AddMonitorRule(x));
             deviceModel.PropertyRules.ForEach(x => _propertyRuleManagers[deviceModel.DeviceId].Rules.Add(x));
             ClearDevice(deviceModel.DeviceId);

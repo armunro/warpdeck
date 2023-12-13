@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using COSMIC.Warpdeck.Domain.Monitor;
 
-namespace COSMIC.Warpdeck.Adapter.Monitor
+namespace COSMIC.Warpdeck.Windows.Adapter.Monitor
 {
     public class ActiveWindowMonitor : IMonitor
     {

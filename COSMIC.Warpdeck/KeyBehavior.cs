@@ -44,6 +44,7 @@ namespace COSMIC.Warpdeck
 
             try
             {
+                //TODO: Cannot move this to Domain package because WarpdeckApp will not be available
                 KeyAction keyAction = WarpdeckApp.Container.ResolveNamed<KeyAction>(actionModel.Type,
                     new NamedParameter("parameters", actionModel.Parameters));
                 keyAction.StartAction();

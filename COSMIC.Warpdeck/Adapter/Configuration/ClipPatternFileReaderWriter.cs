@@ -7,11 +7,11 @@ using COSMIC.Warpdeck.Domain.Configuration;
 
 namespace COSMIC.Warpdeck.Adapter.Configuration
 {
-    public class ClipPatternFileReader : IClipPatternReader,IClipPatternWriter
+    public class ClipPatternFileReaderWriter : IClipPatternReader,IClipPatternWriter
     {
         private readonly string _configBaseDir;
 
-        public ClipPatternFileReader(string configBaseDir)
+        public ClipPatternFileReaderWriter(string configBaseDir)
         {
             _configBaseDir = configBaseDir;
         }
@@ -26,22 +26,22 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
                     "JIRA-Identifier", @"((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)",
                     (pattern, match) => new []{ new ClipSuggestion
                     {
-                        Type = "BROWSE",
-                        Value = "https://jira.ysi.yardi.com/browse/" + match.Value
+                        ActionName = "BROWSE",
+                        ActionParameters = "https://jira.ysi.yardi.com/browse/" + match.Value
                     }}),
                 ClipPattern.Create(
                     "STELLAR-CaseID", @"\d{6,9}",
                     (pattern, match) => new [] {new ClipSuggestion
                     {
-                        Type = "BROWSE",
-                        Value = "https://stellar.yardiapp.com/prod/Pages/stellar_caseaction.aspx?CaseId=" + match.Value
+                        ActionName = "BROWSE",
+                        ActionParameters = "https://stellar.yardiapp.com/prod/Pages/stellar_caseaction.aspx?CaseId=" + match.Value
                     }}),
                 ClipPattern.Create(
                     "YCRM-TRID", @"TR-\d{6,9}",
                     (pattern, match) => new[]{ new ClipSuggestion
                     {
-                        Type = "BROWSE",
-                        Value = "https://ycrm.yardiapp.com/prod/?trid=" + match.Value
+                        ActionName = "BROWSE",
+                        ActionParameters = "https://ycrm.yardiapp.com/prod/?trid=" + match.Value
                     }})
             };
         }
