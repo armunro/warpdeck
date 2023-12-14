@@ -1,17 +1,17 @@
-namespace COSMIC.Warpdeck.Domain.Key.Action
+namespace COSMIC.Warpdeck.Domain.Button
 {
-    public abstract class KeyAction<TModel> : KeyAction where TModel : ActionModelModel, new()
+    public abstract class ButtonAction<TModel> : ButtonAction where TModel : Button.ButtonActionModel, new()
     {
         public TModel Model { get; set; }
 
    
-        public KeyAction(Dictionary<string, string> parameters)
+        public ButtonAction(Dictionary<string, string> parameters)
         {
             Model = new TModel();
             Model.MapParameters(parameters);
         }
 
-        public KeyAction()
+        public ButtonAction()
         {
             Model = new TModel();
         }
@@ -20,7 +20,7 @@ namespace COSMIC.Warpdeck.Domain.Key.Action
         public abstract override void StartAction();
     }
     
-    public abstract class KeyAction
+    public abstract class ButtonAction
     {
         public abstract void StartAction();
     }

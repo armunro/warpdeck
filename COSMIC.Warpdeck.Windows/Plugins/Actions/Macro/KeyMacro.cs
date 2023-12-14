@@ -1,14 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using COSMIC.Warpdeck.Domain.Key.Action;
-using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Button;
 using WindowsInput;
 using WindowsInput.Events;
 
 namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Macro
 {
-    public class KeyMacro : KeyAction<KeyMacroModelModel>, IHasActionParameters
+    public class KeyMacro : ButtonAction<KeyMacroModel>, IHasActionParameters
     {
         public KeyMacro(Dictionary<string, string> parameters) : base(parameters)
         {
@@ -55,8 +56,8 @@ namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Macro
                 {
                     new ActionParamDescriptor()
                     {
-                        Name = "keys",
-                        FriendlyName = "Keys",
+                        Name = "buttons",
+                        FriendlyName = "Buttons",
                         Description = "The key macro to press"
                     }
                 }
