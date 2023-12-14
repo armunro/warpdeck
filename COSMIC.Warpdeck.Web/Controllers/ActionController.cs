@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using COSMIC.Warpdeck.Domain.Key.Action;
-using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Button;
 using Microsoft.AspNetCore.Mvc;
 
 namespace COSMIC.Warpdeck.Web.Controllers
@@ -15,7 +16,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
         public IActionResult GetActions()
         {
             return Json(WarpDeckFrontend.Container.ComponentRegistry.Registrations
-                .Where(r => typeof(KeyAction).IsAssignableFrom(r.Activator.LimitType))
+                .Where(r => typeof(ButtonAction).IsAssignableFrom(r.Activator.LimitType))
                 .Select(x => x.Activator.LimitType.Name));
         }
         

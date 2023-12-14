@@ -34,9 +34,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
          );
     }
     
-    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, 1, 5);
-    window.keyGrid.registerKeyClickCallback(key_pressed);
-    window.keyGrid.registerKeyHoldCallback(key_held);
+    window.keyGrid = new ButtonGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, 1, 5);
+    window.keyGrid.registerButtonClickCallback(key_pressed);
+    window.keyGrid.registerButtonHoldCallback(key_held);
     window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")
 });
 </script>

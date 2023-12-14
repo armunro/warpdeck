@@ -1,13 +1,14 @@
 using System.Collections.Generic;
 using System.Linq;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Button;
 using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Key;
-using COSMIC.Warpdeck.Domain.Key.Action;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.Layer;
 using COSMIC.Warpdeck.Web.Controllers.Models;
+using ActionModel = COSMIC.Warpdeck.Domain.Action.ActionModel;
 
 namespace COSMIC.Warpdeck.Web.Controllers
 {
@@ -44,7 +45,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
                     layerId);
             summaryModel.Keys = CreateKeySummaryModels(deviceId, layerId,
                 _deviceManager.GetAllDevices().First().Layers.GetLayerById(layerId)
-                    .Keys);
+                    .Buttons);
 
             return summaryModel;
         }
@@ -55,9 +56,9 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return _newLayerUseCase.Invoke(deviceId, layer.LayerId);
         }
 
-        private static KeyResponseModel[] CreateKeySummaryModels(string deviceId, string layerId, KeyMap keys)
+        private static KeyResponseModel[] CreateKeySummaryModels(string deviceId, string layerId, ButtonMap buttons)
         {
-            return keys.Select(x => new KeyResponseModel
+            return buttons.Select(x => new KeyResponseModel
             {
                 Uri = $"/device/{deviceId}/layer/{layerId}/key/{x.Key}",
                 IconUri = $"/render/layer/{layerId}/icon/{x.Key}",

@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Autofac;
-using COSMIC.Warpdeck.Domain.Key.Action;
+using COSMIC.Warpdeck.Domain.Action;
 using Microsoft.AspNetCore.Mvc;
 
 namespace COSMIC.Warpdeck.Web.Controllers
@@ -13,7 +13,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
         public IActionResult GetBehaviorTypeNames()
         {
             return Json(WarpDeckFrontend.Container.ComponentRegistry.Registrations
-                .Where(r => typeof(KeyBehavior).IsAssignableFrom(r.Activator.LimitType))
+                .Where(r => typeof(ButtonBehavior).IsAssignableFrom(r.Activator.LimitType))
                 .Select(x => x.Activator.LimitType.Name));
         }
         

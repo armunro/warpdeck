@@ -1,8 +1,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Icon;
-using COSMIC.Warpdeck.Domain.Key;
 
 namespace COSMIC.Warpdeck.Adapter.Icon
 {
@@ -11,19 +11,19 @@ namespace COSMIC.Warpdeck.Adapter.Icon
     {
         private Dictionary<string, KeyIcon> _cache = new();
         
-        public bool DoesCacheHaveIcon(KeyModel keyModel)
+        public bool DoesCacheHaveIcon(ButtonModel buttonModel)
         {
-            string hash = CreateMD5(JsonSerializer.Serialize(keyModel));
+            string hash = CreateMD5(JsonSerializer.Serialize(buttonModel));
             return _cache.ContainsKey(hash);
         }
 
-        public KeyIcon GetIcon(KeyModel keyModel)
+        public KeyIcon GetIcon(ButtonModel buttonModel)
         {
-            string hash = CreateMD5(JsonSerializer.Serialize(keyModel));
+            string hash = CreateMD5(JsonSerializer.Serialize(buttonModel));
             return _cache[hash];
         }
 
-        public KeyIcon SetIcon(KeyModel model, KeyIcon icon)
+        public KeyIcon SetIcon(ButtonModel model, KeyIcon icon)
         {
             string hash = CreateMD5(JsonSerializer.Serialize(model));
             _cache[hash] = icon;

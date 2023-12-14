@@ -1,4 +1,4 @@
-namespace COSMIC.Warpdeck.Domain.Key.Action.Exceptions
+namespace COSMIC.Warpdeck.Domain.Action.Exceptions
 {
     public class ActionNotFoundException : Exception
     {

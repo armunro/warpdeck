@@ -1,4 +1,4 @@
-namespace COSMIC.Warpdeck.Domain.Key.Action.Descriptors
+namespace COSMIC.Warpdeck.Domain.Action.Descriptors
 {
     public class ActionParamDescriptor
     {

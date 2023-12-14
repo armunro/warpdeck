@@ -6,13 +6,14 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
-using COSMIC.Warpdeck.Domain.Key.Action;
-using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Windows.Plugins.Actions.Window.Hwnd;
 
 namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Window
 {
-    public class ManageWindowAction : KeyAction<WindowManageModelModel>, IHasActionParameters
+    public class ManageWindowAction : ButtonAction<WindowManageModel>, IHasActionParameters
     {
         public ManageWindowAction(Dictionary<string, string> parameters) : base(parameters)
         {

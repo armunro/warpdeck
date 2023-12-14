@@ -14,11 +14,11 @@ namespace COSMIC.Warpdeck.Web.Controllers
         {
             Type warpType = typeName switch
             {
-                nameof(KeyBehavior) => typeof(KeyBehavior),
-                _ => typeof(KeyBehavior)
+                nameof(ButtonBehavior) => typeof(ButtonBehavior),
+                _ => typeof(ButtonBehavior)
             };
 
-            var resolve = (IEnumerable<KeyBehavior>) WarpDeckFrontend.Container.Resolve(typeof(IEnumerable<>).MakeGenericType(warpType));
+            var resolve = (IEnumerable<ButtonBehavior>) WarpDeckFrontend.Container.Resolve(typeof(IEnumerable<>).MakeGenericType(warpType));
             return resolve.Select(x => x.GetType().Name).ToArray();
             
         }

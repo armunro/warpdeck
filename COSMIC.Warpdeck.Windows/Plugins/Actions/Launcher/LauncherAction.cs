@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using COSMIC.Warpdeck.Domain.Key.Action;
-using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Button;
 
 namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Launcher
 {
-    public class LauncherAction : KeyAction<LauncherActionModelModel>, IHasActionParameters
+    public class LauncherAction : ButtonAction<LauncherButtonActionModel>, IHasActionParameters
     {
         [DllImport("user32.dll")]
         static extern bool SetForegroundWindow(IntPtr hWnd);

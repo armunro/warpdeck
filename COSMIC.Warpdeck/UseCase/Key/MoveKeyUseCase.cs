@@ -1,5 +1,5 @@
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
@@ -21,17 +21,17 @@ namespace COSMIC.Warpdeck.UseCase.Key
         {
             LayerModel layer = _deviceManager.GetDevice(deviceId).Layers[layerId];
 
-            KeyModel movingKey = layer.Keys[keyId];
-            layer.Keys.Remove(keyId);
-            if (layer.Keys.ContainsKey(newKeyId)) //Swap keys if destination has key already
+            ButtonModel movingButton = layer.Buttons[keyId];
+            layer.Buttons.Remove(keyId);
+            if (layer.Buttons.ContainsKey(newKeyId)) //Swap buttons if destination has button already
             {
-                KeyModel oldKey = layer.Keys[newKeyId];
-                layer.Keys.Remove(newKeyId);
-                layer.Keys.Add(keyId, oldKey);
+                ButtonModel oldButton = layer.Buttons[newKeyId];
+                layer.Buttons.Remove(newKeyId);
+                layer.Buttons.Add(keyId, oldButton);
             }
             _redrawDeviceLayersUseCase.Invoke(deviceId);
 
-            layer.Keys.Add(newKeyId, movingKey);
+            layer.Buttons.Add(newKeyId, movingButton);
         }
     }
 }

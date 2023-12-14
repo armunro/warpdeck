@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using COSMIC.Warpdeck.Domain.Key;
+using COSMIC.Warpdeck.Domain.Button;
 
 namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Window
 {
@@ -11,7 +11,7 @@ namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Window
         Maximized
     }
 
-    public class WindowManageModelModel : ActionModelModel
+    public class WindowManageModel : ButtonActionModel
     {
         public string ProcessName { get; set; }
         public string WindowTitle { get; set; }

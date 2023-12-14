@@ -1,6 +1,6 @@
+using COSMIC.Warpdeck.Domain.Button;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck.Web.Pages
@@ -8,7 +8,7 @@ namespace COSMIC.Warpdeck.Web.Pages
     public class Layer : PageModel
     {
         private readonly DeviceManager _deviceManager;
-        public KeyMap LayerKeys { get; set; }
+        public ButtonMap LayerButtons { get; set; }
         public string LayerId { get; set; }
         public string DeviceId { get; set; }
 
@@ -24,7 +24,7 @@ namespace COSMIC.Warpdeck.Web.Pages
             LayerId = RouteData.Values["layerId"]?.ToString();
             DeviceId = RouteData.Values["deviceId"]?.ToString();
 
-            LayerKeys = _deviceManager.GetDevice(DeviceId).Layers[LayerId].Keys;
+            LayerButtons = _deviceManager.GetDevice(DeviceId).Layers[LayerId].Buttons;
         }
     }
 }

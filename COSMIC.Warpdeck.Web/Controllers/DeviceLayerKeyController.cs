@@ -1,8 +1,8 @@
 using System;
 using System.Text.Json;
+using COSMIC.Warpdeck.Domain.Button;
 using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.DeviceLayer;
@@ -11,7 +11,7 @@ using COSMIC.Warpdeck.UseCase.Key;
 namespace COSMIC.Warpdeck.Web.Controllers
 {
     [ApiController]
-    [Route("api/device/{deviceId}/layer/{layerId}/key")]
+    [Route("api/device/{deviceId}/layer/{layerId}/button")]
     public class DeviceLayerKeyController : Controller
     {
         private readonly DeviceManager _deviceManager;
@@ -35,7 +35,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
 
         [HttpPost]
         public IActionResult CreateLayerKey(string deviceId, string layerId,
-            [FromBody] CreateLayerKeyRequestModel model)
+            [FromBody] CreateLayerButtonRequestModel model)
         {
             _createDeviceLayerKeyUseCase.Invoke(deviceId, layerId, model);
             return Accepted();
@@ -45,8 +45,8 @@ namespace COSMIC.Warpdeck.Web.Controllers
         public IActionResult GetLayerKeys(string deviceId, string layerId)
         {
             if (layerId == "active")
-                return Json(_deviceManager.GetDevice(deviceId).KeyStates);
-            return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Keys);
+                return Json(_deviceManager.GetDevice(deviceId).ButtonStates);
+            return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons);
         }
 
         [HttpGet, Route("{keyId:int}")]
@@ -64,15 +64,15 @@ namespace COSMIC.Warpdeck.Web.Controllers
 
             if (layerId == "active")
             {
-                if (!device.KeyStates.IsKeyMapped(keyId))
+                if (!device.ButtonStates.IsKeyMapped(keyId))
                     return NotFound();
-                return Json(device.KeyStates[keyId]);
+                return Json(device.ButtonStates[keyId]);
             }
             else
             {
-                if (!device.Layers[layerId].Keys.IsKeyMapped(keyId))
+                if (!device.Layers[layerId].Buttons.IsKeyMapped(keyId))
                     return NotFound();
-                return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Keys[keyId],
+                return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId],
                     new JsonSerializerOptions() { WriteIndented = true });    
             }
                 
@@ -80,12 +80,12 @@ namespace COSMIC.Warpdeck.Web.Controllers
         }
 
         [HttpPut, Route("{keyId:int}")]
-        public IActionResult SetLayerKey(string deviceId, string layerId, int keyId, [FromBody] KeyModel updatedKey)
+        public IActionResult SetLayerKey(string deviceId, string layerId, int keyId, [FromBody] ButtonModel updatedButton)
         {
-            _deviceManager.GetDevice(deviceId).Layers[layerId].Keys[keyId] = updatedKey;
-            _deviceManager.GenerateKeyIcon(updatedKey, deviceId, true);
+            _deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId] = updatedButton;
+            _deviceManager.GenerateKeyIcon(updatedButton, deviceId, true);
             _redrawDeviceLayersUseCase.Invoke(deviceId);
-            return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Keys[keyId]);
+            return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId]);
         }
 
         [HttpGet, Route("{keyId:int}/move/{newKeyId:int}")]
@@ -108,7 +108,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
         public IActionResult DeleteLayerKey(string deviceId, string layerId, int keyId)
         {
             LayerModel layer = _deviceManager.GetDevice(deviceId).Layers[layerId];
-            layer.Keys.Remove(keyId);
+            layer.Buttons.Remove(keyId);
             return Ok();
         }
     }

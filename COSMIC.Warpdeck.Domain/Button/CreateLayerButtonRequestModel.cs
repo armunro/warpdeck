@@ -1,8 +1,8 @@
-using COSMIC.Warpdeck.Domain.Key.Behavior;
+using COSMIC.Warpdeck.Domain.Button.Behavior;
 
-namespace COSMIC.Warpdeck.Domain.Key
+namespace COSMIC.Warpdeck.Domain.Button
 {
-    public class CreateLayerKeyRequestModel
+    public class CreateLayerButtonRequestModel
     {
         public int KeyId { get; set; }
         public BehaviorModel Behavior { get; set; }

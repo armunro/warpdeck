@@ -5,9 +5,10 @@ using System.Drawing;
 using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Adapter.Hardware;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor;
 using OpenMacroBoard.SDK;
@@ -98,9 +99,9 @@ namespace COSMIC.Warpdeck.Managers
                 .ActiveLayers
                 .OrderBy(x => x.Value.Level)
                 .Select(x => x.Key);
-            KeyBehavior behavior = WarpdeckApp.Container.Resolve<KeyBehavior>();
+            ButtonBehavior behavior = WarpdeckApp.Container.Resolve<ButtonBehavior>();
 
-            behavior.FireEvent(Devices[deviceId].KeyStates[keyId].Behavior, action);
+            behavior.FireEvent(Devices[deviceId].ButtonStates[keyId].Behavior, action);
         }
 
 
@@ -109,9 +110,9 @@ namespace COSMIC.Warpdeck.Managers
             _timer.UnregisterAllRepeatable();
             DeviceModel device = Devices[deviceId];
             LayerModel layer = device.Layers[layerId];
-            foreach (var (keyId, keyModel) in layer.Keys)
+            foreach (var (keyId, keyModel) in layer.Buttons)
             {
-                device.KeyStates.UpdateKeyState(keyId, keyModel);
+                device.ButtonStates.UpdateKeyState(keyId, keyModel);
                 Boards[deviceId].SetKeyBitmap(keyId, KeyBitmap.Create.FromBitmap(GenerateKeyIcon(keyModel, deviceId)));
             }
         }
@@ -121,9 +122,9 @@ namespace COSMIC.Warpdeck.Managers
             try
             {
                 var keyModels = device.ActiveLayers
-                    .Where(x => x.Value.Keys.ContainsKey(keyId))
+                    .Where(x => x.Value.Buttons.ContainsKey(keyId))
                     .OrderBy(x => x.Value.Level)
-                    .Select(x => x.Value.Keys[keyId]);
+                    .Select(x => x.Value.Buttons[keyId]);
                 if (!keyModels.Any())
                     return;
                 var key = keyModels.Last();
@@ -133,8 +134,8 @@ namespace COSMIC.Warpdeck.Managers
                 else
                     key.History.LastUp = DateTime.Now;
 
-                string behaviorTypeName = device.KeyStates[keyId].Behavior.Type;
-                KeyBehavior behavior = WarpdeckApp.Container.Resolve<KeyBehavior>();
+                string behaviorTypeName = device.ButtonStates[keyId].Behavior.Type;
+                ButtonBehavior behavior = WarpdeckApp.Container.Resolve<ButtonBehavior>();
 
                 if (isDown)
                     behavior.OnKeyDown(device, keyId, key.Behavior, key.History);
@@ -178,17 +179,17 @@ namespace COSMIC.Warpdeck.Managers
         }
 
 
-        public Bitmap GenerateKeyIcon(KeyModel keyModel, string deviceId, bool skipCache = false)
+        public Bitmap GenerateKeyIcon(ButtonModel buttonModel, string deviceId, bool skipCache = false)
         {
-            if (keyModel == null)
+            if (buttonModel == null)
                 return IconHelpers.DrawBlankKeyIcon(144, 144);
 
-            if (_cache.DoesCacheHaveIcon(keyModel) && !skipCache) return _cache.GetIcon(keyModel).ToBitmap();
+            if (_cache.DoesCacheHaveIcon(buttonModel) && !skipCache) return _cache.GetIcon(buttonModel).ToBitmap();
 
             IconTemplate template = WarpdeckApp.Container.Resolve<IconTemplate>();
             template.PropertyRule = _propertyRuleManagers[deviceId];
 
-            return _cache.SetIcon(keyModel, template.GenerateIcon(keyModel)).ToBitmap();
+            return _cache.SetIcon(buttonModel, template.GenerateIcon(buttonModel)).ToBitmap();
         }
 
 

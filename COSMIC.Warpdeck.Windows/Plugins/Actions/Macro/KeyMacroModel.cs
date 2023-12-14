@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using COSMIC.Warpdeck.Domain.Key;
+using COSMIC.Warpdeck.Domain.Button;
 
 namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Macro
 {
-    public class KeyMacroModelModel : ActionModelModel
+    public class KeyMacroModel : ButtonActionModel
     {
         public string Keys { get; set; }
 

@@ -1,9 +1,9 @@
 using System;
 using System.Drawing;
+using COSMIC.Warpdeck.Domain.Button;
 using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck.Web.Controllers
@@ -26,10 +26,10 @@ namespace COSMIC.Warpdeck.Web.Controllers
 
             try
             {
-                KeyModel keyInput = null;
-                if (_deviceManager.GetDevice(deviceId).KeyStates.IsKeyMapped(keyId))
-                    keyInput = _deviceManager.GetDevice(deviceId).KeyStates[keyId];
-                icon = _deviceManager.GenerateKeyIcon(keyInput, deviceId);
+                ButtonModel buttonInput = null;
+                if (_deviceManager.GetDevice(deviceId).ButtonStates.IsKeyMapped(keyId))
+                    buttonInput = _deviceManager.GetDevice(deviceId).ButtonStates[keyId];
+                icon = _deviceManager.GenerateKeyIcon(buttonInput, deviceId);
             }
             catch (Exception)
             {
@@ -45,13 +45,13 @@ namespace COSMIC.Warpdeck.Web.Controllers
             try
             {
                 DeviceModel device = _deviceManager.GetDevice(deviceId);
-                KeyMap keyMap = device.Layers.GetLayerById(layerId).Keys;
+                ButtonMap buttonMap = device.Layers.GetLayerById(layerId).Buttons;
 
                 
-                if (keyMap.ContainsKey(keyId))
+                if (buttonMap.ContainsKey(keyId))
                 {
-                    KeyModel key = keyMap[keyId];
-                    icon = _deviceManager.GenerateKeyIcon(key, deviceId);
+                    ButtonModel button = buttonMap[keyId];
+                    icon = _deviceManager.GenerateKeyIcon(button, deviceId);
                 }
                 else
                 {

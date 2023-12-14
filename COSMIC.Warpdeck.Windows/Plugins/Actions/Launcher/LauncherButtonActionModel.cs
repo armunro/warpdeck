@@ -1,9 +1,9 @@
 using System.Collections.Generic;
-using COSMIC.Warpdeck.Domain.Key;
+using COSMIC.Warpdeck.Domain.Button;
 
 namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Launcher
 {
-    public class LauncherActionModelModel : ActionModelModel
+    public class LauncherButtonActionModel : ButtonActionModel
     {
         public string AppPath { get; set; }
         public string ProcessName { get; set; }

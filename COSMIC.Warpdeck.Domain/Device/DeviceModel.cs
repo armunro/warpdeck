@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
-using COSMIC.Warpdeck.Domain.Key;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property.Rules;
@@ -16,8 +16,10 @@ namespace COSMIC.Warpdeck.Domain.Device
         [JsonIgnore] public LayerMap Layers { get; set; } = new();
         [JsonIgnore] public MonitorRuleList MonitorRules { get; set; }
         [JsonIgnore] public LayerMap ActiveLayers { get; set; } = new();
-        [JsonIgnore] public KeyMap KeyStates { get; set; } = new();
+        [JsonIgnore] public ButtonMap ButtonStates { get; set; } = new();
         [JsonIgnore] public PropertyRuleModelList PropertyRules { get; set; } = new();
+        
+        
         
 
         public bool IsLayerActive(string layerId) => ActiveLayers.ContainsKey(layerId);
@@ -37,9 +39,9 @@ namespace COSMIC.Warpdeck.Domain.Device
                 ActiveLayers.Remove(layerId);
             }
 
-            foreach (int key in Layers[layerId].Keys.Keys)
+            foreach (int key in Layers[layerId].Buttons.Keys)
             {
-                KeyStates[key] = null;
+                ButtonStates[key] = null;
             }
         }
     }

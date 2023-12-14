@@ -1,4 +1,4 @@
-namespace COSMIC.Warpdeck.Domain.Key
+namespace COSMIC.Warpdeck.Domain.Action
 {
     public class ActionTimer
     {

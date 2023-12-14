@@ -1,6 +1,6 @@
-using COSMIC.Warpdeck.Domain.Key.Action.Descriptors;
+using COSMIC.Warpdeck.Domain.Action.Descriptors;
 
-namespace COSMIC.Warpdeck.Domain.Key.Action
+namespace COSMIC.Warpdeck.Domain.Action
 {
     public interface IHasActionParameters
     {

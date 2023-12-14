@@ -1,6 +1,6 @@
-namespace COSMIC.Warpdeck.Domain.Key
+namespace COSMIC.Warpdeck.Domain.Button
 {
-    public class KeyHistoryModel
+    public class ButtonHistoryModel
     {
         public DateTime LastDown { get; set; }
         public DateTime LastUp { get; set; }

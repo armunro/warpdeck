@@ -1,6 +1,6 @@
 using System.Text.Json;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Managers;
 
@@ -19,8 +19,8 @@ namespace COSMIC.Warpdeck.UseCase.Key
         {
             LayerModel layer = _deviceManager.GetDevice(deviceId).Layers[layerId];
 
-            var clone = JsonSerializer.Deserialize<KeyModel>(JsonSerializer.Serialize(layer.Keys[keyId]));
-            layer.Keys.Add(newKeyId, clone);
+            var clone = JsonSerializer.Deserialize<ButtonModel>(JsonSerializer.Serialize(layer.Buttons[keyId]));
+            layer.Buttons.Add(newKeyId, clone);
         }
     }
 }

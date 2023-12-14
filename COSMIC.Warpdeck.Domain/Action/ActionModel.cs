@@ -1,7 +1,7 @@
 
 
 // ReSharper disable UnusedAutoPropertyAccessor.Global
-namespace COSMIC.Warpdeck.Domain.Key.Action
+namespace COSMIC.Warpdeck.Domain.Action
 {
    
     public class ActionModel

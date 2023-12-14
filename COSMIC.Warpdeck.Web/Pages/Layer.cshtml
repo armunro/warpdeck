@@ -52,11 +52,11 @@
             </div>
             <div class="card" id="createKeyCard">
                 <div class="card-header">
-                    New Key
+                    New Button
                 </div>
                 <div class="card-body">
                     <form class="form">
-                        <button id="newKey" type="button" class="btn btn-primary">New Key</button>
+                        <button id="newKey" type="button" class="btn btn-primary">New Button</button>
                     </form>
                 </div>
             </div>
@@ -66,6 +66,6 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    document.editLayer = new EditLayer(new KeyGrid("keymapGrid", "@Model.DeviceId","@Model.LayerId"));  
+    document.editLayer = new EditLayer(new ButtonGrid("keymapGrid", "@Model.DeviceId","@Model.LayerId"));  
 });
 </script>

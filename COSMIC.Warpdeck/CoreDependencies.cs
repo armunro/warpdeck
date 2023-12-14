@@ -3,10 +3,10 @@ using Autofac;
 using COSMIC.Warpdeck.Adapter;
 using COSMIC.Warpdeck.Adapter.Configuration;
 using COSMIC.Warpdeck.Adapter.PropertyRule;
+using COSMIC.Warpdeck.Domain.Action;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Configuration;
 using COSMIC.Warpdeck.Domain.Device;
-using COSMIC.Warpdeck.Domain.Key;
-using COSMIC.Warpdeck.Domain.Key.Action;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Rules;
 using COSMIC.Warpdeck.Managers;
@@ -25,8 +25,8 @@ namespace COSMIC.Warpdeck
             protected override void Load(ContainerBuilder builder)
             {
                 
-                builder.RegisterType<KeyBehavior>()
-                    .As<KeyBehavior>()
+                builder.RegisterType<ButtonBehavior>()
+                    .As<ButtonBehavior>()
                     .As<IHasProperties>()
                     .As<IHasActions>().InstancePerDependency();
                 base.Load(builder);

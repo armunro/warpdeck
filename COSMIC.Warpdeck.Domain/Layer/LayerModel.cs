@@ -1,5 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
-using COSMIC.Warpdeck.Domain.Key;
+using COSMIC.Warpdeck.Domain.Button;
 
 namespace COSMIC.Warpdeck.Domain.Layer
 {
@@ -8,7 +8,7 @@ namespace COSMIC.Warpdeck.Domain.Layer
     public class LayerModel
     {
         public string LayerId { get; set; }
-        public  KeyMap Keys { get; set; } = new();
+        public  ButtonMap Buttons { get; set; } = new();
         public int Level { get; set; } = 0;
     }
 }

@@ -1,7 +1,7 @@
 using System.Drawing;
 using System.IO;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Icon;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
 using COSMIC.Warpdeck.Managers;
@@ -17,7 +17,7 @@ namespace COSMIC.Warpdeck
 
         //TODO: Decouple this from the property rule manager so it can isolated to the domain
         public PropertyRuleManager PropertyRule { get; set; }
-        protected abstract void DrawIcon(KeyModel key);
+        protected abstract void DrawIcon(ButtonModel button);
         public abstract PropertyDescriptorSet SpecifyProperties();
 
         public IconTemplate(ITemplateDocumentProvider templateDocumentProvider, PropertyRuleManager propertyRuleManager)
@@ -26,10 +26,10 @@ namespace COSMIC.Warpdeck
             PropertyRule = propertyRuleManager;
         }
 
-        public KeyIcon GenerateIcon(KeyModel keyModel)
+        public KeyIcon GenerateIcon(ButtonModel buttonModel)
         {
             Document = _templateDocumentProvider.ProvideTemplateDocument();
-            DrawIcon(keyModel);
+            DrawIcon(buttonModel);
             Bitmap export = new Bitmap(244, 244);
             Graphics graphics = Graphics.FromImage(export);
             Document.Draw(graphics);

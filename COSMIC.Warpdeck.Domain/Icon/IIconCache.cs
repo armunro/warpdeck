@@ -1,12 +1,12 @@
-using COSMIC.Warpdeck.Domain.Key;
+using COSMIC.Warpdeck.Domain.Button;
 
 namespace COSMIC.Warpdeck.Domain.Icon
 {
     public interface IIconCache
     {
-        bool DoesCacheHaveIcon(KeyModel keyModel);
-        KeyIcon GetIcon(KeyModel keyModel);
-        KeyIcon SetIcon(KeyModel model, KeyIcon icon);
+        bool DoesCacheHaveIcon(ButtonModel buttonModel);
+        KeyIcon GetIcon(ButtonModel buttonModel);
+        KeyIcon SetIcon(ButtonModel model, KeyIcon icon);
         void Clear();
     }
 }

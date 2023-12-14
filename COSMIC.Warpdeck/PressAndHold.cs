@@ -1,6 +1,6 @@
 using System.IO;
+using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Icon;
-using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
 using COSMIC.Warpdeck.Managers;
 
@@ -24,7 +24,7 @@ namespace COSMIC.Warpdeck
             .WithDefault("#FFF");
 
         public static PropertyDescriptor Text = PropertyDescriptor.Text("text")
-            .Named("Key Text")
+            .Named("Button Text")
             .Described("The text that will display on the icon")
             .WithDefault("#FFF");
 
@@ -48,20 +48,20 @@ namespace COSMIC.Warpdeck
         }
 
 
-        protected override void DrawIcon(KeyModel key)
+        protected override void DrawIcon(ButtonModel button)
         {
-            string svgPath = Path.Combine(@"C:\Atom\Resources\Icons", PropertyRule.GetProperty(key, GraphicPath));
+            string svgPath = Path.Combine(@"C:\Atom\Resources\Icons", PropertyRule.GetProperty(button, GraphicPath));
 
-            string graphicColorCalc = PropertyRule.GetProperty(key, AccentColor);
-            if (key.Properties.HasProperty(GraphicColor.Key))
+            string graphicColorCalc = PropertyRule.GetProperty(button, AccentColor);
+            if (button.Properties.HasProperty(GraphicColor.Key))
             {
-                graphicColorCalc = PropertyRule.GetProperty(key, GraphicColor);
+                graphicColorCalc = PropertyRule.GetProperty(button, GraphicColor);
             }
 
 
             AddGraphic("__wd_pb_glyph", svgPath,IconHelpers.GetColorFromHex(graphicColorCalc));
-            SetFill("__wd_pb_accent_line", IconHelpers.GetColorFromHex(PropertyRule.GetProperty(key, AccentColor)));
-            SetElementText("__wd_pb_text", PropertyRule.GetProperty(key, Text),IconHelpers.GetColorFromHex("#FFFFFF"));
+            SetFill("__wd_pb_accent_line", IconHelpers.GetColorFromHex(PropertyRule.GetProperty(button, AccentColor)));
+            SetElementText("__wd_pb_text", PropertyRule.GetProperty(button, Text),IconHelpers.GetColorFromHex("#FFFFFF"));
         }
     }
 }
