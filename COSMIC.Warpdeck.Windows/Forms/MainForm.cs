@@ -4,7 +4,9 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Clipboard;
+using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.Windows.Adapter;
+using COSMIC.Warpdeck.Windows.Adapter.Monitor;
 
 namespace COSMIC.Warpdeck.Windows.Forms
 {
@@ -22,6 +24,7 @@ namespace COSMIC.Warpdeck.Windows.Forms
             _windowsWarpdeckApp.RegisterDependencies();
             _windowsWarpdeckApp.StartPresentation();
             WindowsWarpdeckApp.Container.Resolve<IClipboardManager>().StartMonitoring();
+            WarpdeckApp.Container.Resolve<DeviceManager>().AddMonitor(new ActiveWindowMonitor());
             
             _app.LoadDevices();
             Visible = false;

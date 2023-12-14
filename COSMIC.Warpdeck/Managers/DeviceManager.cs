@@ -9,6 +9,7 @@ using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
+using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Icon;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
@@ -19,7 +20,7 @@ namespace COSMIC.Warpdeck.Managers
     {
         private readonly ActionTimer _timer;
         private readonly IIconCache _cache;
-        private readonly Dictionary<string, MonitorManager> _monitorManagers = new();
+        private readonly MonitorManager _monitorManager = new();
         private readonly Dictionary<string, PropertyRuleManager> _propertyRuleManagers = new();
         private Dictionary<string, DeviceModel> Devices { get; } = new();
         private Dictionary<string, IMacroBoard> Boards { get; } = new();
@@ -62,10 +63,10 @@ namespace COSMIC.Warpdeck.Managers
             Boards.Add(deviceModel.DeviceId, macroBoard);
 
 
-            
             _propertyRuleManagers.Add(deviceModel.DeviceId, new PropertyRuleManager());
-            
-            deviceModel.MonitorRules.Rules.ForEach(x => _monitorManagers[deviceModel.DeviceId].AddMonitorRule(x));
+
+
+            deviceModel.MonitorRules.Rules.ForEach(x => _monitorManager.AddMonitorRule(x));
             deviceModel.PropertyRules.ForEach(x => _propertyRuleManagers[deviceModel.DeviceId].Rules.Add(x));
             ClearDevice(deviceModel.DeviceId);
         }
@@ -80,9 +81,6 @@ namespace COSMIC.Warpdeck.Managers
                 Boards[deviceId].Dispose();
                 Boards.Remove(deviceId);
             }
-
-            if (_monitorManagers.ContainsKey(deviceId))
-                _monitorManagers.Remove(deviceId);
         }
 
 
@@ -98,6 +96,7 @@ namespace COSMIC.Warpdeck.Managers
                 ClearDevice(devicesKey);
             }
         }
+
         public void FireActionOnActiveDevice(string deviceId, int keyId, string action)
         {
             var orderedLayers = Devices[deviceId]
@@ -105,12 +104,11 @@ namespace COSMIC.Warpdeck.Managers
                 .OrderBy(x => x.Value.Level)
                 .Select(x => x.Key);
             KeyBehavior behavior = WarpdeckApp.Container.Resolve<KeyBehavior>();
-            
+
             behavior.FireEvent(Devices[deviceId].KeyStates[keyId].Behavior, action);
-            
         }
 
-        
+
         private void DrawLayerOnBoard(string layerId, string deviceId)
         {
             _timer.UnregisterAllRepeatable();
@@ -123,7 +121,6 @@ namespace COSMIC.Warpdeck.Managers
             }
         }
 
-        //TODO: START here for injecting click and hold events 
         private void BoardOnKeyStateChanged(DeviceModel device, int keyId, bool isDown)
         {
             try
@@ -144,12 +141,10 @@ namespace COSMIC.Warpdeck.Managers
                 string behaviorTypeName = device.KeyStates[keyId].Behavior.Type;
                 KeyBehavior behavior = WarpdeckApp.Container.Resolve<KeyBehavior>();
 
-
                 if (isDown)
                     behavior.OnKeyDown(device, keyId, key.Behavior, key.History);
                 else
                     behavior.OnKeyUp(device, keyId, key.Behavior, key.History);
-                
             }
             catch (Exception e)
             {
@@ -167,7 +162,11 @@ namespace COSMIC.Warpdeck.Managers
             Boards.Clear();
             Devices.Clear();
             _propertyRuleManagers.Clear();
-            _monitorManagers.Clear();
+        }
+
+        public void AddMonitor(IMonitor monitor)
+        {
+            _monitorManager.AddMonitor(monitor);
         }
 
         public void RedrawDevice(string deviceId)
@@ -204,10 +203,8 @@ namespace COSMIC.Warpdeck.Managers
                 return Devices[deviceId];
             throw new DeviceNotFoundFoundException(deviceId);
         }
-        
+
         public IEnumerable<DeviceModel> GetAllDevices() => Devices.Values;
         public void RedrawDevices() => Devices.Keys.ToList().ForEach(RedrawDevice);
-
-        
     }
 }

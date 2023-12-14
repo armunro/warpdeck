@@ -16,6 +16,8 @@ namespace COSMIC.Warpdeck.Adapter.PropertyRule
 
         public bool IsMetBy(PropertyLookup properties)
         {
+            if(!properties.ContainsKey(_sourceTagName))
+                return false;
             string tag = properties[_sourceTagName];
             if (tag == null)
                 return false;

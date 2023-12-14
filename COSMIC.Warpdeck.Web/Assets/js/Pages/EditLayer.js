@@ -25,7 +25,7 @@ class EditLayer {
 
     onAddPropertyClick() {
         this.activeModel.Properties[this.addPropertyNameSelect.value] = this.addPropertyValueTextBox.value;
-        let keyPropertiesPromise = this.getProperties("KeyBehavior", this.activeModel.Behavior["Type"]);
+        let keyPropertiesPromise = this.getProperties("Object", "KeyBehavior");
         let iconPropertiesPromise = this.getProperties("IconTemplate", this.activeModel.Behavior["Type"]);
         Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
             this.bindPropertyEditors(this.activeModel, properties);
@@ -135,7 +135,7 @@ class EditLayer {
             .then(keyModel => {
                 this.activeModel = keyModel;
                 this.bindBehavior(keyModel);
-                let keyPropertiesPromise = this.getProperties("KeyBehavior", keyModel.Behavior["Type"]);
+                let keyPropertiesPromise = this.getProperties("Object", "KeyBehavior");
                 let iconPropertiesPromise = this.getProperties("IconTemplate", keyModel.Behavior["Type"]);
                 Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
                     this.bindPropertyEditors(keyModel, properties);
@@ -279,7 +279,7 @@ class EditLayer {
         propertyGroupElem.innerHTML =
             "<div class=\"card mb-2\">\n" +
             "    <div class=\"card-header\">\n" +
-            "        " + propertyGroup.friendlyName + "\n" +
+            "        Properties\n" +
             "    </div>\n" +
             "    <div class=\"card-body\">\n" +
             "    </div>\n" +
