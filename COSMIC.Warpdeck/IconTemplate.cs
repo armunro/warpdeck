@@ -8,7 +8,7 @@ using COSMIC.Warpdeck.Managers;
 using Svg;
 using Svg.Transforms;
 
-namespace COSMIC.Warpdeck.Icon
+namespace COSMIC.Warpdeck
 {
     public abstract class IconTemplate : IHasProperties
     {

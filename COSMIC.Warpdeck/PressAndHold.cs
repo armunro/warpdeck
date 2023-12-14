@@ -2,7 +2,6 @@ using System.IO;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
-using COSMIC.Warpdeck.Icon;
 using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck

@@ -10,7 +10,6 @@ using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor;
-using COSMIC.Warpdeck.Icon;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 
@@ -24,7 +23,6 @@ namespace COSMIC.Warpdeck.Managers
         private readonly Dictionary<string, PropertyRuleManager> _propertyRuleManagers = new();
         private Dictionary<string, DeviceModel> Devices { get; } = new();
         private Dictionary<string, IMacroBoard> Boards { get; } = new();
-
 
         public DeviceManager(ActionTimer timer, IIconCache cache)
         {
@@ -62,10 +60,7 @@ namespace COSMIC.Warpdeck.Managers
             Devices.Add(deviceModel.DeviceId, deviceModel);
             Boards.Add(deviceModel.DeviceId, macroBoard);
 
-
             _propertyRuleManagers.Add(deviceModel.DeviceId, new PropertyRuleManager());
-
-
             deviceModel.MonitorRules.Rules.ForEach(x => _monitorManager.AddMonitorRule(x));
             deviceModel.PropertyRules.ForEach(x => _propertyRuleManagers[deviceModel.DeviceId].Rules.Add(x));
             ClearDevice(deviceModel.DeviceId);

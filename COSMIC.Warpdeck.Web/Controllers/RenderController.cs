@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Key;
-using COSMIC.Warpdeck.Icon;
 using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck.Web.Controllers

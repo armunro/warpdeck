@@ -10,7 +10,6 @@ using COSMIC.Warpdeck.Domain.Key.Action;
 using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property;
-using COSMIC.Warpdeck.Icon;
 using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.UseCase.Device;
 using COSMIC.Warpdeck.UseCase.Hardware;
