@@ -56,7 +56,7 @@ namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Macro
                 {
                     new ActionParamDescriptor()
                     {
-                        Name = "buttons",
+                        Name = "keys",
                         FriendlyName = "Buttons",
                         Description = "The key macro to press"
                     }

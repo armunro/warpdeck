@@ -28,8 +28,8 @@ namespace COSMIC.Warpdeck.Managers
                 var criteriaParameters = ruleModel.Criteria.Parameters.Select(x => new NamedParameter(x.Key, x.Value))
                     .ToArray();
                 IPropertyRule propertyRule =
-                    //TODO: Cannot move this to Domain package because WarpdeckApp will not be available
-                    WarpdeckApp.Container.ResolveNamed<IPropertyRule>(ruleModel.Criteria.Type, criteriaParameters);
+                    //TODO: Cannot move this to Domain package because WarpdeckAppContext will not be available
+                    WarpdeckAppContext.Container.ResolveNamed<IPropertyRule>(ruleModel.Criteria.Type, criteriaParameters);
                 if (propertyRule.IsMetBy(button.Properties))
                     return ruleModel.TargetTagValue;
             }

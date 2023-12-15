@@ -25,7 +25,7 @@ class EditLayer {
 
     onAddPropertyClick() {
         this.activeModel.Properties[this.addPropertyNameSelect.value] = this.addPropertyValueTextBox.value;
-        let keyPropertiesPromise = this.getProperties("Object", "KeyBehavior");
+        let keyPropertiesPromise = this.getProperties("Object", "ButtonBehavior");
         let iconPropertiesPromise = this.getProperties("IconTemplate", this.activeModel.Behavior["Type"]);
         Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
             this.bindPropertyEditors(this.activeModel, properties);
@@ -135,7 +135,7 @@ class EditLayer {
             .then(keyModel => {
                 this.activeModel = keyModel;
                 this.bindBehavior(keyModel);
-                let keyPropertiesPromise = this.getProperties("Object", "KeyBehavior");
+                let keyPropertiesPromise = this.getProperties("Object", "ButtonBehavior");
                 let iconPropertiesPromise = this.getProperties("IconTemplate", keyModel.Behavior["Type"]);
                 Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
                     this.bindPropertyEditors(keyModel, properties);

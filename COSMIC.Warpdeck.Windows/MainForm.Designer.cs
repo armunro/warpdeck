@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using System.Windows.Forms;
 
-namespace COSMIC.Warpdeck.Windows.Forms
+namespace COSMIC.Warpdeck.Windows
 {
     partial class MainForm
     {
@@ -53,8 +53,8 @@ namespace COSMIC.Warpdeck.Windows.Forms
             //NotifyIcon.ContextMenuStrip
             NotifyIcon.ContextMenuStrip = new ContextMenuStrip();
             NotifyIcon.ContextMenuStrip.Items.Add("Open UI", null, NotifyIcon_Menu_OpenUI_OnClick);
-            NotifyIcon.ContextMenuStrip.Items.Add("Reload", null, NotifyIcon_Menu_Reload_OnClick);
-            NotifyIcon.ContextMenuStrip.Items.Add("Save", null, NotifyIcon_Menu_Save_OnClick);
+            NotifyIcon.ContextMenuStrip.Items.Add("ReloadConfig", null, NotifyIcon_Menu_Reload_OnClick);
+            NotifyIcon.ContextMenuStrip.Items.Add("SaveConfig", null, NotifyIcon_Menu_Save_OnClick);
             NotifyIcon.ContextMenuStrip.Items.Add("Exit", null, NotifyIcon_Menu_ExitI_OnClick);
         }
 

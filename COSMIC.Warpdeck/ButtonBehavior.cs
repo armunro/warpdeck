@@ -45,8 +45,8 @@ namespace COSMIC.Warpdeck
 
             try
             {
-                //TODO: Cannot move this to Domain package because WarpdeckApp will not be available
-                ButtonAction buttonAction = WarpdeckApp.Container.ResolveNamed<ButtonAction>(actionModel.Type,
+                //TODO: Cannot move this to Domain package because WarpdeckAppContext will not be available
+                ButtonAction buttonAction = WarpdeckAppContext.Container.ResolveNamed<ButtonAction>(actionModel.Type,
                     new NamedParameter("parameters", actionModel.Parameters));
                 buttonAction.StartAction();
             }

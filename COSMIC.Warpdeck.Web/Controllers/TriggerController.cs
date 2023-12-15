@@ -11,7 +11,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
         [HttpPost, Route("api/trigger/{deviceName}/{keyId}/press")]
         public string KeyPress(string deviceName, int keyId)
         {
-WarpdeckApp.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceName, keyId, "press");
+WarpdeckAppContext.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceName, keyId, "press");
 
             return "pressed";
         }
@@ -19,7 +19,7 @@ WarpdeckApp.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceNa
         [HttpPost, Route("api/trigger/{deviceName}/{keyId}/hold")]
         public string KeyHold(string deviceName, int keyId)
         {
-            WarpdeckApp.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceName, keyId, "hold");
+            WarpdeckAppContext.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceName, keyId, "hold");
             return "held";
         }
     }

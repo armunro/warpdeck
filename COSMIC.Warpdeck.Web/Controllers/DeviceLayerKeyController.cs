@@ -11,7 +11,7 @@ using COSMIC.Warpdeck.UseCase.Key;
 namespace COSMIC.Warpdeck.Web.Controllers
 {
     [ApiController]
-    [Route("api/device/{deviceId}/layer/{layerId}/button")]
+    [Route("api/device/{deviceId}/layer/{layerId}/key")]
     public class DeviceLayerKeyController : Controller
     {
         private readonly DeviceManager _deviceManager;

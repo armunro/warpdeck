@@ -23,7 +23,7 @@ using COSMIC.Warpdeck.Windows.Plugins.Actions.Window;
 
 namespace COSMIC.Warpdeck.Windows
 {
-    public class Dependencies
+    public class WindowsDependencies
     {
         public class BoardModule : Module
         {
@@ -55,7 +55,8 @@ namespace COSMIC.Warpdeck.Windows
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<KeyMacro>().Named<ButtonAction>(nameof(KeyMacro)).As<IHasActionParameters>();
+                builder.RegisterType<KeyMacro>().Named<ButtonAction>(nameof(KeyMacro))
+                    .As<IHasActionParameters>();
                 builder.RegisterType<LauncherAction>().Named<ButtonAction>(nameof(LauncherAction))
                     .As<IHasActionParameters>();
                 builder.RegisterType<ManageWindowAction>().Named<ButtonAction>(nameof(ManageWindowAction))

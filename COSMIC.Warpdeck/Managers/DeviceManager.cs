@@ -95,12 +95,7 @@ namespace COSMIC.Warpdeck.Managers
 
         public void FireActionOnActiveDevice(string deviceId, int keyId, string action)
         {
-            var orderedLayers = Devices[deviceId]
-                .ActiveLayers
-                .OrderBy(x => x.Value.Level)
-                .Select(x => x.Key);
-            ButtonBehavior behavior = WarpdeckApp.Container.Resolve<ButtonBehavior>();
-
+            ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
             behavior.FireEvent(Devices[deviceId].ButtonStates[keyId].Behavior, action);
         }
 
@@ -135,7 +130,8 @@ namespace COSMIC.Warpdeck.Managers
                     key.History.LastUp = DateTime.Now;
 
                 string behaviorTypeName = device.ButtonStates[keyId].Behavior.Type;
-                ButtonBehavior behavior = WarpdeckApp.Container.Resolve<ButtonBehavior>();
+                //TODO: This needs to be removed
+                ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
 
                 if (isDown)
                     behavior.OnKeyDown(device, keyId, key.Behavior, key.History);
@@ -186,7 +182,7 @@ namespace COSMIC.Warpdeck.Managers
 
             if (_cache.DoesCacheHaveIcon(buttonModel) && !skipCache) return _cache.GetIcon(buttonModel).ToBitmap();
 
-            IconTemplate template = WarpdeckApp.Container.Resolve<IconTemplate>();
+            IconTemplate template = WarpdeckAppContext.Container.Resolve<IconTemplate>();
             template.PropertyRule = _propertyRuleManagers[deviceId];
 
             return _cache.SetIcon(buttonModel, template.GenerateIcon(buttonModel)).ToBitmap();
