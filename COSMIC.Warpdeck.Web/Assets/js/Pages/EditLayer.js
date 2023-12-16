@@ -26,7 +26,7 @@ class EditLayer {
     onAddPropertyClick() {
         this.activeModel.Properties[this.addPropertyNameSelect.value] = this.addPropertyValueTextBox.value;
         let keyPropertiesPromise = this.getProperties("Object", "ButtonBehavior");
-        let iconPropertiesPromise = this.getProperties("IconTemplate", this.activeModel.Behavior["Type"]);
+        let iconPropertiesPromise = this.getProperties("IconTemplate", "PressAndHold");
         Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
             this.bindPropertyEditors(this.activeModel, properties);
             this.bindAddPropertyEditors(this.activeModel, properties)
@@ -136,7 +136,7 @@ class EditLayer {
                 this.activeModel = keyModel;
                 this.bindBehavior(keyModel);
                 let keyPropertiesPromise = this.getProperties("Object", "ButtonBehavior");
-                let iconPropertiesPromise = this.getProperties("IconTemplate", keyModel.Behavior["Type"]);
+                let iconPropertiesPromise = this.getProperties("IconTemplate", "PressAndHold");
                 Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
                     this.bindPropertyEditors(keyModel, properties);
                     this.bindAddPropertyEditors(keyModel, properties)
@@ -165,8 +165,8 @@ class EditLayer {
 
 
     bindBehavior(keyModel) {
-        this.behaviorSelect.value = keyModel.Behavior.Type;
-        let behaviorActionsUri = "/api/behavior/" + keyModel.Behavior.Type + "/actions";
+        this.behaviorSelect.value = "PressAndHold";
+        let behaviorActionsUri = "/api/behavior/PressAndHold/actions";
         let actionsUri = "/api/action";
         fetch(behaviorActionsUri)
             .then(response => {

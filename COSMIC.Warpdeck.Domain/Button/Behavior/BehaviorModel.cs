@@ -7,7 +7,7 @@ namespace COSMIC.Warpdeck.Domain.Button.Behavior
     public class  BehaviorModel 
     {
         [JsonIgnore]
-        public string Type { get; set; } = "PressAndHold";
+        public string Type { get; } = "PressAndHold";
         public Dictionary<string, Action.ActionModel> Actions { get; set; } = new();
         
 

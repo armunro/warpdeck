@@ -29,9 +29,9 @@ namespace COSMIC.Warpdeck
             .WithDefault("#FFF");
 
         public static PropertyDescriptor GraphicPath = PropertyDescriptor.Path("graphic.path")
-            .Named("Text")
-            .Described("The text that will display on the icon")
-            .WithDefault("#FFF");
+            .Named("Icon")
+            .Described("Relative path to the icon svg")
+            .WithDefault(string.Empty);
 
         public override PropertyDescriptorSet SpecifyProperties() => PropertyDescriptorSet.New().Has(
             Text,
