@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Action.Descriptors;
@@ -26,15 +27,17 @@ namespace COSMIC.Warpdeck
             .Has(Category);
 
         protected readonly ActionTimer ActionTimer;
+        private readonly List<ButtonAction> _actions;
 
 
         public ButtonBehavior()
         {
         }
 
-        protected ButtonBehavior(ActionTimer actionTimer)
+        public ButtonBehavior(ActionTimer actionTimer, List<ButtonAction> actions)
         {
             ActionTimer = actionTimer;
+            _actions = actions;
         }
 
 
@@ -48,7 +51,7 @@ namespace COSMIC.Warpdeck
                 //TODO: Cannot move this to Domain package because WarpdeckAppContext will not be available
                 ButtonAction buttonAction = WarpdeckAppContext.Container.ResolveNamed<ButtonAction>(actionModel.Type,
                     new NamedParameter("parameters", actionModel.Parameters));
-                buttonAction.StartAction();
+                buttonAction.StartAction(actionModel);
             }
             catch (Exception ex)
             {

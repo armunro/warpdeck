@@ -1,9 +1,11 @@
+using COSMIC.Warpdeck.Domain.Action;
+
 namespace COSMIC.Warpdeck.Domain.Button
 {
     public abstract class ButtonAction<TModel> : ButtonAction where TModel : Button.ButtonActionModel, new()
     {
         public TModel Model { get; set; }
-
+        
    
         public ButtonAction(Dictionary<string, string> parameters)
         {
@@ -14,14 +16,16 @@ namespace COSMIC.Warpdeck.Domain.Button
         public ButtonAction()
         {
             Model = new TModel();
-        }
+        }   
 
 
-        public abstract override void StartAction();
+        public abstract override void StartAction(ActionModel actionModel);
     }
     
     public abstract class ButtonAction
     {
-        public abstract void StartAction();
+        public string Name { get; set; }
+        public abstract void StartAction(ActionModel actionModel);
+        
     }
 }

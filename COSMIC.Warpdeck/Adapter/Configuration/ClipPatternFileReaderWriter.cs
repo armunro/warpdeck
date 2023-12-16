@@ -49,7 +49,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
 
             foreach (ClipPattern pattern in patterns)
             {
-                string patternPath = Path.Join(clipPatternConfigDir, pattern.Name + ".wdclip.json");
+                string patternPath = Path.Join(clipPatternConfigDir, pattern.Name + ".wdclippattern.json");
                 File.WriteAllText(patternPath, JsonSerializer.Serialize(pattern, options));
             }
         }

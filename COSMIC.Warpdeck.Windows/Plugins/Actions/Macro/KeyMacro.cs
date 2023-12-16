@@ -19,8 +19,9 @@ namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Macro
         {
         }
 
-        public override void StartAction()
+        public override void StartAction(ActionModel actionModel)
         {
+            
             string keys = Model.Keys;
             EventBuilder eventBuilder = Simulate.Events();
 

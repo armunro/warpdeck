@@ -27,7 +27,7 @@ namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Launcher
         {
         }
 
-        public override void StartAction()
+        public override void StartAction(ActionModel actionModel)
         {
             var matchingProcesses = Process.GetProcessesByName(Model.ProcessName);
 

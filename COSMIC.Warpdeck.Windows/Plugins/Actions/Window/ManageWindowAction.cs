@@ -23,7 +23,7 @@ namespace COSMIC.Warpdeck.Windows.Plugins.Actions.Window
         {
         }
 
-        public override void StartAction()
+        public override void StartAction(ActionModel actionModel)
         {
             try
             {
