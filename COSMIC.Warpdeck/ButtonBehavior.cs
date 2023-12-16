@@ -17,6 +17,7 @@ namespace COSMIC.Warpdeck
     {
         private readonly int _holdDelay = 250;
 
+        
         public PropertyDescriptor Category = PropertyDescriptor.Text("key.category")
             .Named("Category")
             .Described("For categorizing buttons. Useful when using property rules.")
@@ -26,25 +27,13 @@ namespace COSMIC.Warpdeck
             .Named("Button Properties")
             .Has(Category);
 
-        protected readonly ActionTimer ActionTimer;
-        private readonly List<ButtonAction> _actions;
 
+  
 
-        public ButtonBehavior()
-        {
-        }
-
-        public ButtonBehavior(ActionTimer actionTimer, List<ButtonAction> actions)
-        {
-            ActionTimer = actionTimer;
-            _actions = actions;
-        }
-
-
-        public void FireEvent(BehaviorModel behaviorModel, string eventName)
+        public void FireEvent(ButtonModel buttonModel, string eventName)
         {
             //Null check
-            ActionModel actionModel = behaviorModel.Actions[eventName];
+            ActionModel actionModel = buttonModel.Actions[eventName];
 
             try
             {
@@ -60,14 +49,13 @@ namespace COSMIC.Warpdeck
         }
 
 
-        public void OnKeyDown(DeviceModel device, int key, BehaviorModel behavior, ButtonHistoryModel buttonHistory)
+        public void OnKeyDown(DeviceModel device, int key, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
         }
 
-        public void OnKeyUp(DeviceModel device, int key, BehaviorModel behavior, ButtonHistoryModel buttonHistory)
+        public void OnKeyUp(DeviceModel device, int key, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
-            FireEvent(behavior,
-                buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "hold" : "press");
+            FireEvent(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "hold" : "press");
         }
 
 

@@ -180,7 +180,7 @@ class EditLayer {
                     behaviorActionsObject.actions.forEach(action => {
                         let actionElem = this.createElement_actionGroup(action, keyModel, actionsArray);
                         this.actionContainer.appendChild(actionElem);
-                        let actionParameterUri = "/api/action/" + keyModel.Behavior.Actions[action.actionName].Type + "/parameters"
+                        let actionParameterUri = "/api/action/" + keyModel.Actions[action.actionName].Type + "/parameters"
                         fetch(actionParameterUri)
                             .then(response => response.json())
                             .then(actionParams =>
@@ -188,7 +188,7 @@ class EditLayer {
                                     actionElem.appendChild(this.createElement_actionParamEditor(
                                         action,
                                         paramItem,
-                                        keyModel.Behavior.Actions[action.actionName].Parameters[paramItem.name])
+                                        keyModel.Actions[action.actionName].Parameters[paramItem.name])
                                     );
                                 }));
                     })
@@ -226,13 +226,13 @@ class EditLayer {
     }
 
     unbindBehaviors() {
-        for (const actionName in this.activeModel.Behavior.Actions) {
+        for (const actionName in this.activeModel.Actions) {
             let actionSelectId = "action_" + actionName + "_type"
             let actionSelectElem = document.getElementById(actionSelectId);
-            this.activeModel.Behavior.Actions[actionName].Type = actionSelectElem.value;
-            for (const paramItem in this.activeModel.Behavior.Actions[actionName].Parameters) {
+            this.activeModel.Actions[actionName].Type = actionSelectElem.value;
+            for (const paramItem in this.activeModel.Actions[actionName].Parameters) {
                 let paramElement = document.getElementById("action_" + actionName + "_param_" + paramItem)
-                this.activeModel.Behavior.Actions[actionName].Parameters[paramItem] = paramElement.value;
+                this.activeModel.Actions[actionName].Parameters[paramItem] = paramElement.value;
             }
         }
     }
@@ -241,7 +241,7 @@ class EditLayer {
     createElement_actionGroup(behaviorAction, keyModel, actionOptions) {
         let actionElem = document.createElement("div")
         let actionParamContainerId = "action_" + behaviorAction.actionName + "_params"
-        let currentBehaviorAction = keyModel.Behavior.Actions[behaviorAction.actionName].Type;
+        let currentBehaviorAction = keyModel.Actions[behaviorAction.actionName].Type;
         let html = "<div id='" + actionParamContainerId + "' class=\"form-group\">" +
             "<label for=\"keyJson\"> Action: " + behaviorAction.actionName + "</label>" +
             "<select id='action_" + behaviorAction.actionName + "_type' class='form-select'>";

@@ -21,7 +21,6 @@ namespace COSMIC.Warpdeck.UseCase.Key
 
             _deviceManager.GetDevice(deviceId).Layers[layerId].Buttons.Add( model.KeyId, new ButtonModel
             {
-                Behavior = model.Behavior,
                 Properties = properties
             });
             

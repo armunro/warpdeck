@@ -19,7 +19,7 @@ using COSMIC.Warpdeck.UseCase.Property;
 namespace COSMIC.Warpdeck
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class CoreDependencies
+    public class WarpdeckStandardDependancies
     {
         public class BehaviorsModule : Module
         {

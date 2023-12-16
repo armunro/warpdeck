@@ -9,7 +9,8 @@ namespace COSMIC.Warpdeck.Domain.Button
      SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class ButtonModel
     {
-        public BehaviorModel Behavior { get; set; }
+        
+        public Dictionary<string, Action.ActionModel> Actions { get; set; } = new();
         [JsonIgnore] public ButtonHistoryModel History { get; set; } = new();
         public PropertyLookup Properties { get; set; } = new();
     }

@@ -96,7 +96,7 @@ namespace COSMIC.Warpdeck.Managers
         public void FireActionOnActiveDevice(string deviceId, int keyId, string action)
         {
             ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
-            behavior.FireEvent(Devices[deviceId].ButtonStates[keyId].Behavior, action);
+            behavior.FireEvent(Devices[deviceId].ButtonStates[keyId], action);
         }
 
 
@@ -129,14 +129,14 @@ namespace COSMIC.Warpdeck.Managers
                 else
                     key.History.LastUp = DateTime.Now;
 
-                string behaviorTypeName = device.ButtonStates[keyId].Behavior.Type;
+             
                 //TODO: This needs to be removed
-                ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
+                ButtonBehavior behavior = new ButtonBehavior();
 
                 if (isDown)
-                    behavior.OnKeyDown(device, keyId, key.Behavior, key.History);
+                    behavior.OnKeyDown(device, keyId, key, key.History);
                 else
-                    behavior.OnKeyUp(device, keyId, key.Behavior, key.History);
+                    behavior.OnKeyUp(device, keyId, key, key.History);
             }
             catch (Exception e)
             {

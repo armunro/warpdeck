@@ -23,7 +23,7 @@ using COSMIC.Warpdeck.Windows.Plugins.Actions.Window;
 
 namespace COSMIC.Warpdeck.Windows
 {
-    public class WindowsDependencies
+    public class WarpdeckWindowsDependencies
     {
         public class BoardModule : Module
         {

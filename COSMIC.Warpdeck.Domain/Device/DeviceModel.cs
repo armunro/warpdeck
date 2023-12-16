@@ -14,10 +14,11 @@ namespace COSMIC.Warpdeck.Domain.Device
         public DeviceInfo Info { get; set; } = new();
         public string DeviceId { get; set; }
         [JsonIgnore] public LayerMap Layers { get; set; } = new();
-        [JsonIgnore] public MonitorRuleList MonitorRules { get; set; }
         [JsonIgnore] public LayerMap ActiveLayers { get; set; } = new();
+        [JsonIgnore] public MonitorRuleList MonitorRules { get; set; }
         [JsonIgnore] public ButtonMap ButtonStates { get; set; } = new();
         [JsonIgnore] public PropertyRuleModelList PropertyRules { get; set; } = new();
+        [JsonIgnore] public List<ButtonAction> ActionsCombined { get; set; } = new();
         
         
         

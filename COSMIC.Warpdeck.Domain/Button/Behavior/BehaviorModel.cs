@@ -8,7 +8,7 @@ namespace COSMIC.Warpdeck.Domain.Button.Behavior
     {
         [JsonIgnore]
         public string Type { get; } = "PressAndHold";
-        public Dictionary<string, Action.ActionModel> Actions { get; set; } = new();
+     
         
 
     }

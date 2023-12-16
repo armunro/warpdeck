@@ -28,19 +28,19 @@ namespace COSMIC.Warpdeck.Windows
             ContainerBuilder builder = new ContainerBuilder();
 
             //Register Core dependencies 
-            builder.RegisterModule<CoreDependencies.LayersModule>();
-            builder.RegisterModule<CoreDependencies.ConfigModule>();
-            builder.RegisterModule<CoreDependencies.BehaviorsModule>();
-            builder.RegisterModule<CoreDependencies.Property>();
-            builder.RegisterModule<CoreDependencies.DevicesModule>();
+            builder.RegisterModule<WarpdeckStandardDependancies.LayersModule>();
+            builder.RegisterModule<WarpdeckStandardDependancies.ConfigModule>();
+            builder.RegisterModule<WarpdeckStandardDependancies.BehaviorsModule>();
+            builder.RegisterModule<WarpdeckStandardDependancies.Property>();
+            builder.RegisterModule<WarpdeckStandardDependancies.DevicesModule>();
            
             //Register Windows dependencies
-            builder.RegisterModule<WindowsDependencies.BoardModule>();
-            builder.RegisterModule<WindowsDependencies.IconsModule>();
-            builder.RegisterModule<WindowsDependencies.ActionsModule>();
-            builder.RegisterModule<WindowsDependencies.PresentationModule>();
-            builder.RegisterModule<WindowsDependencies.MonitorsModule>();
-            builder.RegisterModule<WindowsDependencies.ClipboardModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.BoardModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.IconsModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.ActionsModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.PresentationModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.MonitorsModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.ClipboardModule>();
 
             Container = builder.Build();
             WarpdeckAppContext.Container = Container;
@@ -64,10 +64,8 @@ namespace COSMIC.Warpdeck.Windows
                 if (deviceModel.Info.HardwareId != "virtual")
                 {
                     var hardwareMatch = deckRefHandles.FirstOrDefault(x => x.DevicePath == deviceModel.Info.HardwareId);
-                    if (hardwareMatch != null)
-                    {
+                    if (hardwareMatch != null) 
                         deviceManager.BindDevice(hardwareMatch.Open(), deviceModel);
-                    }
                 }
                 else
                 {
