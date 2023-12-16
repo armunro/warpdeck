@@ -36,33 +36,13 @@ class EditLayer {
 
     onNewKeyClick() {
         let activeKey = this.keyGrid.activeKey;
-        let updateUri = "/api/device/" + activeKey.device
-            + "/layer/" + activeKey.layer + "/key";
+        let updateUri = "/api/device/" + activeKey.device + "/layer/" + activeKey.layer + "/key";
 
-        let newKeyBody = "{\n" +
-            "    \"KeyId\": " + activeKey.key + ",\n" +
-            "    \"Behavior\": {\n" +
-            "        \"Type\": \"Press\",\n" +
-            "        \"Actions\": {\n" +
-            "            \"press\": {\n" +
-            "                \"Type\": \"KeyMacro\",\n" +
-            "                \"Parameters\": {\n" +
-            "                    \"keys\": \"(control+alt+shift+m)|(o)\"\n" +
-            "                }\n" +
-            "            }\n" +
-            "        }\n" +
-            "    },\n" +
-            "    \"Properties\": {\n" +
-            "        \"key.category\" : \"Rider-General\",\n" +
-            "        \"text\" :\"Close Other\",\n" +
-            "        \"graphic.path\":  \"list-check.svg\"\n" +
-            "    }\n" +
-            "}"
+        let newKeyBody = "{\n" + "    \"KeyId\": " + activeKey.key + ",\n" + "    \"Behavior\": {\n" + "        \"Type\": \"Press\",\n" + "        \"Actions\": {\n" + "            \"press\": {\n" + "                \"Type\": \"KeyMacro\",\n" + "                \"Parameters\": {\n" + "                    \"keys\": \"(control+alt+shift+m)|(o)\"\n" + "                }\n" + "            }\n" + "        }\n" + "    },\n" + "    \"Properties\": {\n" + "        \"key.category\" : \"Rider-General\",\n" + "        \"text\" :\"Close Other\",\n" + "        \"graphic.path\":  \"list-check.svg\"\n" + "    }\n" + "}"
         fetch(updateUri, {
             method: 'POST', headers: {
                 'Content-Type': 'text/json'
-            },
-            body: newKeyBody
+            }, body: newKeyBody
         }).then(response => {
             this.keyGrid.updateKey(activeKey.key);
         });
@@ -72,10 +52,7 @@ class EditLayer {
 
     onGridKeyDragDrop(isCopy, sourceDevice, sourceLayer, sourceKey, destinationKey) {
         let operation = isCopy ? "copy" : "move";
-        let updateUri = "/api/device/" + sourceDevice
-            + "/layer/" + sourceLayer
-            + "/key/" + sourceKey
-            + "/" + operation + "/" + destinationKey;
+        let updateUri = "/api/device/" + sourceDevice + "/layer/" + sourceLayer + "/key/" + sourceKey + "/" + operation + "/" + destinationKey;
         fetch(updateUri).then(() => {
             this.keyGrid.updateKey(sourceKey);
             this.keyGrid.updateKey(destinationKey);
@@ -97,29 +74,24 @@ class EditLayer {
         this.unbindBehaviors();
         this.unbindPropertyEditors();
         let activeKey = this.keyGrid.activeKey;
-        let updateUri = "/api/device/" + activeKey.device
-            + "/layer/" + activeKey.layer
-            + "/key/" + activeKey.key;
+        let updateUri = "/api/device/" + activeKey.device + "/layer/" + activeKey.layer + "/key/" + activeKey.key;
 
         fetch(updateUri, {
             method: 'PUT', headers: {
                 'Content-Type': 'text/json'
-            },
-            body: JSON.stringify(this.activeModel)
+            }, body: JSON.stringify(this.activeModel)
         }).then(response => {
             return response.json();
         }).then(data => {
             let context = this;
             context.keyGrid.updateKey(activeKey.key);
-            
+
         });
     }
 
     onDeleteKeyClick(event) {
         let activeKey = this.keyGrid.activeKey;
-        let updateUri = "/api/device/" + activeKey.device
-            + "/layer/" + activeKey.layer
-            + "/key/" + activeKey.key;
+        let updateUri = "/api/device/" + activeKey.device + "/layer/" + activeKey.layer + "/key/" + activeKey.key;
 
         fetch(updateUri, {method: 'DELETE'}).then(() => {
             this.keyGrid.updateKey(activeKey.key);
@@ -180,22 +152,16 @@ class EditLayer {
                     behaviorActionsObject.actions.forEach(action => {
                         let actionElem = this.createElement_actionGroup(action, keyModel, actionsArray);
                         this.actionContainer.appendChild(actionElem);
-                        let actionParameterUri = "/api/action/" + keyModel.Actions[action.actionName].Type + "/parameters"
-                        fetch(actionParameterUri)
-                            .then(response => response.json())
-                            .then(actionParams =>
-                                actionParams.parameters.forEach(paramItem => {
-                                    actionElem.appendChild(this.createElement_actionParamEditor(
-                                        action,
-                                        paramItem,
-                                        keyModel.Actions[action.actionName].Parameters[paramItem.name])
-                                    );
+                        if(keyModel.Actions[action.actionName] !== undefined) {
+                            let actionParameterUri = "/api/action/" + keyModel.Actions[action.actionName].Type + "/parameters"
+                            fetch(actionParameterUri)
+                                .then(response => response.json())
+                                .then(actionParams => actionParams.parameters.forEach(paramItem => {
+                                    actionElem.appendChild(this.createElement_actionParamEditor(action, paramItem, keyModel.Actions[action.actionName].Parameters[paramItem.name]));
                                 }));
+                        }
                     })
-
                 })
-
-
             });
     }
 
@@ -207,8 +173,7 @@ class EditLayer {
             let propertyGroupElem = this.createElement_propertyGroupCard(propertyGroup)
             for (const propertyName in propertyGroup.properties) {
                 if (keyModel["Properties"][propertyName] !== undefined) {
-                    let propertyEditorElem = this.createElement_propertyEditor(propertyName, propertyGroup.properties[propertyName].friendlyName,
-                        keyModel);
+                    let propertyEditorElem = this.createElement_propertyEditor(propertyName, propertyGroup.properties[propertyName].friendlyName, keyModel);
                     propertyGroupElem.querySelector(".card-body").appendChild(propertyEditorElem);
                 }
             }
@@ -241,49 +206,35 @@ class EditLayer {
     createElement_actionGroup(behaviorAction, keyModel, actionOptions) {
         let actionElem = document.createElement("div")
         let actionParamContainerId = "action_" + behaviorAction.actionName + "_params"
-        let currentBehaviorAction = keyModel.Actions[behaviorAction.actionName].Type;
-        let html = "<div id='" + actionParamContainerId + "' class=\"form-group\">" +
-            "<label for=\"keyJson\"> Action: " + behaviorAction.actionName + "</label>" +
-            "<select id='action_" + behaviorAction.actionName + "_type' class='form-select'>";
+
+        let currentBehaviorAction = null;
+        if (keyModel.Actions[behaviorAction.actionName] !== undefined) {
+            currentBehaviorAction = keyModel.Actions[behaviorAction.actionName].Type;
+        }
+        let html = `<div id='${actionParamContainerId}' class="form-group"><div class="input-group mb-2"><span class="input-group-text">${behaviorAction.actionName} Action</span><select id='action_${behaviorAction.actionName}_type' class='form-select'>`;
         actionOptions.forEach(action => {
-                       html += "<option " + (currentBehaviorAction == action ? "selected" : "") + " value=\""+ action + "\">" + action + "</option>" 
+            html += "<option " + (currentBehaviorAction === action ? "selected" : "") + " value=\"" + action + "\">" + action + "</option>"
         });
-        html += "</select>" +
-            "</div>";
+        html += `</select></div></div>`;
         actionElem.innerHTML = html;
         return actionElem;
     }
 
     createElement_actionParamEditor(action, param, currentValue) {
         let actionParamElem = document.createElement("div");
-        actionParamElem.innerHTML = "" +
-            "<div class=\"input-group mb-2\">" +
-            "<span class=\"input-group-text\">" + param.name + "</span>" +
-            "<input type=\"text\" id='action_" + action.actionName + "_param_" + param.name + "' class=\"form-control\" value=\"" + currentValue + "\">" +
-            "</div>"
+        actionParamElem.innerHTML = `<div class="form-group"><div class="input-group ps-4 mb-2"><span class="input-group-text">${param.name}</span><input type="text" id='action_${action.actionName}_param_${param.name}' class="form-control" value="${currentValue}"></div></div>`
         return actionParamElem;
     }
 
     createElement_propertyEditor(propertyName, friendlyName, keyModel) {
         let propertyEditorElem = document.createElement("div");
-        propertyEditorElem.innerHTML =
-            "<div class='form-group mb-2'>" +
-            "<label for=\"keyId\">" + friendlyName + "</label>" +
-            "<input type=\"text\" id=\"tag_" + propertyName + "\" data-tag=\"" + propertyName + "\" class=\"form-control keyTag\" value=\"" + keyModel["Properties"][propertyName] + "\">" +
-            "</div>";
+        propertyEditorElem.innerHTML = "<div class='form-group mb-2'>" + "<label for=\"keyId\">" + friendlyName + "</label>" + "<input type=\"text\" id=\"tag_" + propertyName + "\" data-tag=\"" + propertyName + "\" class=\"form-control keyTag\" value=\"" + keyModel["Properties"][propertyName] + "\">" + "</div>";
         return propertyEditorElem;
     }
 
     createElement_propertyGroupCard(propertyGroup) {
         let propertyGroupElem = document.createElement("div");
-        propertyGroupElem.innerHTML =
-            "<div class=\"card mb-2\">\n" +
-            "    <div class=\"card-header\">\n" +
-            "        Properties\n" +
-            "    </div>\n" +
-            "    <div class=\"card-body\">\n" +
-            "    </div>\n" +
-            "</div>\n";
+        propertyGroupElem.innerHTML = "<div class=\"card mb-2\">\n" + "    <div class=\"card-header\">\n" + "        Properties\n" + "    </div>\n" + "    <div class=\"card-body\">\n" + "    </div>\n" + "</div>\n";
         return propertyGroupElem;
     }
 }
