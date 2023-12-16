@@ -29,5 +29,13 @@ namespace COSMIC.Warpdeck.Web.Controllers
             ActionParamDescriptorSet parameters = action.SpecifyParameters();
             return parameters;
         }
+        
+        [HttpPost, Route("/api/action/{actionName}/invoke")]
+        public ActionParamDescriptorSet InvokeAction(string actionName)
+        {
+            return null;
+        }
+
+
     }
 }

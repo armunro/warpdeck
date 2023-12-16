@@ -7,7 +7,7 @@ using COSMIC.Warpdeck.Domain.Configuration;
 
 namespace COSMIC.Warpdeck.Adapter.Configuration
 {
-    public class ClipPatternFileReaderWriter : IClipPatternReader,IClipPatternWriter
+    public class ClipPatternFileReaderWriter : IClipPatternReader, IClipPatternWriter
     {
         private readonly string _configBaseDir;
 
@@ -18,38 +18,24 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
 
         public List<ClipPattern> ReadPatterns()
         {
+            List<ClipPattern> patterns = new List<ClipPattern>();
+  
+            string clipPatternConfigPath = Path.Join(_configBaseDir, "clip-patterns");
+            string[] patternConfigFiles = Directory.GetFiles(clipPatternConfigPath, "*.wdclippattern.json");
             
-            
-            return new List<ClipPattern> ()
+            foreach (string patternConfigFile in patternConfigFiles)
             {
-                ClipPattern.Create(
-                    "JIRA-Identifier", @"((?<!([A-Z]{1,10})-?)[A-Z]+-\d+)",
-                    (pattern, match) => new []{ new ClipSuggestion
-                    {
-                        ActionName = "BROWSE",
-                        ActionParameters = "https://jira.ysi.yardi.com/browse/" + match.Value
-                    }}),
-                ClipPattern.Create(
-                    "STELLAR-CaseID", @"\d{6,9}",
-                    (pattern, match) => new [] {new ClipSuggestion
-                    {
-                        ActionName = "BROWSE",
-                        ActionParameters = "https://stellar.yardiapp.com/prod/Pages/stellar_caseaction.aspx?CaseId=" + match.Value
-                    }}),
-                ClipPattern.Create(
-                    "YCRM-TRID", @"TR-\d{6,9}",
-                    (pattern, match) => new[]{ new ClipSuggestion
-                    {
-                        ActionName = "BROWSE",
-                        ActionParameters = "https://ycrm.yardiapp.com/prod/?trid=" + match.Value
-                    }})
-            };
+                ClipPattern pattern = JsonSerializer.Deserialize<ClipPattern>(File.ReadAllText(patternConfigFile));
+                patterns.Add(pattern);
+            }
+            
+            return patterns;
         }
 
         public void WritePatterns(List<ClipPattern> patterns)
         {
             string clipPatternConfigDir = Path.Join(_configBaseDir, "clip-patterns");
-            
+
             if (!Directory.Exists(_configBaseDir))
                 Directory.CreateDirectory(_configBaseDir);
             if (!Directory.Exists(clipPatternConfigDir))

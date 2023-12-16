@@ -25,7 +25,6 @@ namespace COSMIC.Warpdeck
         {
             protected override void Load(ContainerBuilder builder)
             {
-                
                 builder.RegisterType<ButtonBehavior>()
                     .As<ButtonBehavior>()
                     .As<IHasProperties>()

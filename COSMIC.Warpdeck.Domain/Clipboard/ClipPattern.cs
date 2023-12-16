@@ -5,8 +5,11 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
     public class ClipPattern
     {
         public string Name { get; set; }
-        public string RegexPattern {get; set;}
-        public Func<ClipPattern, Match, IEnumerable<ClipSuggestion>> SuggestionFactory;
+        public string RegexPattern { get; set; }
+        public string Action { get; set; }
+
+        public string ActionParamTemplate { get; set; }
+
 
         public List<ClipSuggestion> OfferSuggestions(string? text)
         {
@@ -14,26 +17,30 @@ namespace COSMIC.Warpdeck.Domain.Clipboard
             MatchCollection matches = new Regex(RegexPattern).Matches(text);
             foreach (Match match in matches)
             {
-                IEnumerable<ClipSuggestion> newSuggestions = SuggestionFactory(this, match);
-                foreach (ClipSuggestion tSuggest in newSuggestions)
+                suggestions.Add(new ClipSuggestion
                 {
-                    tSuggest.Match = match.Value;
-                    tSuggest.PatternName = Name;
-                    suggestions.Add(tSuggest);
-                }
+                    ActionName = Action,
+                    Match = match.Value,
+                    PatternName = Name,
+                    ActionParameters = CompileParameters(match.Value)
+                });
             }
-
             return suggestions;
         }
 
-        public static ClipPattern Create(string name, string pattern,
-            Func<ClipPattern, Match, IEnumerable<ClipSuggestion>> suggestionFactory)
+        private string CompileParameters(string match)
+        {
+            return ActionParamTemplate.Replace("{match}", match);
+        }
+
+        public static ClipPattern Create(string name, string pattern, string actionName, string actionParamTemplate)
         {
             return new ClipPattern
             {
                 Name = name,
                 RegexPattern = pattern,
-                SuggestionFactory = suggestionFactory
+                Action = actionName,
+                ActionParamTemplate = actionParamTemplate
             };
         }
     }
