@@ -3,21 +3,24 @@
 @using COSMIC.Warpdeck.Domain.Device
 @using COSMIC.Warpdeck.Managers
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse d-block">
-    <div class="position-sticky pt-3">
-        <h3 class="sidebar-heading d-flex justify-content-between align-items-center px-2  text-muted">
-            <span>Devices</span>
-        </h3>
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 ps-3 pb-2 mb-3 border-bottom text-muted">
+        <h3 class="h2">Devices</h3>
+        <div class="row">
+            <div class="input-group">
+            </div>
+        </div>
+    </div>
+    <div class="position-sticky">
         <ul class="nav d-block">
             @foreach (var v in COSMIC.Warpdeck.Web.WarpDeckFrontend.Container.Resolve<DeviceManager>().GetAllDevices())
             {
                 <li class="nav-item">
-                    <a class="nav-link px-2" aria-current="page" href="/device/@v.DeviceId">@v.DeviceId</a>
+                    <h2>
+                        <a class="nav-link px-2" aria-current="page" href="/device/@v.DeviceId">@v.DeviceId</a>
+                    </h2>
                     <ul class="nav d-block">
                         <li>
-                            <a class="nav-link" href="/device/@v.DeviceId/monitor">Monitors (@v.MonitorRules.Rules.Count)</a>
-                        </li>
-                        <li>
-                            <a class="nav-link" href="/device/@v.DeviceId/property">Properties (@v.PropertyRules.Count)</a>
+                            <a class="nav-link d-inline" href="/device/@v.DeviceId/monitor">Monitors (@v.MonitorRules.Rules.Count)</a> | <a class="nav-link d-inline" href="/device/@v.DeviceId/property">Properties (@v.PropertyRules.Count)</a>
                         </li>
                     </ul>
 
@@ -38,5 +41,5 @@
                 </li>
             }
         </ul>
-</div>
+    </div>
 </nav>
