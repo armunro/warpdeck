@@ -40,7 +40,7 @@ namespace COSMIC.Warpdeck.Domain.Device
                 ActiveLayers.Remove(layerId);
             }
 
-            foreach (int key in Layers[layerId].Buttons.Keys)
+            foreach (string key in Layers[layerId].Buttons.Keys)
             {
                 ButtonStates[key] = null;
             }

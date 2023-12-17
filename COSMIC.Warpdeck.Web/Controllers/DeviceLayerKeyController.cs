@@ -49,8 +49,8 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons);
         }
 
-        [HttpGet, Route("{keyId:int}")]
-        public IActionResult GetLayerKey(string deviceId, string layerId, int keyId)
+        [HttpGet, Route("{keyId}")]
+        public IActionResult GetLayerKey(string deviceId, string layerId, string keyId)
         {
             DeviceModel device;
             try
@@ -79,8 +79,8 @@ namespace COSMIC.Warpdeck.Web.Controllers
             
         }
 
-        [HttpPut, Route("{keyId:int}")]
-        public IActionResult SetLayerKey(string deviceId, string layerId, int keyId, [FromBody] ButtonModel updatedButton)
+        [HttpPut, Route("{keyId}")]
+        public IActionResult SetLayerKey(string deviceId, string layerId, string keyId, [FromBody] ButtonModel updatedButton)
         {
             _deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId] = updatedButton;
             _deviceManager.GenerateKeyIcon(updatedButton, deviceId, true);
@@ -88,24 +88,24 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId]);
         }
 
-        [HttpGet, Route("{keyId:int}/move/{newKeyId:int}")]
-        public IActionResult MoveLayerKey(string deviceId, string layerId, int keyId, int newKeyId)
+        [HttpGet, Route("{keyId}/move/{newKeyId}")]
+        public IActionResult MoveLayerKey(string deviceId, string layerId, string keyId, string newKeyId)
         {
             _moveKeyUseCase.Invoke(deviceId, layerId, keyId, newKeyId);
             _redrawDeviceLayersUseCase.Invoke(deviceId);
             return Ok();
         }
 
-        [HttpGet, Route("{keyId:int}/copy/{newKeyId:int}")]
-        public IActionResult CopyLayerKey(string deviceId, string layerId, int keyId, int newKeyId)
+        [HttpGet, Route("{keyId}/copy/{newKeyId}")]
+        public IActionResult CopyLayerKey(string deviceId, string layerId, string keyId, string newKeyId)
         {
             _duplicateKeyUseCase.Invoke(deviceId, layerId, keyId, newKeyId);
             _redrawDeviceLayersUseCase.Invoke(deviceId);
             return Ok();
         }
 
-        [HttpDelete, Route("{keyId:int}")]
-        public IActionResult DeleteLayerKey(string deviceId, string layerId, int keyId)
+        [HttpDelete, Route("{keyId}")]
+        public IActionResult DeleteLayerKey(string deviceId, string layerId, string keyId)
         {
             LayerModel layer = _deviceManager.GetDevice(deviceId).Layers[layerId];
             layer.Buttons.Remove(keyId);

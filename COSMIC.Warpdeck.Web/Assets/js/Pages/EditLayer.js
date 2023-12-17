@@ -38,7 +38,26 @@ class EditLayer {
         let activeKey = this.keyGrid.activeKey;
         let updateUri = "/api/device/" + activeKey.device + "/layer/" + activeKey.layer + "/key";
 
-        let newKeyBody = "{\n" + "    \"KeyId\": " + activeKey.key + ",\n" + "    \"Behavior\": {\n" + "        \"Type\": \"Press\",\n" + "        \"Actions\": {\n" + "            \"press\": {\n" + "                \"Type\": \"KeyMacro\",\n" + "                \"Parameters\": {\n" + "                    \"keys\": \"(control+alt+shift+m)|(o)\"\n" + "                }\n" + "            }\n" + "        }\n" + "    },\n" + "    \"Properties\": {\n" + "        \"key.category\" : \"Rider-General\",\n" + "        \"text\" :\"Close Other\",\n" + "        \"graphic.path\":  \"list-check.svg\"\n" + "    }\n" + "}"
+        let newKeyBody =
+`{
+    "KeyId": ${activeKey.key},
+    "Behavior": {
+        "Type": "Press",
+        "Actions": {
+            "press": {
+                "Type": "KeyMacro",
+                "Parameters": {
+                    "keys": "(control+alt+shift+m)|(o)"
+                }
+            }
+        }
+    },
+    "Properties": {
+        "Category" : "Rider-General",
+        "Text" :"Close Other",
+        "Icon":  "list-check.svg"
+    }
+}`
         fetch(updateUri, {
             method: 'POST', headers: {
                 'Content-Type': 'text/json'
@@ -152,7 +171,7 @@ class EditLayer {
                     behaviorActionsObject.actions.forEach(action => {
                         let actionElem = this.createElement_actionGroup(action, keyModel, actionsArray);
                         this.actionContainer.appendChild(actionElem);
-                        if(keyModel.Actions[action.actionName] !== undefined) {
+                        if (keyModel.Actions[action.actionName] !== undefined) {
                             let actionParameterUri = "/api/action/" + keyModel.Actions[action.actionName].Type + "/parameters"
                             fetch(actionParameterUri)
                                 .then(response => response.json())
@@ -197,7 +216,9 @@ class EditLayer {
             this.activeModel.Actions[actionName].Type = actionSelectElem.value;
             for (const paramItem in this.activeModel.Actions[actionName].Parameters) {
                 let paramElement = document.getElementById("action_" + actionName + "_param_" + paramItem)
-                this.activeModel.Actions[actionName].Parameters[paramItem] = paramElement.value;
+                if (this.activeModel.Actions[actionName] !== undefined && paramElement !== null) {
+                    this.activeModel.Actions[actionName].Parameters[paramItem] = paramElement.value;
+                }
             }
         }
     }

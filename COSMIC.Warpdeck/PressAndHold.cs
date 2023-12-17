@@ -3,40 +3,41 @@ using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
 using COSMIC.Warpdeck.Managers;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace COSMIC.Warpdeck
 {
     public class PressAndHold : IconTemplate
     {
-        public static PropertyDescriptor BackgroundColor = PropertyDescriptor.Color("background.fillColor")
+        public static readonly PropertyDescriptor BackgroundColor = PropertyDescriptor.Color("BackgroundColor")
             .Named("Background Color")
-            .Described("The background color for the icon")
+            .Described("The background color for the icon.")
             .WithDefault("#000");
 
-        public static PropertyDescriptor GraphicColor = PropertyDescriptor.Color("graphic.fillColor")
+        public static readonly PropertyDescriptor IconColor = PropertyDescriptor.Color("IconColor")
             .Named("Graphic Color")
-            .Described("The fill color of the primary grahpic.")
+            .Described("The fill color of the primary graphic.")
             .WithDefault("#FFF");
         
-        public static PropertyDescriptor AccentColor = PropertyDescriptor.Color("accent.fillColor")
+        public static readonly PropertyDescriptor AccentColor = PropertyDescriptor.Color("AccentColor")
             .Named("Accent Color")
             .Described("The accent color.")
             .WithDefault("#FFF");
 
-        public static PropertyDescriptor Text = PropertyDescriptor.Text("text")
-            .Named("Button Text")
-            .Described("The text that will display on the icon")
+        public static readonly PropertyDescriptor Text = PropertyDescriptor.Text("Text")
+            .Named("Text")
+            .Described("The text that will display on the icon.")
             .WithDefault("#FFF");
 
-        public static PropertyDescriptor GraphicPath = PropertyDescriptor.Path("graphic.path")
+        public static readonly PropertyDescriptor GraphicPath = PropertyDescriptor.Path("Icon")
             .Named("Icon")
-            .Described("Relative path to the icon svg")
+            .Described("Relative path to the icon svg.")
             .WithDefault(string.Empty);
 
         public override PropertyDescriptorSet SpecifyProperties() => PropertyDescriptorSet.New().Has(
             Text,
             BackgroundColor,
-            GraphicColor,
+            IconColor,
             GraphicPath,
             AccentColor
         );
@@ -53,9 +54,9 @@ namespace COSMIC.Warpdeck
             string svgPath = Path.Combine(@"C:\Atom\Resources\Icons", PropertyRule.GetProperty(button, GraphicPath));
 
             string graphicColorCalc = PropertyRule.GetProperty(button, AccentColor);
-            if (button.Properties.HasProperty(GraphicColor.Key))
+            if (button.Properties.HasProperty(IconColor.Key))
             {
-                graphicColorCalc = PropertyRule.GetProperty(button, GraphicColor);
+                graphicColorCalc = PropertyRule.GetProperty(button, IconColor);
             }
 
 

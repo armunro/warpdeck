@@ -48,7 +48,7 @@ namespace COSMIC.Warpdeck.Managers
 
         public void BindDevice(IMacroBoard macroBoard, DeviceModel deviceModel)
         {
-            macroBoard.KeyStateChanged += (_, args) => BoardOnKeyStateChanged(deviceModel, args.Key, args.IsDown);
+            macroBoard.KeyStateChanged += (_, args) => BoardOnKeyStateChanged(deviceModel, args.Key.ToString(), args.IsDown);
             macroBoard.ConnectionStateChanged += (_, args) =>
             {
                 if (args.NewConnectionState)
@@ -65,6 +65,19 @@ namespace COSMIC.Warpdeck.Managers
             deviceModel.MonitorRules.Rules.ForEach(x => _monitorManager.AddMonitorRule(x));
             deviceModel.PropertyRules.ForEach(x => _propertyRuleManagers[deviceModel.DeviceId].Rules.Add(x));
             ClearDevice(deviceModel.DeviceId);
+            CombineDeviceComponents(deviceModel);
+        }
+
+        private void CombineDeviceComponents(DeviceModel deviceModel)
+        {
+            foreach (LayerModel layerModel in deviceModel.Layers.Values.ToList())
+            {
+                foreach (var button in layerModel.Buttons)
+                {
+                    //TODO. Once component keys are string and not integers, all comps can be combined from all layers
+                    
+                }
+            }
         }
 
 
@@ -93,7 +106,7 @@ namespace COSMIC.Warpdeck.Managers
             }
         }
 
-        public void FireActionOnActiveDevice(string deviceId, int keyId, string action)
+        public void FireActionOnActiveDevice(string deviceId, string keyId, string action)
         {
             ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
             behavior.FireEvent(Devices[deviceId].ButtonStates[keyId], action);
@@ -108,11 +121,11 @@ namespace COSMIC.Warpdeck.Managers
             foreach (var (keyId, keyModel) in layer.Buttons)
             {
                 device.ButtonStates.UpdateKeyState(keyId, keyModel);
-                Boards[deviceId].SetKeyBitmap(keyId, KeyBitmap.Create.FromBitmap(GenerateKeyIcon(keyModel, deviceId)));
+                Boards[deviceId].SetKeyBitmap(Int32.Parse(keyId), KeyBitmap.Create.FromBitmap(GenerateKeyIcon(keyModel, deviceId)));
             }
         }
 
-        private void BoardOnKeyStateChanged(DeviceModel device, int keyId, bool isDown)
+        private void BoardOnKeyStateChanged(DeviceModel device, string keyId, bool isDown)
         {
             try
             {

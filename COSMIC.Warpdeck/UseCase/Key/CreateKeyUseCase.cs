@@ -19,7 +19,7 @@ namespace COSMIC.Warpdeck.UseCase.Key
             PropertyLookup properties = new PropertyLookup();
             foreach (var modelTag in model.Properties) properties.Add(modelTag.Key, modelTag.Value);
 
-            _deviceManager.GetDevice(deviceId).Layers[layerId].Buttons.Add( model.KeyId, new ButtonModel
+            _deviceManager.GetDevice(deviceId).Layers[layerId].Buttons.Add(model.KeyId, new ButtonModel
             {
                 Properties = properties
             });

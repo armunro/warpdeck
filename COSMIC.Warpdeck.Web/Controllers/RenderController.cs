@@ -19,8 +19,8 @@ namespace COSMIC.Warpdeck.Web.Controllers
             _deviceManager = deviceManager;
         }
 
-        [HttpGet, Route("layer/active/icon/{keyId:int}")]
-        public IActionResult RenderLiveStateIcon(string deviceId, int keyId)
+        [HttpGet, Route("layer/active/icon/{keyId}")]
+        public IActionResult RenderLiveStateIcon(string deviceId, string keyId)
         {
             Bitmap icon;
 
@@ -38,8 +38,8 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return File(icon.ToMemoryStream(), "image/png", "key.png");
         }
 
-        [HttpGet, Route("layer/{layerId}/icon/{keyId:int}")]
-        public IActionResult RenderLayerIcon(string deviceId, string layerId, int keyId)
+        [HttpGet, Route("layer/{layerId}/icon/{keyId}")]
+        public IActionResult RenderLayerIcon(string deviceId, string layerId, string keyId)
         {
             Bitmap icon;
             try

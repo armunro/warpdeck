@@ -17,7 +17,7 @@ namespace COSMIC.Warpdeck.UseCase.Key
             _redrawDeviceLayersUseCase = redrawDeviceLayersUseCase;
         }
 
-        public void Invoke(string deviceId, string layerId, int keyId, int newKeyId)
+        public void Invoke(string deviceId, string layerId, string keyId, string newKeyId)
         {
             LayerModel layer = _deviceManager.GetDevice(deviceId).Layers[layerId];
 

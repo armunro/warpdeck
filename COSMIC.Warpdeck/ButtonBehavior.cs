@@ -17,7 +17,7 @@ namespace COSMIC.Warpdeck
         private readonly int _holdDelay = 250;
 
         
-        public PropertyDescriptor Category = PropertyDescriptor.Text("key.category")
+        public PropertyDescriptor Category = PropertyDescriptor.Text("Category")
             .Named("Category")
             .Described("For categorizing buttons. Useful when using property rules.")
             .WithDefault("Uncategorized");
@@ -48,11 +48,11 @@ namespace COSMIC.Warpdeck
         }
 
 
-        public void OnKeyDown(DeviceModel device, int key, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
+        public void OnKeyDown(DeviceModel device, string keyId, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
         }
 
-        public void OnKeyUp(DeviceModel device, int key, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
+        public void OnKeyUp(DeviceModel device, string keyId, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
             FireEvent(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "hold" : "press");
         }
