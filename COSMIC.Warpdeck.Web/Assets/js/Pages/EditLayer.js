@@ -53,9 +53,9 @@ class EditLayer {
         }
     },
     "Properties": {
-        "Category" : "Rider-General",
-        "Text" :"Close Other",
-        "Icon":  "list-check.svg"
+        "Category" : "",
+        "Text" :"New",
+        "Icon":  ""
     }
 }`
         fetch(updateUri, {

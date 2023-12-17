@@ -54,12 +54,12 @@ namespace COSMIC.Warpdeck
 
         public void OnKeyUp(DeviceModel device, string keyId, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
-            FireEvent(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "hold" : "press");
+            FireEvent(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "Hold" : "Press");
         }
 
 
         public ActionDescriptorSet SpecifyActions() => ActionDescriptorSet.New(nameof(ButtonBehavior))
-            .Action(ActionDescriptor.New("press"))
-            .Action(ActionDescriptor.New("hold"));
+            .Action(ActionDescriptor.New("Press"))
+            .Action(ActionDescriptor.New("Hold"));
     }
 }
