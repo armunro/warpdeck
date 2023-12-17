@@ -74,7 +74,6 @@ namespace COSMIC.Warpdeck.Managers
             {
                 foreach (var button in layerModel.Buttons)
                 {
-                    //TODO. Once component keys are string and not integers, all comps can be combined from all layers
                     
                 }
             }
