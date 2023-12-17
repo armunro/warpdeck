@@ -38,9 +38,8 @@ class EditLayer {
         let activeKey = this.keyGrid.activeKey;
         let updateUri = "/api/device/" + activeKey.device + "/layer/" + activeKey.layer + "/key";
 
-        let newKeyBody =
-`{
-    "KeyId": ${activeKey.key},
+        let newKeyBody = `{
+    "KeyId": "${activeKey.key}",
     "Behavior": {
         "Type": "Press",
         "Actions": {
@@ -136,6 +135,7 @@ class EditLayer {
     }
 
     bindAddPropertyEditors(keyMode, properties) {
+        this.addPropertyNameSelect.innerHTML = "";
         for (let propertyGroup in properties) {
             for (let property in properties[propertyGroup].properties) {
                 let selectOption = document.createElement('option')
@@ -249,13 +249,21 @@ class EditLayer {
 
     createElement_propertyEditor(propertyName, friendlyName, keyModel) {
         let propertyEditorElem = document.createElement("div");
-        propertyEditorElem.innerHTML = "<div class='form-group mb-2'>" + "<label for=\"keyId\">" + friendlyName + "</label>" + "<input type=\"text\" id=\"tag_" + propertyName + "\" data-tag=\"" + propertyName + "\" class=\"form-control keyTag\" value=\"" + keyModel["Properties"][propertyName] + "\">" + "</div>";
+        propertyEditorElem.innerHTML = `<div class='form-group mb-2'>
+<label for="keyId">${friendlyName}</label><input type="text" id="tag_${propertyName}" data-tag="${propertyName}" class="form-control keyTag" value="${keyModel["Properties"][propertyName]}"></div>`;
         return propertyEditorElem;
     }
 
     createElement_propertyGroupCard(propertyGroup) {
         let propertyGroupElem = document.createElement("div");
-        propertyGroupElem.innerHTML = "<div class=\"card mb-2\">\n" + "    <div class=\"card-header\">\n" + "        Properties\n" + "    </div>\n" + "    <div class=\"card-body\">\n" + "    </div>\n" + "</div>\n";
+        propertyGroupElem.innerHTML = `<div class="card mb-2">
+    <div class="card-header">
+        Properties
+    </div>
+    <div class="card-body">
+    </div>
+</div>
+`;
         return propertyGroupElem;
     }
 }

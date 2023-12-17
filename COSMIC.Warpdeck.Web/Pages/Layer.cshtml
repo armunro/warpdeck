@@ -25,30 +25,35 @@
                         Behavior
                     </div>
                     <div class="card-body">
-                        <select id="behaviorSelect" class="form-select d-none" >
+                        <select id="behaviorSelect" class="form-select d-none">
                             <option value="Press">Press</option>
                             <option value="PressAndHold">Press And Hold</option>
                         </select>
                         <div id="actionContainer" class="form-group">
                         </div>
+
+                        <form class="form">
+                            <div id="tagContainer" class="form-group">
+                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                        data-bs-toggle="dropdown" aria-expanded="false">Dropdown
+                                </button>
+                            </div>
+                            <div class="input-group">
+                                <select class="form-select" id="addPropertyNameSelect">
+                                </select>
+                                <input type="text" id="addPropertyValueTextBox" class="form-control">
+                                <button class="btn btn-outline-secondary" id="addPropertyButton" type="button">Add
+                                    Property
+                                </button>
+                            </div>
+                            <div class="form-group">
+                                <button id="saveKey" type="button" class="btn btn-primary">Save</button>
+                                <button id="deleteKey" type="button" class="btn btn-primary">Delete</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
-                <form class="form">
-                    <div id="tagContainer" class="form-group">
-                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</button>
-                    </div>
-                    <div class="input-group">
-                        <select class="form-select" id="addPropertyNameSelect">
-                        </select>
-                         <input type="text" id="addPropertyValueTextBox" class="form-control">
-                        <button class="btn btn-outline-secondary" id="addPropertyButton" type="button">Add Property</button>
-                    </div>
-                    <div class="form-group">
-                        <button id="saveKey" type="button" class="btn btn-primary">Save</button>
-                        <button id="deleteKey" type="button" class="btn btn-primary">Delete</button>
-                    </div>
-                </form>
-
+               
             </div>
             <div class="card" id="createKeyCard">
                 <div class="card-header">
