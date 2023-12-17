@@ -11,11 +11,10 @@ namespace COSMIC.Warpdeck.Web.Controllers
         [HttpPost, Route("api/trigger/{deviceName}/{keyId}/press")]
         public string KeyPress(string deviceName, string keyId)
         {
-WarpdeckAppContext.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceName, keyId, "press");
-
+            WarpdeckAppContext.Container.Resolve<DeviceManager>().FireActionOnActiveDevice(deviceName, keyId, "press");
             return "pressed";
         }
-        
+
         [HttpPost, Route("api/trigger/{deviceName}/{keyId}/hold")]
         public string KeyHold(string deviceName, string keyId)
         {

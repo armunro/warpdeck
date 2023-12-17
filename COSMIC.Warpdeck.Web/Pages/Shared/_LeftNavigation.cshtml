@@ -7,25 +7,26 @@
         <ul class="nav d-block">
             @foreach (var v in COSMIC.Warpdeck.Web.WarpDeckFrontend.Container.Resolve<DeviceManager>().GetAllDevices())
             {
-                <li class="nav-item">
-                    <h2>
-                        <a class="nav-link px-2" aria-current="page" href="/device/@v.DeviceId">@v.DeviceId</a>
-                    </h2>
-                    <ul class="nav d-block">
-                        <li>
-                            <a class="nav-link d-inline" href="/device/@v.DeviceId/monitor">Monitors (@v.MonitorRules.Rules.Count)</a> 
-
-                        </li>
-                        <li>
-                        <a class="nav-link d-inline" href="/device/@v.DeviceId/property">Properties (@v.PropertyRules.Count)</a>
-                            
-                        </li>
-                    </ul>
-
-                    <ul class="nav d-block">
-                        <li>
-                            <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 my-0 text-muted">Layers</h6>
-                        </li>
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="m-0"><a class="deviceHeaderLink" aria-current="page" href="/device/@v.DeviceId">@v.DeviceId</a></h3>
+                    </div>
+                    <div class="card-body">
+                        <a class="btn btn-secondary btn-sm position-relative me-1" href="/device/@v.DeviceId/monitor">
+                            Monitors
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                @v.MonitorRules.Rules.Count
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </a>
+                        <a class="btn btn-secondary btn-sm position-relative" href="/device/@v.DeviceId/property">
+                            Properties
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
+                                @v.PropertyRules.Count
+                                <span class="visually-hidden">unread messages</span>
+                            </span>
+                        </a>
+                        <h5 class="">LAYERS</h5>
                         @foreach (var j in v.Layers)
                         {
                             <li class="nav-item">
@@ -34,9 +35,8 @@
                                 </a>
                             </li>
                         }
-                    </ul>
-
-                </li>
+                    </div>
+                </div>
             }
         </ul>
     </div>

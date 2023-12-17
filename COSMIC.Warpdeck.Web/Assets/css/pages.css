@@ -6,6 +6,11 @@
 .keyMapKey.active{
     border: 1px solid #0a53be;
 }
+.deviceHeaderLink{
+    text-decoration: none;
+    color: #2b5f8c;
+}
+
 #propertiesCard{display:none}
 #propertiesCard.active{display:block}
 

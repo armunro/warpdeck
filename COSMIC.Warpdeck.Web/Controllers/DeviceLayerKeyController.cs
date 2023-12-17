@@ -75,8 +75,6 @@ namespace COSMIC.Warpdeck.Web.Controllers
                 return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId],
                     new JsonSerializerOptions() { WriteIndented = true });    
             }
-                
-            
         }
 
         [HttpPut, Route("{keyId}")]

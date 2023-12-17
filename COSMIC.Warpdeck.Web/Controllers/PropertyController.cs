@@ -25,15 +25,11 @@ namespace COSMIC.Warpdeck.Web.Controllers
         [Route("property")]
         public IEnumerable<TypePropertiesResponseModel> Index()
         {
-            
             IEnumerable<IHasProperties> hasProps = WarpDeckFrontend.Container.Resolve<IEnumerable<IHasProperties>>();
-
             return hasProps.Select(x => new TypePropertiesResponseModel()
             {
                 TypeName = x.GetType().Name,
                 Properties = x.SpecifyProperties(),
-               
-                
             });
         }
         
@@ -41,9 +37,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
         [Route("property/{parentTypeName}/{typeName}")]
         public PropertyDescriptorSet Index(string parentTypeName, string typeName)
         {
-
             return _getTypePropertyUseCase.Invoke(parentTypeName, typeName);
-
         }
     }
 }

@@ -24,6 +24,7 @@ namespace COSMIC.Warpdeck.Managers
         private readonly Dictionary<string, PropertyRuleManager> _propertyRuleManagers = new();
         private Dictionary<string, DeviceModel> Devices { get; } = new();
         private Dictionary<string, IMacroBoard> Boards { get; } = new();
+        private ButtonMap CombinedButtons { get; } = new();
 
         public DeviceManager(ActionTimer timer, IIconCache cache)
         {
@@ -48,7 +49,8 @@ namespace COSMIC.Warpdeck.Managers
 
         public void BindDevice(IMacroBoard macroBoard, DeviceModel deviceModel)
         {
-            macroBoard.KeyStateChanged += (_, args) => BoardOnKeyStateChanged(deviceModel, args.Key.ToString(), args.IsDown);
+            macroBoard.KeyStateChanged +=
+                (_, args) => BoardOnKeyStateChanged(deviceModel, args.Key.ToString(), args.IsDown);
             macroBoard.ConnectionStateChanged += (_, args) =>
             {
                 if (args.NewConnectionState)
@@ -70,11 +72,12 @@ namespace COSMIC.Warpdeck.Managers
 
         private void CombineDeviceComponents(DeviceModel deviceModel)
         {
+            CombinedButtons.Clear();
             foreach (LayerModel layerModel in deviceModel.Layers.Values.ToList())
             {
                 foreach (var button in layerModel.Buttons)
                 {
-                    
+                    CombinedButtons.Add(layerModel.LayerId + "-" + button.Key, button.Value);
                 }
             }
         }
@@ -120,7 +123,8 @@ namespace COSMIC.Warpdeck.Managers
             foreach (var (keyId, keyModel) in layer.Buttons)
             {
                 device.ButtonStates.UpdateKeyState(keyId, keyModel);
-                Boards[deviceId].SetKeyBitmap(Int32.Parse(keyId), KeyBitmap.Create.FromBitmap(GenerateKeyIcon(keyModel, deviceId)));
+                Boards[deviceId].SetKeyBitmap(Int32.Parse(keyId),
+                    KeyBitmap.Create.FromBitmap(GenerateKeyIcon(keyModel, deviceId)));
             }
         }
 
@@ -141,7 +145,7 @@ namespace COSMIC.Warpdeck.Managers
                 else
                     key.History.LastUp = DateTime.Now;
 
-             
+
                 //TODO: This needs to be removed
                 ButtonBehavior behavior = new ButtonBehavior();
 

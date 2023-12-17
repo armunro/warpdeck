@@ -23,9 +23,6 @@ namespace COSMIC.Warpdeck.Web.Controllers
             IEnumerable<IHasActions> hasActions = WarpDeckFrontend.Container.Resolve<IEnumerable<IHasActions>>();
             IHasActions behavior = hasActions.FirstOrDefault();
             return behavior.SpecifyActions();
-
-
-
         }
     }
 }
