@@ -1,0 +1,38 @@
+ @page "/device/{deviceId}/actions"
+@model COSMIC.Warpdeck.Web.Pages.DeviceActions
+
+@{
+    Layout = "_Layout";
+}
+
+
+<table class="table">
+    <thead>
+    <tr>
+        <th scope="col">Key</th>
+        <th scope="col">Type</th>
+        <th scope="col">Parameters</th>
+        
+    </tr>
+    </thead>
+    <tbody>
+    @{ int counter = 0; }
+    @foreach (var actionModel in Model.Actions)
+    {
+        <tr>
+            <td>@actionModel.Key</td>
+            <td>@actionModel.Value.Type</td>
+            <td>
+             
+                @foreach (var (key, value) in actionModel.Value.Parameters)
+                {
+                    <div><text>@key</text> = <code>@value</code></div>
+                }
+
+            </td>
+         
+        </tr>
+        counter += 1;
+    }
+    </tbody>
+</table>

@@ -1,5 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Text.Json.Serialization;
+using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
@@ -18,7 +19,7 @@ namespace COSMIC.Warpdeck.Domain.Device
         [JsonIgnore] public MonitorRuleList MonitorRules { get; set; }
         [JsonIgnore] public ButtonMap ButtonStates { get; set; } = new();
         [JsonIgnore] public PropertyRuleModelList PropertyRules { get; set; } = new();
-        [JsonIgnore] public List<ButtonAction> ActionsCombined { get; set; } = new();
+        [JsonIgnore] public Dictionary<String,ActionModel> ActionsCombined { get; set; } = new();
         
         
         

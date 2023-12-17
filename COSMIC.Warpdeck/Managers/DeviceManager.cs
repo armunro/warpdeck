@@ -24,7 +24,6 @@ namespace COSMIC.Warpdeck.Managers
         private readonly Dictionary<string, PropertyRuleManager> _propertyRuleManagers = new();
         private Dictionary<string, DeviceModel> Devices { get; } = new();
         private Dictionary<string, IMacroBoard> Boards { get; } = new();
-        private ButtonMap CombinedButtons { get; } = new();
 
         public DeviceManager(ActionTimer timer, IIconCache cache)
         {
@@ -67,17 +66,24 @@ namespace COSMIC.Warpdeck.Managers
             deviceModel.MonitorRules.Rules.ForEach(x => _monitorManager.AddMonitorRule(x));
             deviceModel.PropertyRules.ForEach(x => _propertyRuleManagers[deviceModel.DeviceId].Rules.Add(x));
             ClearDevice(deviceModel.DeviceId);
-            CombineDeviceComponents(deviceModel);
+            CombineDeviceActions(deviceModel);
         }
 
-        private void CombineDeviceComponents(DeviceModel deviceModel)
+        private void CombineDeviceActions(DeviceModel deviceModel)
         {
-            CombinedButtons.Clear();
+            
             foreach (LayerModel layerModel in deviceModel.Layers.Values.ToList())
             {
                 foreach (var button in layerModel.Buttons)
                 {
-                    CombinedButtons.Add(layerModel.LayerId + "-" + button.Key, button.Value);
+                    foreach (string actionName in button.Value.Actions.Keys)
+                    {
+                        string key = $"{layerModel.LayerId}.{button.Key}.{actionName}";
+                        deviceModel.ActionsCombined.Add(key, button.Value.Actions[actionName]);
+                        
+                    }
+
+                    
                 }
             }
         }
