@@ -1,10 +1,10 @@
 .keyMapKey{
     cursor: pointer;
     background:#000;
-    
+    border: 1px solid #252525;
 }
 .keyMapKey.active{
-    border-color: #0a53be;
+    border: 1px solid #0a53be;
 }
 #propertiesCard{display:none}
 #propertiesCard.active{display:block}
