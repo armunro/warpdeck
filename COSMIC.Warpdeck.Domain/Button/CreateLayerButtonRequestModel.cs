@@ -1,5 +1,3 @@
-using COSMIC.Warpdeck.Domain.Button.Behavior;
-
 namespace COSMIC.Warpdeck.Domain.Button
 {
     public class CreateLayerButtonRequestModel

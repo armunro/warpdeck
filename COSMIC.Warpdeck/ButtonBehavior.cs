@@ -5,7 +5,6 @@ using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Action.Descriptors;
 using COSMIC.Warpdeck.Domain.Action.Exceptions;
 using COSMIC.Warpdeck.Domain.Button;
-using COSMIC.Warpdeck.Domain.Button.Behavior;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
