@@ -25,10 +25,13 @@ namespace COSMIC.Warpdeck.Web
         {
             services.AddRazorPages()
                 .WithRazorPagesRoot(Defaults.RazorPagesRoot)
-                
                 .AddJsonOptions(
                     options => options.JsonSerializerOptions.IgnoreNullValues = true
                 );
+            services.AddEndpointsApiExplorer();
+            services.AddControllers();
+            services.AddSwaggerGen();
+            
         }
 
         // Here's the change for child lifetime scope usage! Register your "root"
@@ -58,11 +61,14 @@ namespace COSMIC.Warpdeck.Web
             });
             app.UseRouting();
             app.UseAuthorization();
+            
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
                 endpoints.MapControllers();
             });
+            app.UseSwagger();
+            app.UseSwaggerUI(options => options.EnableTryItOutByDefault());
         }
     }
 }
