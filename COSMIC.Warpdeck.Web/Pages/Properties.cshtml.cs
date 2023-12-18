@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Property.Rules;
@@ -10,7 +11,7 @@ namespace COSMIC.Warpdeck.Web.Pages
         private readonly DeviceManager _deviceManager;
         public string DeviceId { get; set; }
 
-        public PropertyRuleModelList PropertyRules { get; set; }
+        public List<PropertyRuleModel> PropertyRules { get; set; }
 
         public Properties(DeviceManager deviceManager)
         {

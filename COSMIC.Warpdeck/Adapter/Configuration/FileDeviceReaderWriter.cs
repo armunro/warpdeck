@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Text.Json;
@@ -40,7 +41,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
                     JsonSerializer.Deserialize<MonitorRuleList>(
                         File.ReadAllText(Path.Join(deviceBaseDir, "monitorRules.json")));
                 device.PropertyRules =
-                    JsonSerializer.Deserialize<PropertyRuleModelList>(
+                    JsonSerializer.Deserialize<List<PropertyRuleModel>>(
                         File.ReadAllText(Path.Join(deviceBaseDir, "propertyRules.json")));
 
 

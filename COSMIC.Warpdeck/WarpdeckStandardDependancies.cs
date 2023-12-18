@@ -39,7 +39,7 @@ namespace COSMIC.Warpdeck
             {
                 builder.RegisterType<PropertyRuleManager>().SingleInstance();
                 builder.RegisterType<AlwaysRule>().Named<IPropertyRule>("Always");
-                builder.RegisterType<PropertyEqualsRule>().Named<IPropertyRule>("TagEquals");
+                builder.RegisterType<PropertyEqualsRule>().Named<IPropertyRule>("PropertyEquals");
                 builder.RegisterType<GetTypePropertyUseCase>().AsSelf();
 
                 base.Load(builder);

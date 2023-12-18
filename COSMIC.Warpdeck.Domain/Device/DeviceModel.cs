@@ -18,7 +18,7 @@ namespace COSMIC.Warpdeck.Domain.Device
         [JsonIgnore] public LayerMap ActiveLayers { get; set; } = new();
         [JsonIgnore] public MonitorRuleList MonitorRules { get; set; }
         [JsonIgnore] public ButtonMap ButtonStates { get; set; } = new();
-        [JsonIgnore] public PropertyRuleModelList PropertyRules { get; set; } = new();
+        [JsonIgnore] public List<PropertyRuleModel> PropertyRules { get; set; } = new();
         [JsonIgnore] public Dictionary<String,ActionModel> ActionsCombined { get; set; } = new();
         
         

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Button;
@@ -8,7 +9,7 @@ namespace COSMIC.Warpdeck.Managers
 {
     public class PropertyRuleManager
     {
-        public PropertyRuleModelList Rules { get; } = new();
+        public List<PropertyRuleModel> Rules { get; } = new();
 
   
         
@@ -19,7 +20,7 @@ namespace COSMIC.Warpdeck.Managers
                 return button.Properties.GetProperty(property.Key);
 
             //check for style rules
-            var applicableRules = Rules.Where(x => x.TargetTagName == property.Key);
+            var applicableRules = Rules.Where(x => x.UpdateProperty == property.Key);
             if (!applicableRules.Any())
                 return property.Default;
 
@@ -31,7 +32,7 @@ namespace COSMIC.Warpdeck.Managers
                     //TODO: Cannot move this to Domain package because WarpdeckAppContext will not be available
                     WarpdeckAppContext.Container.ResolveNamed<IPropertyRule>(ruleModel.Criteria.Type, criteriaParameters);
                 if (propertyRule.IsMetBy(button.Properties))
-                    return ruleModel.TargetTagValue;
+                    return ruleModel.UpdateValue;
             }
 
             if (noDefault)
