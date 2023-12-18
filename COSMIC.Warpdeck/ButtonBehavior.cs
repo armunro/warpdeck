@@ -29,22 +29,24 @@ namespace COSMIC.Warpdeck
 
   
 
-        public void FireEvent(ButtonModel buttonModel, string eventName)
+        public void TriggerButtonAction(ButtonModel buttonModel, string actionName)
         {
-            //Null check
-            ActionModel actionModel = buttonModel.Actions[eventName];
-
+            ActionModel actionModel = buttonModel.Actions[actionName];
             try
             {
-                //TODO: Cannot move this to Domain package because WarpdeckAppContext will not be available
-                ButtonAction buttonAction = WarpdeckAppContext.Container.ResolveNamed<ButtonAction>(actionModel.Type,
-                    new NamedParameter("parameters", actionModel.Parameters));
-                buttonAction.StartAction(actionModel);
+                TriggerAction(actionModel);
             }
             catch (Exception ex)
             {
                 throw new ActionNotFoundException(actionModel.Type);
             }
+        }
+
+        public void TriggerAction(ActionModel action)
+        {
+            ButtonAction buttonAction = WarpdeckAppContext.Container.ResolveNamed<ButtonAction>(action.Type,
+                new NamedParameter("parameters", action.Parameters));
+            buttonAction.StartAction(action);
         }
 
 
@@ -54,7 +56,7 @@ namespace COSMIC.Warpdeck
 
         public void OnKeyUp(DeviceModel device, string keyId, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
-            FireEvent(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "Hold" : "Press");
+            TriggerButtonAction(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "Hold" : "Press");
         }
 
 

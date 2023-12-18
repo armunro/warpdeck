@@ -114,10 +114,16 @@ namespace COSMIC.Warpdeck.Managers
             }
         }
 
-        public void FireActionOnActiveDevice(string deviceId, string keyId, string action)
+        public void TriggerButtonAction(string deviceId, string buttonId, string action)
         {
             ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
-            behavior.FireEvent(Devices[deviceId].ButtonStates[keyId], action);
+            behavior.TriggerButtonAction(Devices[deviceId].ButtonStates[buttonId], action);
+        }
+
+        public void TriggerAction(ActionModel action)
+        {
+            ButtonBehavior behavior = WarpdeckAppContext.Container.Resolve<ButtonBehavior>();
+            behavior.TriggerAction(action);
         }
 
 

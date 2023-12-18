@@ -65,7 +65,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
                 KeyId = x.Key,
                 Behavior = new BehaviorResponseModel
                 {
-                    BehaviorId = "PuhAndHold",
+                    BehaviorId = "PushAndHold",
                     Actions = CreateActionSummaries(x.Value.Actions)
                 }
             }).ToArray();
