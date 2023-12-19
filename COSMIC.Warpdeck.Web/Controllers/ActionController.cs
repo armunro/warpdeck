@@ -4,6 +4,7 @@ using Autofac;
 using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Action.Descriptors;
 using COSMIC.Warpdeck.Domain.Button;
+using COSMIC.Warpdeck.Managers;
 using Microsoft.AspNetCore.Mvc;
 
 namespace COSMIC.Warpdeck.Web.Controllers
@@ -30,10 +31,13 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return parameters;
         }
         
-        [HttpPost, Route("/api/action/{actionName}/invoke")]
-        public ActionParamDescriptorSet InvokeAction(string actionName)
+
+        
+        [HttpPost, Route("/api/action/{actionName}/trigger")]
+        public string TriggerAction(string actionName, [FromBody] ActionModel action)
         {
-            return null;
+            WarpdeckAppContext.Container.Resolve<DeviceManager>().TriggerAction(action);
+            return "held";
         }
     }
 }

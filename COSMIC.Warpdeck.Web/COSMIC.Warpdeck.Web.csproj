@@ -188,12 +188,6 @@
       <Content Include="Controllers\DeviceController.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="Controllers\DeviceLayerController.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Controllers\DeviceLayerKeyController.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <Content Include="Controllers\HardwareController.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
@@ -222,9 +216,6 @@
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Include="Controllers\RenderController.cs">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Controllers\TypeController.cs">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
       <Content Update="Pages\Device.cshtml">
