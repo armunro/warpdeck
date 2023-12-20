@@ -10,6 +10,7 @@
 <link href="/css/layout.css" rel="stylesheet">
 <link href="/css/pages.css" rel="stylesheet">
 <script src="/js/Partials/KeyGrid.js"></script>
+<script src="/js/Partials/NewLayerModal.js"></script>
 <script src="/js/Pages/Device.js"></script>
 
 
@@ -22,21 +23,22 @@ document.addEventListener("DOMContentLoaded", function(event) {
     function key_pressed(key) {
         let  keyData = key.parentNode.dataset
 
-        fetch(`/api/trigger/${keyData.deviceid}/${keyData.keyid}/press`, {method: "POST"}).then(
+///api/device/Office%20Streamdeck%20XL/keys/25/press
+        fetch(`/api/device/${keyData.deviceid}/keys/${keyData.keyid}/press`, {method: "POST"}).then(
             (response) => {console.log(response.json())}
         );
         
     }
     function key_held(key) {
         let  keyData = key.parentNode.dataset
-        fetch(`/api/trigger/${keyData.deviceid}/${keyData.keyid}/hold`, {method: "POST"}).then(
+        fetch(`/api/device/${keyData.deviceid}/keys/${keyData.keyid}/hold`, {method: "POST"}).then(
              (response) => {console.log(response.json())}
          );
     }
     
-    window.keyGrid = new ButtonGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, 1, 5);
-    window.keyGrid.registerButtonClickCallback(key_pressed);
-    window.keyGrid.registerButtonHoldCallback(key_held);
+    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, 1, 5);
+    window.keyGrid.registerKeyClickCallback(key_pressed);
+    window.keyGrid.registerKeyHoldCallback(key_held);
     window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")
 });
 </script>

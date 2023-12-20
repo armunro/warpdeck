@@ -10,9 +10,8 @@
     <thead>
     <tr>
         <th scope="col">#</th>
-        <th scope="col">Monitor ActionName</th>
+        <th scope="col">Monitor</th>
         <th scope="col">Criteria</th>
-        <th scope="col">Criteria Parameters</th>
         <th scope="col">Actions</th>
     </tr>
     </thead>
@@ -23,8 +22,8 @@
         <tr>
             <th scope="row">@(counter + 1) </th>
             <td>@ruleModel.MonitorType</td>
-            <td>@ruleModel.Criteria.CriteriaType</td>
             <td>
+                @ruleModel.Criteria.CriteriaType
                 @foreach (var param in @ruleModel.Criteria.Parameters)
                 {
                     <span>@(param.Key): @(param.Value)</span>

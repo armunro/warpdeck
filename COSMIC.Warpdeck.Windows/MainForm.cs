@@ -53,6 +53,12 @@ namespace COSMIC.Warpdeck.Windows
                 e.Cancel = true;
             }
         }
-        
+
+        private void NotifyIcon_Menu_Device_OnClick(object? sender, EventArgs e)
+        {
+            DeviceHost deviceHost = new DeviceHost();
+            deviceHost.Show();
+            deviceHost.LoadDeviceHost("Office Streamdeck XL");
+        }
     }
 }

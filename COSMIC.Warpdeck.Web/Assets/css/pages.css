@@ -1,3 +1,6 @@
+#keymapGrid{
+    overflow:hidden;
+}
 .keyMapKey{
     cursor: pointer;
     background:#000;
