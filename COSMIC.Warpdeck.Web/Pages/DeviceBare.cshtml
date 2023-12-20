@@ -36,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
          );
     }
     
-    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, 1, 5);
+    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, @Model.CurrentDevice.Info.Rows, @Model.CurrentDevice.Info.Columns);
     window.keyGrid.registerKeyClickCallback(key_pressed);
     window.keyGrid.registerKeyHoldCallback(key_held);
     window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")

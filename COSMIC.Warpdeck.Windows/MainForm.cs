@@ -4,12 +4,15 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Clipboard;
+using COSMIC.Warpdeck.Domain.Device;
+using COSMIC.Warpdeck.Domain.DeviceHost;
 using COSMIC.Warpdeck.Managers;
+using COSMIC.Warpdeck.Windows.Adapter;
 using COSMIC.Warpdeck.Windows.Adapter.Monitor;
 
 namespace COSMIC.Warpdeck.Windows
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, IDeviceHostClient
     {
         private readonly WarpdeckWindowsApp _warpdeckWindowsApp;
 
@@ -21,7 +24,8 @@ namespace COSMIC.Warpdeck.Windows
             _warpdeckWindowsApp.StartPresentation();
             _warpdeckWindowsApp.StartClipboardMonitor();
             _warpdeckWindowsApp.RegisterWindowsMonitors();
-            WarpdeckAppContext.Container = WarpdeckWindowsApp.Container;            
+            WarpdeckAppContext.Container = WarpdeckWindowsApp.Container;     
+            WarpdeckAppContext.Container.Resolve<DeviceHostManager>().RegisterHostClient(this);
             
             _warpdeckWindowsApp.LoadConfig();
             Visible = false;
@@ -54,11 +58,22 @@ namespace COSMIC.Warpdeck.Windows
             }
         }
 
-        private void NotifyIcon_Menu_Device_OnClick(object? sender, EventArgs e)
+      public DeviceHostHandle OpenDeviceHost(DeviceModel model)
         {
-            DeviceHost deviceHost = new DeviceHost();
-            deviceHost.Show();
-            deviceHost.LoadDeviceHost("Office Streamdeck XL");
+            DeviceHostHandle deviceHostHandle = null;
+            this.Invoke((MethodInvoker) delegate
+            {
+                DeviceHost deviceHost = new DeviceHost(model);
+                deviceHost.Show();
+                deviceHostHandle = new WinFormsDeviceHostHandle()
+                {
+                    Device = model,
+                    WinForm = deviceHost
+                };
+            });
+
+            return deviceHostHandle;
         }
+
     }
 }

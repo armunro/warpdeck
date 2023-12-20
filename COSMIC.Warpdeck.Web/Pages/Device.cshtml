@@ -60,7 +60,7 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function(event) { 
-    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true});
+    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, @Model.CurrentDevice.Info.Rows, @Model.CurrentDevice.Info.Columns);
     setInterval(() => window.keyGrid.updateButtons(),10000);
     window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")
     document.newLayerModal = new NewLayerModal("office", () => $("#newLayerModal").modal());  //do work

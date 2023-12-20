@@ -11,6 +11,7 @@ namespace COSMIC.Warpdeck.Web.Pages
         public ButtonMap LayerButtons { get; set; }
         public string LayerId { get; set; }
         public string DeviceId { get; set; }
+        public DeviceModel DeviceModel { get; set; } 
 
         
         public Layer(DeviceManager deviceManager)
@@ -23,8 +24,9 @@ namespace COSMIC.Warpdeck.Web.Pages
         {
             LayerId = RouteData.Values["layerId"]?.ToString();
             DeviceId = RouteData.Values["deviceId"]?.ToString();
-
-            LayerButtons = _deviceManager.GetDevice(DeviceId).Layers[LayerId].Buttons;
+            DeviceModel = _deviceManager.GetDevice(DeviceId);
+            
+            LayerButtons = DeviceModel.Layers[LayerId].Buttons;
         }
     }
 }

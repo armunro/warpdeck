@@ -1,20 +1,30 @@
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Threading.Tasks;
+using COSMIC.Warpdeck.Domain.Device;
 
 namespace COSMIC.Warpdeck.Windows;
 
 public partial class DeviceHost : Form
 {
-    public DeviceHost()
+    private readonly DeviceModel _model;
+
+    public DeviceHost(DeviceModel model)
     {
+        _model = model;
         InitializeComponent();
+        LoadDeviceHost();
+        
     }
 
-    public async void LoadDeviceHost(string deviceId)
+    public async void LoadDeviceHost()
     {
+        Activate();
+        BringToFront();
+        TopLevel = true;
+        TopMost = true;
         await _deviceHostWebView.EnsureCoreWebView2Async();
-        _deviceHostWebView.CoreWebView2.Navigate($"http://localhost:4300/deviceBare/{deviceId}/");
+        _deviceHostWebView.CoreWebView2.Navigate($"http://localhost:4300/deviceBare/{_model.DeviceId}/");
         
         await SetFormSizeAfter3SecondDelay();
     }

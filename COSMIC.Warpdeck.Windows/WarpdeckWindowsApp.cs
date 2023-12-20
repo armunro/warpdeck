@@ -41,6 +41,7 @@ namespace COSMIC.Warpdeck.Windows
             builder.RegisterModule<WarpdeckWindowsDependencies.PresentationModule>();
             builder.RegisterModule<WarpdeckWindowsDependencies.MonitorsModule>();
             builder.RegisterModule<WarpdeckWindowsDependencies.ClipboardModule>();
+            builder.RegisterModule<WarpdeckWindowsDependencies.DeviceHostModule>();
 
             Container = builder.Build();
             WarpdeckAppContext.Container = Container;

@@ -7,6 +7,7 @@ using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Device.Hardware;
+using COSMIC.Warpdeck.Domain.DeviceHost;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Monitor;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
@@ -85,6 +86,15 @@ namespace COSMIC.Warpdeck.Windows
             protected override void Load(ContainerBuilder builder)
             {
                 builder.RegisterType<Web.WarpDeckFrontend>();
+                base.Load(builder);
+            }
+        }
+
+        public class DeviceHostModule : Module
+        {
+            protected override void Load(ContainerBuilder builder)
+            {
+                builder.RegisterType<DeviceHostManager>().AsSelf().SingleInstance();
                 base.Load(builder);
             }
         }

@@ -82,6 +82,6 @@
 <script>
 
 document.addEventListener("DOMContentLoaded", function(event) { 
-    document.editLayer = new EditLayer(new KeyGrid("keymapGrid", "@Model.DeviceId","@Model.LayerId"));  
+    document.editLayer = new EditLayer(new KeyGrid("keymapGrid", "@Model.DeviceId","@Model.LayerId",{disableSelection: false}, @Model.DeviceModel.Info.Rows, @Model.DeviceModel.Info.Columns));
 });
 </script>
