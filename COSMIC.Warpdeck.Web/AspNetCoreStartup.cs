@@ -34,9 +34,6 @@ namespace COSMIC.Warpdeck.Web
             
         }
 
-        // Here's the change for child lifetime scope usage! Register your "root"
-        // child lifetime scope things with the adapter.
-        // ReSharper disable once UnusedMember.Global
         public void ConfigureContainer(AutofacChildLifetimeScopeConfigurationAdapter config)
         {
         }
@@ -51,7 +48,7 @@ namespace COSMIC.Warpdeck.Web
                 app.UseHsts();
             }
 
-            app.UseStatusCodePages();
+            
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions
             {

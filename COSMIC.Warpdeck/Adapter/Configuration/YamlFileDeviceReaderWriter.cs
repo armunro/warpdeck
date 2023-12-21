@@ -57,11 +57,8 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
                     LayerModel layer = deserializer.Deserialize<LayerModel>(File.ReadAllText(layerFile));
                     device.Layers.Add(layer.LayerId, layer);
                 }
-
                 devices.Add(device);
             }
-
-
             return devices;
         }
 

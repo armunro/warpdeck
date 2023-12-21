@@ -266,6 +266,10 @@
       <Content Update="Pages\DeviceBare.cshtml">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Assets\favicon.ico" />
+      <Content Include="Assets\favicon.ico">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

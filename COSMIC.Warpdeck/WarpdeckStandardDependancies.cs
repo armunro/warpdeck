@@ -87,7 +87,7 @@ namespace COSMIC.Warpdeck
                     .As<IDeviceWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
                     .SingleInstance();
-                builder.RegisterType<ClipPatternFileReaderWriter>()
+                builder.RegisterType<YamlFileClipPatternReaderWriter>()
                     .As<IClipPatternReader>()
                     .As<IClipPatternWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
