@@ -7,20 +7,26 @@ using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property.Rules;
+using YamlDotNet.Serialization;
+using YamlDotNet.Serialization.NamingConventions;
 
 namespace COSMIC.Warpdeck.Adapter.Configuration
 {
-    public class FileDeviceReaderWriter : IDeviceReader, IDeviceWriter
+    public class YamlFileDeviceReaderWriter : IDeviceReader, IDeviceWriter
     {
         private readonly string _configBaseDir;
 
-        public FileDeviceReaderWriter(string configBaseDir)
+        public YamlFileDeviceReaderWriter(string configBaseDir)
         {
             _configBaseDir = configBaseDir;
         }
 
         public DeviceModelList ReadDevices()
         {
+            var deserializer = new DeserializerBuilder()
+                .WithNamingConvention(CamelCaseNamingConvention.Instance) 
+                .Build();
+            
             string devicesDir = Path.Join(_configBaseDir, "devices");
             if (!Directory.Exists(devicesDir))
                 return new DeviceModelList() { new DeviceModel() };
@@ -34,21 +40,21 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
 
                 //device Info
                 device.Info =
-                    JsonSerializer.Deserialize<DeviceInfo>(
-                        File.ReadAllText(Path.Join(deviceBaseDir, "device.wdspec.json")));
+                    deserializer.Deserialize<DeviceInfo>(
+                        File.ReadAllText(Path.Join(deviceBaseDir, "device.yaml")));
                 //monitor rules
                 device.MonitorRules =
-                    JsonSerializer.Deserialize<MonitorRuleList>(
-                        File.ReadAllText(Path.Join(deviceBaseDir, "monitorRules.json")));
+                    deserializer.Deserialize<MonitorRuleList>(
+                        File.ReadAllText(Path.Join(deviceBaseDir, "monitorRules.yaml")));
                 device.PropertyRules =
-                    JsonSerializer.Deserialize<List<PropertyRuleModel>>(
-                        File.ReadAllText(Path.Join(deviceBaseDir, "propertyRules.json")));
+                    deserializer.Deserialize<List<PropertyRuleModel>>(
+                        File.ReadAllText(Path.Join(deviceBaseDir, "propertyRules.yaml")));
 
 
-                string[] layerFiles = Directory.GetFiles(deviceBaseDir, "*.wdlayer.json");
+                string[] layerFiles = Directory.GetFiles(deviceBaseDir, "*.layer.yaml");
                 foreach (string layerFile in layerFiles)
                 {
-                    LayerModel layer = JsonSerializer.Deserialize<LayerModel>(File.ReadAllText(layerFile));
+                    LayerModel layer = deserializer.Deserialize<LayerModel>(File.ReadAllText(layerFile));
                     device.Layers.Add(layer.LayerId, layer);
                 }
 
@@ -61,34 +67,30 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
 
         public void WriteDeviceModel(DeviceModel deviceModel)
         {
+            var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
             string deviceBaseDir = Path.Join(_configBaseDir, "devices", deviceModel.DeviceId);
             if (!Directory.Exists(_configBaseDir))
                 Directory.CreateDirectory(_configBaseDir);
             if (!Directory.Exists(deviceBaseDir))
                 Directory.CreateDirectory(deviceBaseDir);
 
-            JsonSerializerOptions options = new JsonSerializerOptions()
-            {
-                Encoder = JavaScriptEncoder.UnsafeRelaxedJsonEscaping,
-                WriteIndented = true
-            };
+            //Device
+            string specPath = Path.Join(deviceBaseDir, "device.yaml");
+            File.WriteAllText(specPath, serializer.Serialize(deviceModel.Info));
 
-            //Save specifications
-            string specPath = Path.Join(deviceBaseDir, "device.wdspec.json");
-            File.WriteAllText(specPath, JsonSerializer.Serialize(deviceModel.Info, options));
+            //Monitors
+            string monitorFilePath = Path.Join(deviceBaseDir, "monitorRules.yaml");
+            File.WriteAllText(monitorFilePath, serializer.Serialize(deviceModel.MonitorRules));
 
-            //save monitors
-            string monitorFilePath = Path.Join(deviceBaseDir, "monitorRules.json");
-            File.WriteAllText(monitorFilePath, JsonSerializer.Serialize(deviceModel.MonitorRules, options)); 
+            //Property Rules
+            string propertyRulesPath = Path.Join(deviceBaseDir, "propertyRules.yaml");
+            File.WriteAllText(propertyRulesPath, serializer.Serialize(deviceModel.PropertyRules));
 
-            //save property rules
-            string propertyRulesPath = Path.Join(deviceBaseDir, "propertyRules.json");
-            File.WriteAllText(propertyRulesPath, JsonSerializer.Serialize(deviceModel.PropertyRules, options));
-
+            //Layers
             foreach (var layerModel in deviceModel.Layers.Values)
             {
-                string layerFilePath = Path.Join(deviceBaseDir, $"{layerModel.LayerId}.wdlayer.json");
-                File.WriteAllText(layerFilePath, JsonSerializer.Serialize(layerModel, options));
+                string layerFilePath = Path.Join(deviceBaseDir, $"{layerModel.LayerId}.layer.yaml");
+                File.WriteAllText(layerFilePath, serializer.Serialize(layerModel));
             }
         }
     }

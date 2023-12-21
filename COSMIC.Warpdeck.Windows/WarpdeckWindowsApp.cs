@@ -67,6 +67,8 @@ namespace COSMIC.Warpdeck.Windows
                     var hardwareMatch = deckRefHandles.FirstOrDefault(x => x.DevicePath == deviceModel.Info.HardwareId);
                     if (hardwareMatch != null) 
                         deviceManager.BindDevice(hardwareMatch.Open(), deviceModel);
+                    else
+                        deviceManager.BindVirtualDevice(deviceModel);
                 }
                 else
                 {

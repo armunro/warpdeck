@@ -15,6 +15,7 @@
       <PackageReference Include="OpenMacroBoard.SDK" Version="2.1.0" />
       <PackageReference Include="StreamDeckSharp" Version="2.2.0" />
       <PackageReference Include="Svg" Version="3.2.3" />
+      <PackageReference Include="YamlDotNet" Version="13.7.1" />
     </ItemGroup>
 
     <ItemGroup>

@@ -33,17 +33,8 @@ namespace COSMIC.Warpdeck.Managers
 
         public void BindVirtualDevice(DeviceModel newDevice)
         {
-            if (newDevice.Info.HardwareId == "virtual")
-            {
+         
                 BindDevice(new VirtualBoard(), newDevice);
-            }
-            else
-            {
-                IStreamDeckRefHandle refHandle =
-                    StreamDeck.EnumerateDevices().First(x => x.DevicePath == newDevice.Info.HardwareId);
-                IStreamDeckBoard board = refHandle.Open();
-                BindDevice(board, newDevice);
-            }
         }
 
         public void BindDevice(IMacroBoard macroBoard, DeviceModel deviceModel)

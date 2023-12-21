@@ -5,6 +5,7 @@ using COSMIC.Warpdeck.Domain.Button;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Domain.Property.Rules;
+using YamlDotNet.Serialization;
 
 namespace COSMIC.Warpdeck.Domain.Device
 {
@@ -14,12 +15,12 @@ namespace COSMIC.Warpdeck.Domain.Device
     {
         public DeviceInfo Info { get; set; } = new();
         public string DeviceId { get; set; }
-        [JsonIgnore] public LayerMap Layers { get; set; } = new();
-        [JsonIgnore] public LayerMap ActiveLayers { get; set; } = new();
-        [JsonIgnore] public MonitorRuleList MonitorRules { get; set; }
-        [JsonIgnore] public ButtonMap ButtonStates { get; set; } = new();
-        [JsonIgnore] public List<PropertyRuleModel> PropertyRules { get; set; } = new();
-        [JsonIgnore] public Dictionary<String,ActionModel> ActionsCombined { get; set; } = new();
+        [JsonIgnore, YamlIgnore] public LayerMap Layers { get; set; } = new();
+        [JsonIgnore, YamlIgnore] public LayerMap ActiveLayers { get; set; } = new();
+        [JsonIgnore, YamlIgnore] public MonitorRuleList MonitorRules { get; set; }
+        [JsonIgnore, YamlIgnore] public ButtonMap ButtonStates { get; set; } = new();
+        [JsonIgnore, YamlIgnore] public List<PropertyRuleModel> PropertyRules { get; set; } = new();
+        [JsonIgnore, YamlIgnore] public Dictionary<String,ActionModel> ActionsCombined { get; set; } = new();
         
         
         

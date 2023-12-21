@@ -1,6 +1,4 @@
 @using Autofac
-@using COSMIC.Warpdeck
-@using COSMIC.Warpdeck.Domain.Device
 @using COSMIC.Warpdeck.Managers
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse d-block">
     <div class="position-sticky">
@@ -9,15 +7,26 @@
             {
                 <div class="card mb-1">
                     <div class="card-header">
-                        <h4 class="m-0">
+                        <div class="float-start">
                             <a class="deviceHeaderLink" aria-current="page" href="/device/@deviceModel.DeviceId">
                                 @deviceModel.DeviceId
                             </a>
-                        </h4>
+                        </div>
+                        <div class="float-end">
+                                                    <a class=" me-1" href="javascript:fetch('/api/devicehost/@deviceModel.DeviceId/start')">
+                                                        Open
+                                                    </a>
+
+                        </div>
+
+
                     </div>
                     <div class="card-body">
-                        <a href="javascript:fetch('/api/devicehost/@deviceModel.DeviceId/start')"> Launch</a>
-                        <h5 class="">LAYERS</h5>
+                        <h5 class="">LAYERS |       <a href="/device/@deviceModel.DeviceId/actions">
+                                                                          ACTIONS
+                                                                      </a></h5>
+                  
+
                         @foreach (var j in deviceModel.Layers)
                         {
                             <li class="nav-item">
@@ -29,26 +38,20 @@
 
                     </div>
                     <div class="card-footer text-muted">
-                        <a class="btn btn-secondary btn-sm position-relative me-2" href="/device/@deviceModel.DeviceId/actions">
-                            Actions
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                                @deviceModel.ActionsCombined.Count
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
-                        </a>
-                        <a class="btn btn-secondary btn-sm position-relative me-2" href="/device/@deviceModel.DeviceId/monitor">
+
+
+                        <a class="btn btn-secondary btn-sm position-relative me-1"
+                           href="/device/@deviceModel.DeviceId/monitor">
                             Monitors
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                                @deviceModel.MonitorRules.Rules.Count
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
+                            <span class="badge bg-primary">@deviceModel.MonitorRules.Rules.Count</span>
+
                         </a>
-                        <a class="btn btn-secondary btn-sm position-relative" href="/device/@deviceModel.DeviceId/property">
+                        <a class="btn btn-secondary btn-sm position-relative"
+                           href="/device/@deviceModel.DeviceId/property">
                             Properties
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-info">
-                                @deviceModel.PropertyRules.Count
-                                <span class="visually-hidden">unread messages</span>
-                            </span>
+                            <span class="badge bg-primary"> @deviceModel.PropertyRules.Count</span>
+
+
                         </a>
                     </div>
 

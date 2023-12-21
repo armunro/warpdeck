@@ -79,8 +79,11 @@ namespace COSMIC.Warpdeck
         {
             protected override void Load(ContainerBuilder builder)
             {
-                builder.RegisterType<FileDeviceReaderWriter>()
+                builder.RegisterType<YamlFileDeviceReaderWriter>()
                     .As<IDeviceReader>()
+                    .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
+                    .SingleInstance();
+                builder.RegisterType<YamlFileDeviceReaderWriter>()
                     .As<IDeviceWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
                     .SingleInstance();

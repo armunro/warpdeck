@@ -19,6 +19,7 @@ public partial class DeviceHost : Form
 
     public async void LoadDeviceHost()
     {
+        Text = _model.DeviceId;
         Activate();
         BringToFront();
         TopLevel = true;
