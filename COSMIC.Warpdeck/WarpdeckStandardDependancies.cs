@@ -1,4 +1,5 @@
 using System;
+using System.IO;
 using Autofac;
 using COSMIC.Warpdeck.Adapter;
 using COSMIC.Warpdeck.Adapter.Configuration;
@@ -92,6 +93,7 @@ namespace COSMIC.Warpdeck
                     .As<IClipPatternWriter>()
                     .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
                     .SingleInstance();
+                builder.RegisterType<DirectoryClipListReader>().As<IClipListReader>().SingleInstance().WithParameter("configBaseDir", Path.Join(Environment.GetCommandLineArgs()[1], "clip-lists") );
 
                 base.Load(builder);
             }

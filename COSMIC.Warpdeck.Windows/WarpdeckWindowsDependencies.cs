@@ -73,7 +73,8 @@ namespace COSMIC.Warpdeck.Windows
                 builder.RegisterType<MonitorManager>().SingleInstance();
                 builder.RegisterType<ActiveWindowMonitor>().Named<IMonitor>(nameof(ActiveWindowMonitor))
                     .SingleInstance();
-                builder.RegisterType<ActivateLayerMonitorAction>().Named<IMonitorRuleAction>(nameof(ActivateLayerMonitorAction));
+                builder.RegisterType<ActivateLayerMonitorAction>()
+                    .Named<IMonitorRuleAction>(nameof(ActivateLayerMonitorAction));
                 builder.RegisterType<Always>().Named<MonitorCondition>(nameof(Always));
                 builder.RegisterType<AppPathMatches>().Named<MonitorCondition>(nameof(AppPathMatches));
                 builder.RegisterType<WindowTitleMatches>().Named<MonitorCondition>(nameof(WindowTitleMatches));
@@ -103,7 +104,9 @@ namespace COSMIC.Warpdeck.Windows
         {
             protected override void Load(ContainerBuilder builder)
             {
-               builder.RegisterType<WindowsClipboardManager>().SingleInstance().As<IClipboardManager>();
+                builder.RegisterType<WindowsClipboardManager>().SingleInstance().As<IClipboardManager>();
+                builder.RegisterType<ClipListManager>().SingleInstance().AsSelf();
+                
                 base.Load(builder);
             }
         }
