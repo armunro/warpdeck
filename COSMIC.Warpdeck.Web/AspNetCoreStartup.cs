@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Text.Json.Serialization;
 using Autofac.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,7 @@ namespace COSMIC.Warpdeck.Web
             services.AddRazorPages()
                 .WithRazorPagesRoot(Defaults.RazorPagesRoot)
                 .AddJsonOptions(
-                    options => options.JsonSerializerOptions.IgnoreNullValues = true
+                    options => options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull
                 );
             services.AddEndpointsApiExplorer();
             services.AddControllers();
@@ -47,7 +48,6 @@ namespace COSMIC.Warpdeck.Web
                 app.UseExceptionHandler("/Error");
                 app.UseHsts();
             }
-
             
             app.UseHttpsRedirection();
             app.UseStaticFiles(new StaticFileOptions

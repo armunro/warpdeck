@@ -22,7 +22,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
         public DeviceModelList ReadDevices()
         {
             var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance) 
+                .WithNamingConvention(PascalCaseNamingConvention.Instance) 
                 .Build();
             
             string devicesDir = Path.Join(_configBaseDir, "devices");
@@ -62,7 +62,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
 
         public void WriteDeviceModel(DeviceModel deviceModel)
         {
-            var serializer = new SerializerBuilder().WithNamingConvention(CamelCaseNamingConvention.Instance).Build();
+            var serializer = new SerializerBuilder().WithNamingConvention(PascalCaseNamingConvention.Instance).Build();
             string deviceBaseDir = Path.Join(_configBaseDir, "devices", deviceModel.DeviceId);
             if (!Directory.Exists(_configBaseDir))
                 Directory.CreateDirectory(_configBaseDir);

@@ -87,7 +87,6 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return Ok("Board created");
         }
 
-
         [HttpGet, Route("{deviceId}/layer")]
         public DeviceResponseModel DeviceLayersByDeviceId(string deviceId)
         {
@@ -115,8 +114,6 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return _newLayerUseCase.Invoke(deviceId, layer.LayerId);
         }
         
-
-
         [HttpGet, Route("{deviceId}/layer/{layerId}/key")]
         public IActionResult GetLayerKeys(string deviceId, string layerId)
         {
@@ -144,13 +141,11 @@ namespace COSMIC.Warpdeck.Web.Controllers
                     return NotFound();
                 return Json(device.ButtonStates[keyId]);
             }
-            else
-            {
-                if (!device.Layers[layerId].Buttons.IsKeyMapped(keyId))
-                    return NotFound();
-                return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId],
-                    new JsonSerializerOptions() { WriteIndented = true });    
-            }
+
+            if (!device.Layers[layerId].Buttons.IsKeyMapped(keyId))
+                return NotFound();
+            return Json(_deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId],
+                new JsonSerializerOptions() { WriteIndented = true });
         }
         
         [HttpPost, Route("{deviceId}/layer/{layerId}/key")]
