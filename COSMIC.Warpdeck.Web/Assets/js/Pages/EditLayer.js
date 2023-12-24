@@ -43,7 +43,7 @@ class EditLayer {
     "Behavior": {
         "Type": "Press",
         "Actions": {
-            "press": {
+            "Press": {
                 "Type": "KeyMacro",
                 "Parameters": {
                     "keys": "(control+alt+shift+m)|(o)"
@@ -171,19 +171,50 @@ class EditLayer {
                     behaviorActionsObject.actions.forEach(action => {
                         let actionElem = this.createElement_actionGroup(action, keyModel, actionsArray);
                         this.actionContainer.appendChild(actionElem);
-                        if (keyModel.Actions[action.actionName] !== undefined) {
-                            let actionParameterUri = "/api/action/" + keyModel.Actions[action.actionName].Type + "/parameters"
-                            fetch(actionParameterUri)
-                                .then(response => response.json())
-                                .then(actionParams => actionParams.parameters.forEach(paramItem => {
-                                    actionElem.appendChild(this.createElement_actionParamEditor(action, paramItem, keyModel.Actions[action.actionName].Parameters[paramItem.name]));
-                                }));
-                        }
+
+
+                        let actionSelectElem = document.getElementById(`action_${action.actionName}_type`);
+                        actionSelectElem.addEventListener("change", ev => {
+                            this.bindActionParamEditors2(keyModel, actionSelectElem.value, action.actionName, action, actionElem);
+                        })
+                        this.bindActionParamEditors(keyModel, action, actionElem);
                     })
                 })
             });
     }
 
+
+    bindActionParamEditors(keyModel, action, actionElem) {
+        if (keyModel.Actions[action.actionName] !== undefined) {
+            //per action
+            let actionParameterUri = "/api/action/" + keyModel.Actions[action.actionName].Type + "/parameters"
+            fetch(actionParameterUri)
+                .then(response => response.json())
+                .then(actionParams => actionParams.parameters.forEach(paramItem => {
+                    //per action parameter
+                    actionElem.appendChild(this.createElement_actionParamEditor(action, paramItem, keyModel.Actions[action.actionName].Parameters[paramItem.name]));
+                }));
+        }
+    }
+
+    bindActionParamEditors2(keyModel, actionName, eventName, action, actionElem) {
+        if (keyModel.Actions[eventName] === undefined) {
+            keyModel.Actions[eventName] = { "Type": eventName, "Parameters": {}};
+        }
+        //per action
+        let actionParameterUri = "/api/action/" + actionName + "/parameters"
+        fetch(actionParameterUri)
+            .then(response => response.json())
+            .then(actionParams => actionParams.parameters.forEach(paramItem => {
+                //per action parameter
+                var currentValue = keyModel.Actions[eventName].Parameters[paramItem.name];
+                if(currentValue === undefined)
+                {
+                    keyModel.Actions[eventName].Parameters[paramItem.name] = paramItem.defaultValue; 
+                }
+                actionElem.appendChild(this.createElement_actionParamEditor(action, paramItem, ));
+            }));
+    }
 
     bindPropertyEditors(keyModel, propertyGroups) {
         this.tagContainer.innerHTML = "";
@@ -238,6 +269,7 @@ class EditLayer {
         });
         html += `</select></div></div>`;
         actionElem.innerHTML = html;
+
         return actionElem;
     }
 

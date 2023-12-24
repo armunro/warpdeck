@@ -153,9 +153,9 @@ namespace COSMIC.Warpdeck.Managers
                 ButtonBehavior behavior = new ButtonBehavior();
 
                 if (isDown)
-                    behavior.OnKeyDown(device, keyId, key, key.History);
+                    behavior.OnKeyDown(key, key.History);
                 else
-                    behavior.OnKeyUp(device, keyId, key, key.History);
+                    behavior.OnKeyUp(key, key.History);
             }
             catch (Exception e)
             {

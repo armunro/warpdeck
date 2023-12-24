@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using System.Text.Encodings.Web;
-using System.Text.Json;
 using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Configuration;
 using YamlDotNet.Serialization;

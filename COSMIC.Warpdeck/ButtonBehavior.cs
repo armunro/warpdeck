@@ -1,14 +1,12 @@
 using System;
-using System.Collections.Generic;
 using Autofac;
 using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Action.Descriptors;
 using COSMIC.Warpdeck.Domain.Action.Exceptions;
 using COSMIC.Warpdeck.Domain.Button;
-using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Property;
 using COSMIC.Warpdeck.Domain.Property.Descriptors;
-using ActionModel = COSMIC.Warpdeck.Domain.Action.ActionModel;
+
 
 namespace COSMIC.Warpdeck
 {
@@ -50,11 +48,11 @@ namespace COSMIC.Warpdeck
         }
 
 
-        public void OnKeyDown(DeviceModel device, string keyId, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
+        public void OnKeyDown(ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
         }
 
-        public void OnKeyUp(DeviceModel device, string keyId, ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
+        public void OnKeyUp(ButtonModel buttonModel, ButtonHistoryModel buttonHistory)
         {
             TriggerButtonAction(buttonModel, buttonHistory.LastDown.AddMilliseconds(_holdDelay) < DateTime.Now ? "Hold" : "Press");
         }

@@ -161,7 +161,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
             return Accepted();
         }
 
-        [HttpPut, Route("{deviceId}/layer/{layerId}/key")]
+        [HttpPut, Route("{deviceId}/layer/{layerId}/key/{keyId}")]
         public IActionResult SetLayerKey(string deviceId, string layerId, string keyId, [FromBody] ButtonModel updatedButton)
         {
             _deviceManager.GetDevice(deviceId).Layers[layerId].Buttons[keyId] = updatedButton;
