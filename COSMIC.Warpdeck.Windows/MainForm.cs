@@ -36,6 +36,10 @@ namespace COSMIC.Warpdeck.Windows
             ShowStartedNotification();
         }
 
+        #region MainForm Toast Notifications
+
+        
+        
         private static void ShowStartedNotification()
         {
             new ToastContentBuilder()
@@ -60,6 +64,21 @@ namespace COSMIC.Warpdeck.Windows
                 .Show();
         }
 
+        #endregion
+
+        #region MainForm Event Handlers
+
+        private void OnFormClosing(object? sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                Hide();
+                ShowInTaskbar = false;
+                e.Cancel = true;
+            }
+        }
+
+        
         private void NotifyIcon_Menu_Reload_OnClick(object? sender, EventArgs e)
         {
             _warpdeckWindowsApp.ReloadConfig();
@@ -78,16 +97,12 @@ namespace COSMIC.Warpdeck.Windows
             Application.Exit();
         }
 
-        private void OnFormClosing(object? sender, FormClosingEventArgs e)
-        {
-            if (e.CloseReason == CloseReason.UserClosing)
-            {
-                Hide();
-                ShowInTaskbar = false;
-                e.Cancel = true;
-            }
-        }
+        private void NotifyIcon_Menu_OpenUI_OnClick(object? sender, EventArgs e) =>
+            Process.Start(new ProcessStartInfo("http://localhost:4300") { UseShellExecute = true });
+        
 
+        #endregion
+       
         public DeviceHostHandle OpenDeviceHost(DeviceModel model)
         {
             DeviceHostHandle deviceHostHandle = null;
@@ -105,7 +120,11 @@ namespace COSMIC.Warpdeck.Windows
             return deviceHostHandle;
         }
 
-        private void NotifyIcon_Menu_OpenUI_OnClick(object? sender, EventArgs e) =>
-            Process.Start(new ProcessStartInfo("http://localhost:4300") { UseShellExecute = true });
+
+        private void NotifyIcon_Menu_Clipboard_OnClick(object? sender, EventArgs e)
+        {
+            ClipboardHostForm clipboard = new ClipboardHostForm();
+            clipboard.Show();
+        }
     }
 }

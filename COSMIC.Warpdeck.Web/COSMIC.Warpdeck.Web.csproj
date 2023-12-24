@@ -277,4 +277,18 @@
       <ProjectReference Include="..\COSMIC.Warpdeck\COSMIC.Warpdeck.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Pages\Device.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\DeviceActions.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\DeviceBare.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Layer.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Monitor.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\NewDevice.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\NewLayerModalPartial.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Properties.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_Layout.cshtml" />
+      <_ContentIncludedByDefault Remove="Pages\Shared\_LeftNavigation.cshtml" />
+    </ItemGroup>
+
 </Project>
