@@ -9,6 +9,7 @@ using COSMIC.Warpdeck.Domain.DeviceHost;
 using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.Windows.Adapter;
 using COSMIC.Warpdeck.Windows.Adapter.Monitor;
+using Microsoft.Toolkit.Uwp.Notifications;
 
 namespace COSMIC.Warpdeck.Windows
 {
@@ -19,6 +20,7 @@ namespace COSMIC.Warpdeck.Windows
         public MainForm(string[] args)
         {
             InitializeComponent();
+
             _warpdeckWindowsApp = new WarpdeckWindowsApp(args);
             _warpdeckWindowsApp.RegisterDependencies();
             _warpdeckWindowsApp.StartPresentation();
@@ -30,19 +32,47 @@ namespace COSMIC.Warpdeck.Windows
             _warpdeckWindowsApp.LoadConfig();
             Visible = false;
             Hide();
+            
+            ShowStartedNotification();
         }
 
+        private static void ShowStartedNotification()
+        {
+            new ToastContentBuilder()
+                .AddText("Warpdeck is running in the background.")
+                .AddText("Right click the system tray icon to get started.")
+                .Show();  
+        }
 
-        private void NotifyIcon_Menu_OpenUI_OnClick(object? sender, EventArgs e) =>
-            Process.Start(new ProcessStartInfo("http://localhost:4300") { UseShellExecute = true });
+        private static void ShowReloadedNotification()
+        {
+            new ToastContentBuilder()
+                .AddText("Configuration Reloaded")
+                .AddText("Warpdeck configuration has been reloaded")
+                .Show();
+        }
 
-        private void NotifyIcon_Menu_Reload_OnClick(object? sender, EventArgs e) =>
+        private static void ShowSavedNotification()
+        {
+            new ToastContentBuilder()
+                .AddText("Configuration Saved")
+                .AddText("Warpdeck configuration has been saved")
+                .Show();
+        }
+
+        private void NotifyIcon_Menu_Reload_OnClick(object? sender, EventArgs e)
+        {
             _warpdeckWindowsApp.ReloadConfig();
+            ShowReloadedNotification();
+        }
 
-        private void NotifyIcon_Menu_Save_OnClick(object? sender, EventArgs e) =>
+        private void NotifyIcon_Menu_Save_OnClick(object? sender, EventArgs e)
+        {
             _warpdeckWindowsApp.SaveConfig();
+            ShowSavedNotification();
+        }
 
-        private void NotifyIcon_Menu_ExitI_OnClick(object? sender, EventArgs e)
+        private void NotifyIcon_Menu_Exit_OnClick(object? sender, EventArgs e)
         {
             NotifyIcon.Visible = false;
             Application.Exit();
@@ -58,7 +88,7 @@ namespace COSMIC.Warpdeck.Windows
             }
         }
 
-      public DeviceHostHandle OpenDeviceHost(DeviceModel model)
+        public DeviceHostHandle OpenDeviceHost(DeviceModel model)
         {
             DeviceHostHandle deviceHostHandle = null;
             this.Invoke((MethodInvoker) delegate
@@ -75,5 +105,7 @@ namespace COSMIC.Warpdeck.Windows
             return deviceHostHandle;
         }
 
+        private void NotifyIcon_Menu_OpenUI_OnClick(object? sender, EventArgs e) =>
+            Process.Start(new ProcessStartInfo("http://localhost:4300") { UseShellExecute = true });
     }
 }

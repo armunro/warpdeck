@@ -55,7 +55,7 @@ namespace COSMIC.Warpdeck.Windows
             NotifyIcon.ContextMenuStrip.Items.Add("Open UI", null, NotifyIcon_Menu_OpenUI_OnClick);
             NotifyIcon.ContextMenuStrip.Items.Add("Reload", null, NotifyIcon_Menu_Reload_OnClick);
             NotifyIcon.ContextMenuStrip.Items.Add("Save", null, NotifyIcon_Menu_Save_OnClick);
-            NotifyIcon.ContextMenuStrip.Items.Add("Exit", null, NotifyIcon_Menu_ExitI_OnClick);
+            NotifyIcon.ContextMenuStrip.Items.Add("Exit", null, NotifyIcon_Menu_Exit_OnClick);
         }
 
         #endregion
