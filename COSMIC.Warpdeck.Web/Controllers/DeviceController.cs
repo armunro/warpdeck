@@ -49,7 +49,7 @@ namespace COSMIC.Warpdeck.Web.Controllers
             _redrawDeviceLayersUseCase = redrawDeviceLayersUseCase;
         }
 
-        [HttpGet, Route("")]
+        [HttpGet]
         public DeviceResponseModel[] AllDevices()
         {
             return _deviceManager.GetAllDevices().Select(CreateSummaryModel).ToArray();

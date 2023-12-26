@@ -19,6 +19,8 @@ using COSMIC.Warpdeck.Windows.Adapter;
 using COSMIC.Warpdeck.Windows.Adapter.Monitor;
 using COSMIC.Warpdeck.Windows.Plugins.Actions.Launcher;
 using COSMIC.Warpdeck.Windows.Plugins.Actions.Macro;
+using COSMIC.Warpdeck.Windows.Plugins.Actions.Paste;
+using COSMIC.Warpdeck.Windows.Plugins.Actions.WebLaunch;
 using COSMIC.Warpdeck.Windows.Plugins.Actions.Window;
 
 
@@ -62,6 +64,8 @@ namespace COSMIC.Warpdeck.Windows
                     .As<IHasActionParameters>();
                 builder.RegisterType<ManageWindowAction>().Named<ButtonAction>(nameof(ManageWindowAction))
                     .As<IHasActionParameters>();
+                builder.RegisterType<WebLaunchAction>().Named<ButtonAction>(nameof(WebLaunchAction)).As<IHasActionParameters>();
+                builder.RegisterType<PasteAction>().Named<ButtonAction>(nameof(PasteAction)).As<IHasActionParameters>();
                 base.Load(builder);
             }
         }

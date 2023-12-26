@@ -48,6 +48,14 @@ namespace COSMIC.Warpdeck.Windows.Adapter
                 case SharpClipboard.ContentTypes.Text:
                     var textSuggestions = ProcessCopiedTextSuggestions(args);
                     newClip.Suggestions = textSuggestions;
+                    newClip.Suggestions.Add(new ClipSuggestion()
+                    {
+                        Match = "",
+                        PatternName = "",
+                        ActionName = "PasteAction",
+                        ActionParameters = "{ \"Text\": \"" + args.Content.ToString() + "\"}"
+                        
+                    });
                     break;
             }
 
