@@ -4,7 +4,6 @@ export default {
         layerid: String,
         columns: Number,
         rows: Number
-
     },
     data() {
         return {
@@ -15,13 +14,7 @@ export default {
         range(end) {
             return Array.from({length: end}, (_, i) => i + 1)
         },
-        calculateLayerKeysUri() {
-            return "/api/device/" + this.deviceId + "/layer/" + this.layerId + "/key"
-        },
-
-        calculateLayerKeyUri(keyId) {
-            return "/api/device/" + this.deviceId + "/layer/" + this.layerId + "/key/" + keyId
-        },
+        
         component_clicked(clickedComponent) {
             if (this.activeComponent)
                 this.activeComponent.deactivate();
