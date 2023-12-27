@@ -16,7 +16,7 @@
                 <code>{{clip.text}}</code>
             </td>
             <td class="">
-                <button class="btn btn-sm, btn-primary" @@click="triggerAction(suggestion.actionName, suggestion.actionParameters)" v-for="suggestion in clip.suggestions">{{suggestion.actionName}}<br /></button>
+                <button class="btn btn-sm btn-primary" @@click="triggerAction(suggestion.actionName, suggestion.actionParameters)" v-for="suggestion in clip.suggestions">{{suggestion.actionName}}</button>
             </td>
         </tr>
     </table>
