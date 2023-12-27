@@ -4,6 +4,7 @@ export default {
         layerid: String,
         columns: Number,
         rows: Number
+        
     },
     data() {
         return {}
@@ -23,12 +24,10 @@ export default {
     mounted() {
     },
     template: `
-      <div class="container-fluid">
         <div class="row" v-for='r in range(this.rows)'>
           <wdcomponent :deviceId="this.deviceid" :layerId="this.layerid"
                        :keyId="(((r-1) * this.columns) + (c-1)).toString()"
                        v-for="c in range(this.columns)"></wdcomponent>
         </div>
-      </div>
     `
 }

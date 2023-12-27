@@ -16,10 +16,8 @@ export default {
     mounted() {
     },
     template: `
-      <div id="key_25" class="col m-0 p-0 keyMapKey" data-keyid="25" data-deviceid="Office Streamdeck XL"
-           data-layerid="active" data-keybound="true" draggable="true">
+      <div id="key_{{this.keyId}}" class="col m-0 p-0 keyMapKey" draggable="true">
         <img class="img-fluid me-2 mb-2 keyMapKeyImage"
-             style="border-radius: 1rem"
              :src="calculateIconUrl()">
       </div>
     `
