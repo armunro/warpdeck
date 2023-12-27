@@ -9,6 +9,7 @@
 
 <script src="/js/Partials/KeyGrid.js"></script>
 <script src="/js/Pages/Device.js"></script>
+
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
     <h1>
         <span class="badge bg-secondary">Device </span> @Model.CurrentDevice.DeviceId
@@ -25,6 +26,9 @@
             <div class="card ">
                 <div class="card-body bg-dark rounded-3">
                     <div class="container-fluid" id="keymapGrid">
+
+                    </div>
+                    <div class="container-fluid" id="keymapGrid2">
 
                     </div>
                 </div>
@@ -52,6 +56,10 @@
     </div>
 </div>
 
+<div id="deviceApp">
+    <WdComponentGrid deviceId="@Model.CurrentDevice.DeviceId" layerId="active"  rows="4" columns="8"></WdComponentGrid>
+</div>
+
 
 @await Html.PartialAsync("NewLayerModalPartial", new NewLayerModalPartial()
 {
@@ -67,3 +75,5 @@ document.addEventListener("DOMContentLoaded", function(event) {
 });
 
 </script>
+<script  src="/js/warpdeck.js"></script>
+<script type="module" src="/Apps/DeviceApp.js"></script>

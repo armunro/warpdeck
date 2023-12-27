@@ -1,16 +1,16 @@
 export default {
     props: {
-        componentModel: Object,
+        deviceid: String,
+        layerid: String,
         columns: Number,
         rows: Number
     },
-    data (){
-        return {
-        }
+    data() {
+        return {}
     },
     methods: {
-        calculateIconUrl() {
-            return "/api/device/" + this.deviceId + "/layer/" + this.layerId + "/icon";
+        range(end) {
+            return Array.from({ length: end }, (_, i) => i + 1)
         },
         calculateLayerKeysUri() {
             return "/api/device/" + this.deviceId + "/layer/" + this.layerId + "/key"
@@ -23,10 +23,12 @@ export default {
     mounted() {
     },
     template: `
-        <div v-for="r in rows">
-            <div v-for="c in columns">
-            hi
-            </div>
+      <div class="container-fluid">
+        <div class="row" v-for='r in range(this.rows)'>
+          <wdcomponent :deviceId="this.deviceid" :layerId="this.layerid"
+                       :keyId="(((r-1) * this.columns) + (c-1)).toString()"
+                       v-for="c in range(this.columns)"></wdcomponent>
         </div>
+      </div>
     `
 }
