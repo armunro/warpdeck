@@ -278,6 +278,10 @@
       <Content Include="Assets\js\warpdeck.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <None Remove="Assets\Apps\ClipboardApp.js" />
+      <Content Include="Assets\Apps\ClipboardApp.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

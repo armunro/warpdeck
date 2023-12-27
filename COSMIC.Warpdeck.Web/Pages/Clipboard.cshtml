@@ -41,32 +41,6 @@
         </tr>
     </table>
 </div>
-
-<script>
-  let api = new WarpdeckApi("http://localhost:4300/api")
-  const { createApp, ref } = Vue
-  let app = createApp({
-  
-      data() {
-          return {
-              clips: [{text: ''}]
-          };
-      },
-      methods: {
-          loadClips() {
-             api.getClips().then(value => this.clips = value)
-          },
-          triggerAction(actionTypeName, parametersString) {
-              api.triggerAction(actionTypeName, parametersString).then(response => console.log(response) )
-          }
-      },
-      mounted() {
-          setInterval(() => this.loadClips(), 2000);
-          setTimeout(() => {    this.loadClips()}, 20);
-      },
-     
-  }).mount("#clipboardApp");
-  window.app = app;
-</script>
+<script type="module" src="/Apps/ClipboardApp.js"></script>
 </body>
 </html>
