@@ -274,6 +274,10 @@
       <Content Include="Assets\favicon.ico">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Assets\js\warpdeck.js" />
+      <Content Include="Assets\js\warpdeck.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

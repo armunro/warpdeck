@@ -14,6 +14,7 @@
     <link href="/vendor/boostrap-5.1.3/css/bootstrap.min.css" rel="stylesheet"/>
     <script src="/vendor/boostrap-5.1.3/js/popper.min.js" crossorigin="anonymous"></script>
     <script src="/vendor/boostrap-5.1.3/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="/js/Warpdeck.js"></script>
 </head>
 <body class="h-100 bg-dark">
 <script type="importmap">
@@ -42,6 +43,7 @@
 </div>
 
 <script>
+  let api = new WarpdeckApi("http://localhost:4300/api")
   const { createApp, ref } = Vue
   let app = createApp({
   
@@ -52,20 +54,10 @@
       },
       methods: {
           loadClips() {
-             fetch('http://localhost:4300/api/clipboard').then(value => {return value.json()}).then(value => this.clips = value)
+             api.getClips().then(value => this.clips = value)
           },
           triggerAction(actionTypeName, parametersString) {
-              fetch('http://localhost:4300/api/action/test/trigger', {
-                  method: 'POST',
-                  headers: {
-                      'Content-Type': 'application/json'
-                  },
-                  body: JSON.stringify({
-                      'type': actionTypeName,
-                      'parameters': JSON.parse(parametersString)
-                      
-                  })
-              }).then(response => console.log(response) )
+              api.triggerAction(actionTypeName, parametersString).then(response => console.log(response) )
           }
       },
       mounted() {
