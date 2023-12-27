@@ -20,7 +20,7 @@ public class PasteAction : ButtonAction<PasteModel>, IHasActionParameters
     public override void StartAction(ActionModel actionModel)
     {
         EventBuilder eventBuilder = Simulate.Events();
-        eventBuilder.Wait(1000);
+        eventBuilder.Wait(1000); //TODO: Remove this when proper focus handling has been implemented
         eventBuilder.Click(Model.Text);
         eventBuilder.Invoke();
     }

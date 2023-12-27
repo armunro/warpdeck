@@ -5,8 +5,11 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerGen;
+using System.IO;
+using Serilog;
 
 namespace COSMIC.Warpdeck.Web
 {
@@ -17,21 +20,19 @@ namespace COSMIC.Warpdeck.Web
 
         public static void StartAsync(string[] args)
         {
+            Log.Logger = new LoggerConfiguration()
+            .MinimumLevel.Debug()
+            .WriteTo.File("logs\\warpdeck.txt", rollingInterval: RollingInterval.Day)
+            .CreateLogger();
+
             var builder = Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<AspNetCoreStartup>())
+                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<AspNetCoreStartup>()).UseSerilog()
                 .UseServiceProviderFactory(
                     new AutofacChildLifetimeScopeServiceProviderFactory(
-                        Container.BeginLifetimeScope("root-one")));
+                  Container.BeginLifetimeScope("root-one")));
             var app = builder.Build();
             app.Start();
         }
-
-        private static IHostBuilder CreateHostBuilder(string[] args) =>
-            Host.CreateDefaultBuilder(args)
-                .UseServiceProviderFactory(
-                    new AutofacChildLifetimeScopeServiceProviderFactory(
-                        Container.BeginLifetimeScope("root-one")))
-                .ConfigureWebHostDefaults(webBuilder => webBuilder.UseStartup<AspNetCoreStartup>());
     }
 
     public class SwaggerStartup
