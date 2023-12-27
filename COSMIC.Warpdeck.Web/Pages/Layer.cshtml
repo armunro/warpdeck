@@ -21,11 +21,9 @@
                 <div class="card ">
                     <div class="card-body bg-dark rounded-3">
                         <div class="container-fluid" id="keymapGrid">
-
                         </div>
-
                         <div class="container-fluid" id="keymapGrid2">
-                            <WdComponentGrid deviceId="@Model.DeviceId" layerId="active" rows="@Model.DeviceModel.Info.Rows" columns="@Model.DeviceModel.Info.Columns"></WdComponentGrid>
+                            <WdComponentGrid deviceId="@Model.DeviceId" layerId="@Model.LayerId" rows="@Model.DeviceModel.Info.Rows" columns="@Model.DeviceModel.Info.Columns"></WdComponentGrid>
                         </div>
                     </div>
                 </div>

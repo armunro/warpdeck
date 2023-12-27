@@ -3,6 +3,7 @@ export default {
         deviceId: String,
         layerId: String,
         componentId: String
+        
     },
     data() {
         return {}
@@ -19,7 +20,6 @@ export default {
           </div>
           <div class="card-body">
             <select id="behaviorSelect" class="form-select d-none">
-              <option value="Press">Press</option>
               <option value="PressAndHold">Press And Hold</option>
             </select>
             <div id="actionContainer" class="form-group">

@@ -31,7 +31,6 @@ class EditLayer {
             this.bindPropertyEditors(this.activeModel, properties);
             this.bindAddPropertyEditors(this.activeModel, properties)
         })
-
     }
 
     onNewKeyClick() {
@@ -64,8 +63,6 @@ class EditLayer {
         }).then(response => {
             this.keyGrid.updateKey(activeKey.key);
         });
-
-
     }
 
     onGridKeyDragDrop(isCopy, sourceDevice, sourceLayer, sourceKey, destinationKey) {

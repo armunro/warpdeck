@@ -20,6 +20,7 @@ export default {
                 this.activeComponent.deactivate();
             clickedComponent.activate();
             this.activeComponent = clickedComponent;
+            alert(JSON.stringify(this.activeComponent));
         }
     },
     mounted() {
