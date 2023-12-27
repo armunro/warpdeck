@@ -285,6 +285,8 @@ class EditLayer {
 <label for="keyId">${friendlyName}</label><input type="text" id="tag_${propertyName}" data-tag="${propertyName}" class="form-control keyTag" value="${keyModel["Properties"][propertyName]}"></div>`;
         return propertyEditorElem;
     }
+    
+    
 
     createElement_propertyGroupCard(propertyGroup) {
         let propertyGroupElem = document.createElement("div");

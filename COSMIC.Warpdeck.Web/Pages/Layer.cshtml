@@ -7,74 +7,82 @@
 
 <script src="/js/Partials/KeyGrid.js"></script>
 <script src="/js/Pages/EditLayer.js"></script>
+<div id="layerApp">
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 
-<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1>
+            <span class="badge bg-secondary">Layer </span> @Model.LayerId
+        </h1>
 
-    <h1>
-        <span class="badge bg-secondary">Layer </span> @Model.LayerId
-    </h1>
+    </div>
+    <div class="container-fluid m-0 p-0">
+        <div class="row">
+            <div class="col-md-8 ">
+                <div class="card ">
+                    <div class="card-body bg-dark rounded-3">
+                        <div class="container-fluid" id="keymapGrid">
 
-</div>
-<div class="container-fluid m-0 p-0">
-    <div class="row">
-        <div class="col-md-8 ">
-            <div class="card ">
-                <div class="card-body bg-dark rounded-3">
-                    <div class="container-fluid" id="keymapGrid">
-
-                    </div>
-                </div>
-            </div>
-
-        </div>
-        <div class="col-md-4">
-            <div id="propertiesCard">
-                <div class="card mb-2">
-                    <div class="card-header">
-                        Behavior
-                    </div>
-                    <div class="card-body">
-                        <select id="behaviorSelect" class="form-select d-none">
-                            <option value="Press">Press</option>
-                            <option value="PressAndHold">Press And Hold</option>
-                        </select>
-                        <div id="actionContainer" class="form-group">
                         </div>
 
+                        <div class="container-fluid" id="keymapGrid2">
+                            <WdComponentGrid deviceId="@Model.DeviceId" layerId="active" rows="@Model.DeviceModel.Info.Rows" columns="@Model.DeviceModel.Info.Columns"></WdComponentGrid>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="col-md-4">
+                <div id="propertiesCard">
+                    <div class="card mb-2">
+                        <div class="card-header">
+                            Behavior
+                        </div>
+                        <div class="card-body">
+                            <select id="behaviorSelect" class="form-select d-none">
+                                <option value="Press">Press</option>
+                                <option value="PressAndHold">Press And Hold</option>
+                            </select>
+                            <div id="actionContainer" class="form-group">
+                            </div>
+
+                            <form class="form">
+                                <div id="tagContainer" class="form-group">
+                                    <button class="btn btn-outline-secondary dropdown-toggle" type="button"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        Dropdown
+                                    </button>
+                                </div>
+                                <div class="input-group">
+                                    <select class="form-select" id="addPropertyNameSelect">
+                                    </select>
+                                    <input type="text" id="addPropertyValueTextBox" class="form-control">
+                                    <button class="btn btn-outline-secondary" id="addPropertyButton" type="button">
+                                        Add
+                                        Property
+                                    </button>
+                                </div>
+                                <div class="form-group">
+                                    <button id="saveKey" type="button" class="btn btn-primary">Save</button>
+                                    <button id="deleteKey" type="button" class="btn btn-primary">Delete</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card" id="createKeyCard">
+                    <div class="card-header">
+                        New Button
+                    </div>
+                    <div class="card-body">
                         <form class="form">
-                            <div id="tagContainer" class="form-group">
-                                <button class="btn btn-outline-secondary dropdown-toggle" type="button"
-                                        data-bs-toggle="dropdown" aria-expanded="false">
-                                    Dropdown
-                                </button>
-                            </div>
-                            <div class="input-group">
-                                <select class="form-select" id="addPropertyNameSelect">
-                                </select>
-                                <input type="text" id="addPropertyValueTextBox" class="form-control">
-                                <button class="btn btn-outline-secondary" id="addPropertyButton" type="button">
-                                    Add
-                                    Property
-                                </button>
-                            </div>
-                            <div class="form-group">
-                                <button id="saveKey" type="button" class="btn btn-primary">Save</button>
-                                <button id="deleteKey" type="button" class="btn btn-primary">Delete</button>
-                            </div>
+                            <button id="newKey" type="button" class="btn btn-primary">New Button</button>
                         </form>
                     </div>
                 </div>
 
-            </div>
-            <div class="card" id="createKeyCard">
-                <div class="card-header">
-                    New Button
-                </div>
-                <div class="card-body">
-                    <form class="form">
-                        <button id="newKey" type="button" class="btn btn-primary">New Button</button>
-                    </form>
-                </div>
+                <wdeditcomponentform deviceId="@Model.DeviceId" layerId="@Model.LayerId" componentId="1"> </wdeditcomponentform>
+
             </div>
         </div>
     </div>
@@ -85,3 +93,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
     document.editLayer = new EditLayer(new KeyGrid("keymapGrid", "@Model.DeviceId","@Model.LayerId",{disableSelection: false}, @Model.DeviceModel.Info.Rows, @Model.DeviceModel.Info.Columns));
 });
 </script>
+
+<!-- Warpdeck API and Vue -->
+<script src="/js/warpdeck.js"></script>
+<script type="module" src="/Apps/LayerApp.js"></script>
