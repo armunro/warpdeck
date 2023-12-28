@@ -10,28 +10,33 @@ let app = createApp({
         return {
             api: null,
             editingComponent: null,
+            editingDeviceId: null,
+            editingLayerId: null,
+            editingComponentId: null,
             editingIconProperties: null,
             editingComponentProperties: null,
         }
-    },
-    methods: {
-        componentClick(component)
-        {
+    }, methods: {
+        componentClick(component) {
             let keyPropertiesPromise = this.api.getTypeProperties("Object", "ButtonBehavior");
             let iconPropertiesPromise = this.api.getTypeProperties("IconTemplate", "PressAndHold");
             Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
                 this.editingComponentProperties = properties[1].properties;
                 this.editingIconProperties = properties[0].properties;
             })
-            
-            api.getDeviceLayerComponent(component.deviceId, component.layerId, component.keyId).then(x=> {
-               this.editingComponent = x;
-               
+
+            api.getDeviceLayerComponent(component.deviceId, component.layerId, component.keyId).then(x => {
+                this.editingComponent = x;
+                this.editingDeviceId = component.deviceId;
+                this.editingLayerId = component.layerId;
+                this.editingComponentId = component.keyId;
+                
             });
+        }, componentSave(component) {
+            this.api.saveDeviceLayerComponent(this.editingDeviceId, this.editingLayerId, this.editingComponentId, component).then();
         }
-    },
-    mounted() {
-        
+    }, mounted() {
+
 
     },
 });

@@ -1,25 +1,28 @@
-
-
 export default {
     props: {
         componentmodel: Object,
         keyproperties: Object,
         iconproperties: Object,
+
     },
     data() {
         return {}
     },
     methods: {
-        getJson(){
+        getJson() {
             return JSON.stringify(this.componentmodel);
         },
-        bindComponent(){
-          
+        saveComponent() {
+            alert(this.getJson());
+            this.$emit('component-save', this.componentmodel);
         },
-        formatId(test){
+        bindComponent() {
+
+        },
+        formatId(test) {
             return "test_" + test
         }
-        
+
     },
     mounted() {
         this.bindComponent();
@@ -76,15 +79,19 @@ export default {
                 <div>
                   <div class="card mb-2">
                     <div class="card-header">
-                      Properties
+                      Icon Properties
                     </div>
                     <div class="card-body">
                       <div>
-                        <div class="form-group mb-2" v-for="property in this.keyproperties">
-                          <label for="">{{ property.friendlyName }}</label><input type="text" :id="formatId(property.key)"
-                                                                                  v-model="componentmodel.Properties[property.key]"
-                                                                                  class="form-control keyTag">
-                        </div>
+                        <template v-for="property in this.keyproperties">
+                          <div v-if="componentmodel.Properties[property.key]" class="form-group mb-2">
+                            <label for="">{{ property.friendlyName }}</label><input type="text"
+                                                                                    :id="formatId(property.key)"
+                                                                                    v-model="componentmodel.Properties[property.key]"
+                                                                                    class="form-control keyTag">
+                          </div>
+                        </template>
+
                       </div>
                     </div>
                   </div>
@@ -92,13 +99,13 @@ export default {
                 <div>
                   <div class="card mb-2">
                     <div class="card-header">
-                      Properties
+                      Component Properties
                     </div>
                     <div class="card-body">
                       <div>
                         <div class="form-group mb-2" v-for="property in this.iconproperties">
                           <label for="">{{ property.friendlyName }}</label><input type="text"
-                                                                                  
+
                                                                                   v-model="componentmodel.Properties[property.key]"
                                                                                   class="form-control keyTag" value="">
                         </div>
@@ -123,8 +130,7 @@ export default {
                 </button>
               </div>
               <div class="form-group">
-                <button id="saveKey" type="button" class="btn btn-primary">Save</button>
-                <button id="deleteKey" type="button" class="btn btn-primary">Delete</button>
+                <button id="saveKey" @click="saveComponent" type="button" class="btn btn-primary">Save</button>
               </div>
             </form>
           </div>
