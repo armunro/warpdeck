@@ -10,6 +10,7 @@ let app = createApp({
         return {
             api: null,
             editingComponent: null,
+            editingComponent2: null,
             editingDeviceId: null,
             editingLayerId: null,
             editingComponentId: null,
@@ -27,13 +28,15 @@ let app = createApp({
 
             api.getDeviceLayerComponent(component.deviceId, component.layerId, component.keyId).then(x => {
                 this.editingComponent = x;
+                this.editingComponent2 = component;
                 this.editingDeviceId = component.deviceId;
                 this.editingLayerId = component.layerId;
                 this.editingComponentId = component.keyId;
-                
+
             });
-        }, componentSave(component) {
-            this.api.saveDeviceLayerComponent(this.editingDeviceId, this.editingLayerId, this.editingComponentId, component).then();
+        }, componentSave: function (component) {
+            this.api.saveDeviceLayerComponent(this.editingDeviceId, this.editingLayerId, this.editingComponentId, component).then(() => this.editingComponent2.refresh());
+
         }
     }, mounted() {
 

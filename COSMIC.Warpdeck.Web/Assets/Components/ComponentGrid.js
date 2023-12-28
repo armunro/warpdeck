@@ -21,6 +21,9 @@ export default {
             clickedComponent.activate();
             this.activeComponent = clickedComponent;
             this.$emit('component-click', this.activeComponent);
+        },
+        component_refresh_request(component){
+            this.activeComponent.refresh();
         }
     },
     mounted() {

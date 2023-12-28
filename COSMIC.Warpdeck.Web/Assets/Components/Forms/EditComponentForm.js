@@ -13,8 +13,8 @@ export default {
             return JSON.stringify(this.componentmodel);
         },
         saveComponent() {
-            alert(this.getJson());
             this.$emit('component-save', this.componentmodel);
+            this.$emit('component-reload', this.componentmodel);
         },
         bindComponent() {
 
