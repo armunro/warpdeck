@@ -43,6 +43,12 @@ class WarpdeckApi {
             return value.json()
         });
     }
+    
+    getComponentTriggers(){
+        return fetch(`${this.apiBase}/behavior/PressAndHold/actions`).then(value => {
+            return value.json();
+        });
+    }
 
     saveDeviceLayerComponent(deviceId, layerId, componentId, model) {
         return fetch(`${this.apiBase}/device/${deviceId}/layer/${layerId}/key/${componentId}`, this.buildRequest('PUT', JSON.stringify(model))).then(value => {

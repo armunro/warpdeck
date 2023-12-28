@@ -16,15 +16,21 @@ let app = createApp({
             editingComponentId: null,
             editingIconProperties: null,
             editingComponentProperties: null,
+            editingTriggers:null
+            
         }
     }, methods: {
         componentClick(component) {
             let keyPropertiesPromise = this.api.getTypeProperties("Object", "ButtonBehavior");
             let iconPropertiesPromise = this.api.getTypeProperties("IconTemplate", "PressAndHold");
+            let triggersPromise = this.api.getComponentTriggers();
             Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
                 this.editingComponentProperties = properties[1].properties;
                 this.editingIconProperties = properties[0].properties;
             })
+            
+            triggersPromise.then(x=> this.editingTriggers = x.actions)
+            
 
             api.getDeviceLayerComponent(component.deviceId, component.layerId, component.keyId).then(x => {
                 this.editingComponent = x;
@@ -35,7 +41,8 @@ let app = createApp({
 
             });
         }, componentSave: function (component) {
-            this.api.saveDeviceLayerComponent(this.editingDeviceId, this.editingLayerId, this.editingComponentId, component).then(() => this.editingComponent2.refresh());
+            this.api.saveDeviceLayerComponent(this.editingDeviceId, this.editingLayerId, this.editingComponentId, component)
+                .then(() => this.editingComponent2.refresh());
 
         }
     }, mounted() {
