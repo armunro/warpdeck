@@ -1,16 +1,28 @@
+
+
 export default {
     props: {
-        deviceId: String,
-        layerId: String,
-        componentId: String
-        
+        componentmodel: Object,
+        keyproperties: Object,
+        iconproperties: Object,
     },
     data() {
         return {}
     },
     methods: {
+        getJson(){
+            return JSON.stringify(this.componentmodel);
+        },
+        bindComponent(){
+          
+        },
+        formatId(test){
+            return "test_" + test
+        }
+        
     },
     mounted() {
+        this.bindComponent();
     },
     template: `
       <div id="propertiesCard" class="active">
@@ -19,6 +31,7 @@ export default {
             Behavior
           </div>
           <div class="card-body">
+            <!--<text>{{getJson()}}</text>-->
             <select id="behaviorSelect" class="form-select d-none">
               <option value="PressAndHold">Press And Hold</option>
             </select>
@@ -67,9 +80,10 @@ export default {
                     </div>
                     <div class="card-body">
                       <div>
-                        <div class="form-group mb-2">
-                          <label for="keyId">Category</label><input type="text" id="tag_Category" data-tag="Category"
-                                                                    class="form-control keyTag" value="Multimedia">
+                        <div class="form-group mb-2" v-for="property in this.keyproperties">
+                          <label for="">{{ property.friendlyName }}</label><input type="text" :id="formatId(property.key)"
+                                                                                  v-model="componentmodel.Properties[property.key]"
+                                                                                  class="form-control keyTag">
                         </div>
                       </div>
                     </div>
@@ -82,15 +96,11 @@ export default {
                     </div>
                     <div class="card-body">
                       <div>
-                        <div class="form-group mb-2">
-                          <label for="keyId">Text</label><input type="text" id="tag_Text" data-tag="Text"
-                                                                class="form-control keyTag" value="PLAY"></div>
-                      </div>
-                      <div>
-                        <div class="form-group mb-2">
-                          <label for="keyId">Icon</label><input type="text" id="tag_Icon" data-tag="Icon"
-                                                                class="form-control keyTag"
-                                                                value="fontawesome-pro-6.4.0-web\\svgs\\solid\\play-pause.svg">
+                        <div class="form-group mb-2" v-for="property in this.iconproperties">
+                          <label for="">{{ property.friendlyName }}</label><input type="text"
+                                                                                  
+                                                                                  v-model="componentmodel.Properties[property.key]"
+                                                                                  class="form-control keyTag" value="">
                         </div>
                       </div>
                     </div>
@@ -119,7 +129,6 @@ export default {
             </form>
           </div>
         </div>
-
       </div>
     `
 }

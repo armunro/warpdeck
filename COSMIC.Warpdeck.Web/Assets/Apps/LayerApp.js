@@ -9,22 +9,39 @@ let app = createApp({
     data() {
         return {
             api: null,
+            editingComponent: null,
+            editingIconProperties: null,
+            editingComponentProperties: null,
         }
     },
     methods: {
-    
+        componentClick(component)
+        {
+            let keyPropertiesPromise = this.api.getTypeProperties("Object", "ButtonBehavior");
+            let iconPropertiesPromise = this.api.getTypeProperties("IconTemplate", "PressAndHold");
+            Promise.all([keyPropertiesPromise, iconPropertiesPromise]).then((properties) => {
+                this.editingComponentProperties = properties[1].properties;
+                this.editingIconProperties = properties[0].properties;
+            })
+            
+            api.getDeviceLayerComponent(component.deviceId, component.layerId, component.keyId).then(x=> {
+               this.editingComponent = x;
+               
+            });
+        }
     },
     mounted() {
-        api = new WarpdeckApi("http://localhost:4300/api")
-        this.api = api;
+        
 
     },
 });
 
+api = new WarpdeckApi("http://localhost:4300/api")
 
 app.component("wdcomponent", WdComponent);
 app.component("wdcomponentgrid", WdComponentGrid);
 app.component("wdeditcomponentform", WdEditComponentForm);
 app = app.mount("#layerApp");
-document.app = app;
+window.app = app;
+window.app.api = api;
 

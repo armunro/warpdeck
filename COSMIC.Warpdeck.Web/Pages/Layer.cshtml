@@ -9,11 +9,9 @@
 <script src="/js/Pages/EditLayer.js"></script>
 <div id="layerApp">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-
         <h1>
             <span class="badge bg-secondary">Layer </span> @Model.LayerId
         </h1>
-
     </div>
     <div class="container-fluid m-0 p-0">
         <div class="row">
@@ -23,11 +21,10 @@
                         <div class="container-fluid" id="keymapGrid">
                         </div>
                         <div class="container-fluid" id="keymapGrid2">
-                            <WdComponentGrid deviceId="@Model.DeviceId" layerId="@Model.LayerId" rows="@Model.DeviceModel.Info.Rows" columns="@Model.DeviceModel.Info.Columns"></WdComponentGrid>
+                            <WdComponentGrid @@component-click="componentClick" deviceId="@Model.DeviceId" layerId="@Model.LayerId" rows="@Model.DeviceModel.Info.Rows" columns="@Model.DeviceModel.Info.Columns"></WdComponentGrid>
                         </div>
                     </div>
                 </div>
-
             </div>
             <div class="col-md-4">
                 <div id="propertiesCard">
@@ -66,7 +63,6 @@
                             </form>
                         </div>
                     </div>
-
                 </div>
                 <div class="card" id="createKeyCard">
                     <div class="card-header">
@@ -78,9 +74,7 @@
                         </form>
                     </div>
                 </div>
-
-                <wdeditcomponentform deviceId="@Model.DeviceId" layerId="@Model.LayerId" componentId="1"> </wdeditcomponentform>
-
+                <wdeditcomponentform :api="this.api" :keyproperties="this.editingComponentProperties" :iconproperties="this.editingIconProperties" :componentmodel="this.editingComponent"> </wdeditcomponentform>
             </div>
         </div>
     </div>

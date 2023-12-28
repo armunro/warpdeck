@@ -2,8 +2,8 @@ export default {
     props: {
         deviceid: String,
         layerid: String,
-        columns: Number,
-        rows: Number
+        columns: String,
+        rows: String
     },
     data() {
         return {
@@ -20,7 +20,7 @@ export default {
                 this.activeComponent.deactivate();
             clickedComponent.activate();
             this.activeComponent = clickedComponent;
-            alert(JSON.stringify(this.activeComponent));
+            this.$emit('component-click', this.activeComponent);
         }
     },
     mounted() {
