@@ -32,7 +32,7 @@ class WarpdeckApi {
     }
 
     getTypeProperties(parentTypeName, typeName) {
-        return fetch("/api/property/" + parentTypeName + "/" + typeName)
+        return fetch(`${this.apiBase}/property/${parentTypeName}/${typeName}`)
             .then(response => {
                 return response.json()
             });
@@ -43,11 +43,38 @@ class WarpdeckApi {
             return value.json()
         });
     }
-    
-    getComponentTriggers(){
+
+    getComponentTriggers() {
         return fetch(`${this.apiBase}/behavior/PressAndHold/actions`).then(value => {
             return value.json();
         });
+    }
+
+    createDeviceLayerComponent(deviceId, layerId, componentId) {
+        let newKeyBody = `{
+    "KeyId": "${componentId}",
+    "Behavior": {
+        "Type": "Press",
+        "Actions": {
+            "Press": {
+                "Type": "KeyMacro",
+                "Parameters": {
+                    "keys": "(control+alt+shift+m)|(o)"
+                }
+            }
+        }
+    },
+    "Properties": {
+        "Category" : "",
+        "Text" :"New",
+        "Icon":  ""
+    }
+}`
+
+        return fetch(`${this.apiBase}/device/${deviceId}/layer/${layerId}/key/${componentId}`, this.buildRequest('POST', JSON.stringify(newKeyBody))).then(value => {
+            return value.json()
+        });
+
     }
 
     saveDeviceLayerComponent(deviceId, layerId, componentId, model) {
@@ -55,4 +82,28 @@ class WarpdeckApi {
             return value.json()
         });
     }
+
+    deleteDeviceLayerComponent(deviceId, layerId, keyId) {
+        return fetch(`${this.apiBase}/device/ ${deviceId}/layer/${layerId}/key/${keyId}`, this.buildRequest("DELETE"))
+    }
+
+    copyDeviceLayerComponent(deviceId, layerId, componentId, targetComponentId) {
+        return fetch(`${this.apiBase}/device/ ${deviceId}/layer/${layerId}/key/${componentId}/copy/${targetComponentId}`);
+    }
+
+    moveDeviceLayerComponent(deviceId, layerId, componentId, targetComponentId) {
+        return fetch(`${this.apiBase}/device/ ${deviceId}/layer/${layerId}/key/${componentId}/move/${targetComponentId}`);
+    }
+
+    createDevice(name, hardware) {
+        return fetch(`${this.apiBase}"/device/" + name;`, this.buildRequest("POST", JSON.stringify({
+            "HardwareId": hardware
+        })));
+
+    }
+
+    createDeviceLayer(deviceId, newLayerId) {
+        return fetch(`${this.apiBase}/device/${deviceId}/layer`, this.buildRequest("POST", JSON.stringify({"LayerId": newLayerId})));
+    }
+
 }

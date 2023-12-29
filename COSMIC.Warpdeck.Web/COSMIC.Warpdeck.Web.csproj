@@ -30,21 +30,6 @@
       <Content Include="Assets\css\pages.css">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
-      <Content Include="Assets\js\Pages\Device.js">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Assets\js\Pages\EditLayer.js">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Assets\js\Pages\NewDevice.js">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Assets\js\Partials\KeyGrid.js">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
-      <Content Include="Assets\js\Partials\NewLayerModal.js">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </Content>
       <Content Include="Assets\vendor\boostrap-5.1.3\css\bootstrap-grid.css">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
