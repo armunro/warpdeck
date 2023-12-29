@@ -5,8 +5,7 @@
     Layout = "_Layout";
 }
 
-<script src="/js/Partials/KeyGrid.js"></script>
-<script src="/js/Pages/EditLayer.js"></script>
+
 <div id="layerApp">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1>
@@ -18,8 +17,6 @@
             <div class="col-md-8 ">
                 <div class="card ">
                     <div class="card-body bg-dark rounded-3">
-                        <div class="container-fluid" id="keymapGrid">
-                        </div>
                         <div class="container-fluid" id="keymapGrid2">
                             <WdComponentGrid @@component-click="componentClick" deviceId="@Model.DeviceId" layerId="@Model.LayerId" rows="@Model.DeviceModel.Info.Rows" columns="@Model.DeviceModel.Info.Columns"></WdComponentGrid>
                         </div>
@@ -79,12 +76,7 @@
         </div>
     </div>
 </div>
-<script>
 
-document.addEventListener("DOMContentLoaded", function(event) { 
-    document.editLayer = new EditLayer(new KeyGrid("keymapGrid", "@Model.DeviceId","@Model.LayerId",{disableSelection: false}, @Model.DeviceModel.Info.Rows, @Model.DeviceModel.Info.Columns));
-});
-</script>
 
 <!-- Warpdeck API and Vue -->
 <script src="/js/warpdeck.js"></script>
