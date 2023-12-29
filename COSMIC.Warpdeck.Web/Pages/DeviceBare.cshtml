@@ -9,21 +9,17 @@
 <script src="/vendor/boostrap-5.1.3/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 <link href="/css/layout.css" rel="stylesheet">
 <link href="/css/pages.css" rel="stylesheet">
-<script src="/js/Partials/KeyGrid.js"></script>
-<script src="/js/Partials/NewLayerModal.js"></script>
-<script src="/js/Pages/Device.js"></script>
 
-
+<div id="deviceBareApp">
 <div class="container-fluid" id="keymapGrid">
+    <WdComponentGrid @@component-click="componentClick" deviceId="@Model.Device.DeviceId" layerId="active" rows="@Model.Device.Info.Rows" columns="@Model.Device.Info.Columns"></WdComponentGrid>
 </div>
-
 
 <script>
 document.addEventListener("DOMContentLoaded", function(event) { 
     function key_pressed(key) {
         let  keyData = key.parentNode.dataset
 
-///api/device/Office%20Streamdeck%20XL/keys/25/press
         fetch(`/api/device/${keyData.deviceid}/keys/${keyData.keyid}/press`, {method: "POST"}).then(
             (response) => {console.log(response.json())}
         );
@@ -36,9 +32,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
          );
     }
     
-    window.keyGrid = new KeyGrid("keymapGrid","@(Model.CurrentDevice.DeviceId)","active", {disableSelection: true}, @Model.CurrentDevice.Info.Rows, @Model.CurrentDevice.Info.Columns);
-    window.keyGrid.registerKeyClickCallback(key_pressed);
-    window.keyGrid.registerKeyHoldCallback(key_held);
-    window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")
 });
 </script>
+</div>
+<!-- Warpdeck API and Vue -->
+<script src="/js/warpdeck.js"></script>
+<script type="module" src="/Apps/DeviceBareApp.js"></script>

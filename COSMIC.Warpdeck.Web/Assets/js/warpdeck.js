@@ -99,7 +99,6 @@ class WarpdeckApi {
         return fetch(`${this.apiBase}"/device/" + name;`, this.buildRequest("POST", JSON.stringify({
             "HardwareId": hardware
         })));
-
     }
 
     createDeviceLayer(deviceId, newLayerId) {

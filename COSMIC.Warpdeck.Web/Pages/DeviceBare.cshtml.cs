@@ -7,7 +7,7 @@ namespace COSMIC.Warpdeck.Web.Pages
     public class DeviceBare : PageModel
     {
         private readonly DeviceManager _deviceManager;
-        public DeviceModel CurrentDevice;
+        public DeviceModel Device;
 
         public DeviceBare(DeviceManager deviceManager)
         {
@@ -16,7 +16,7 @@ namespace COSMIC.Warpdeck.Web.Pages
 
         public void OnGet()
         {
-            CurrentDevice = _deviceManager.GetDevice(RouteData.Values["deviceId"].ToString());
+            Device = _deviceManager.GetDevice(RouteData.Values["deviceId"].ToString());
         }
     }
 }

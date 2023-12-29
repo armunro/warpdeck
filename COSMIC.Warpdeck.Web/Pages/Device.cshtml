@@ -6,10 +6,6 @@
     Layout = "_Layout";
 }
 
-
-<script src="/js/Partials/KeyGrid.js"></script>
-<script src="/js/Pages/Device.js"></script>
-
 <div id="deviceApp">
     <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
         <h1>
@@ -41,12 +37,10 @@
                     <div class="card-body">
                         <div class="input-group mb-3">
                             <span class="input-group-text" id="addon-wrapping">Device Name</span>
-                            <input id="deviceNameTextBox" type="text" class="form-control" value="@Model.CurrentDevice.DeviceId" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                            <input id="deviceNameTextBox" type="text" class="form-control" value="@Model.CurrentDevice.DeviceId" >
                         </div>
-
                         <div class="input-group mb-3">
                             <button id="saveDeviceButton" type="button" class="btn btn-primary">Save</button>
-
                         </div>
                     </div>
                 </div>
@@ -56,20 +50,6 @@
 
 </div>
 
-
-@await Html.PartialAsync("NewLayerModalPartial", new NewLayerModalPartial()
-{
-    DeviceId = @Model.CurrentDevice.DeviceId
-})
-
-<script>
-document.addEventListener("DOMContentLoaded", function(event) { 
-  
-    window.devicePage = new Device("@(Model.CurrentDevice.DeviceId)")
-    document.newLayerModal = new NewLayerModal("office", () => $("#newLayerModal").modal());  //do work
-});
-
-</script>
 <!-- Warpdeck API and Vue -->
 <script src="/js/warpdeck.js"></script>
 <script type="module" src="/Apps/DeviceApp.js"></script>

@@ -285,6 +285,9 @@
       <Content Include="Assets\Components\Forms\EditComponentForm.js">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="Assets\Apps\DeviceBareApp.js">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>
