@@ -4,12 +4,12 @@ using COSMIC.Warpdeck.Managers;
 
 namespace COSMIC.Warpdeck.Web.Pages
 {
-    public class DeviceBare : PageModel
+    public class TouchDevice : PageModel
     {
         private readonly DeviceManager _deviceManager;
         public DeviceModel Device;
 
-        public DeviceBare(DeviceManager deviceManager)
+        public TouchDevice(DeviceManager deviceManager)
         {
             _deviceManager = deviceManager;
         }

@@ -105,4 +105,20 @@ class WarpdeckApi {
         return fetch(`${this.apiBase}/device/${deviceId}/layer`, this.buildRequest("POST", JSON.stringify({"LayerId": newLayerId})));
     }
 
+    triggerComponentPress(deviceId, componentId) {
+        return fetch(`${this.apiBase}/device/${deviceId}/keys/${componentId}/press`, {method: "POST"}).then(
+            (response) => {
+                return response.json();
+            }
+        );
+    }
+
+    triggerComponentHold(deviceId, componentId) {
+        return fetch(`${this.apiBase}/device/${deviceId}/keys/${componentId}/hold`, {method: "POST"}).then(
+            (response) => {
+                return response.json();
+            }
+        );
+    }
+
 }

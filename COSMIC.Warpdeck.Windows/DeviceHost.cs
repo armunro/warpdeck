@@ -25,7 +25,7 @@ public partial class DeviceHost : Form
         TopLevel = true;
         TopMost = true;
         await _deviceHostWebView.EnsureCoreWebView2Async();
-        _deviceHostWebView.CoreWebView2.Navigate($"http://localhost:4300/deviceBare/{_model.DeviceId}/");
+        _deviceHostWebView.CoreWebView2.Navigate($"http://localhost:4300/touchDevice/{_model.DeviceId}/");
         
         await SetFormSizeAfter3SecondDelay();
     }

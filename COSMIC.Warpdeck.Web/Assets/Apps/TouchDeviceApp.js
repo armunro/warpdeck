@@ -11,7 +11,7 @@ let app = createApp({
         }
     },
     methods: {
-    
+       
     },
     mounted() {
         api = new WarpdeckApi("http://localhost:4300/api")
@@ -23,6 +23,6 @@ let app = createApp({
 
 app.component("wdcomponent", WdComponent);
 app.component("wdcomponentgrid", WdComponentGrid);
-app = app.mount("#deviceBareApp");
+app = app.mount("#touchDeviceApp");
 document.app = app;
 
