@@ -32,7 +32,6 @@ export default {
             this.mouseDownTime = Date.now();
         },
         onMouseUp(event){
-            console.log('onMouseUp event: ' + JSON.stringify(event));
             if (Date.now() - this.mouseDownTime > 500) {
                 this.$emit('component-touch-press', this);
             } else {
