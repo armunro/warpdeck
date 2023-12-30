@@ -7,7 +7,14 @@
 
 <div id="touchDeviceApp">
     <div class="container-fluid" id="keymapGrid">
-        <WdComponentGrid @@component-click="componentClick" deviceId="@Model.Device.DeviceId" layerId="active" rows="@Model.Device.Info.Rows" columns="@Model.Device.Info.Columns"></WdComponentGrid>
+        <WdComponentGrid @@component-click="componentClick"
+                         @@component-touch-press="pressed"
+                         @@component-touch-hold="held"
+                         deviceId="@Model.Device.DeviceId"
+                         layerId="active"
+                         rows="@Model.Device.Info.Rows"
+                         columns="@Model.Device.Info.Columns">
+        </WdComponentGrid>
     </div>
 </div>
 

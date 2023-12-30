@@ -7,7 +7,8 @@ export default {
     data() {
         return {
             isActive: false,
-            cacheKey: null
+            cacheKey: null,
+            mouseDownTime: null
         }
     },
     methods: {
@@ -26,31 +27,32 @@ export default {
         onComponentIconClick(item) {
             this.$emit('component-click', item);
         },
-        onDragStart(event){
-            console.log('onDragStart event: ' + JSON.stringify(event));
-        },
-        onDragDrop(event){
-            console.log('onDragDrop event: ' + JSON.stringify(event));
-        },
-        onDragOver(event){
-            //console.log('onDragOver event: ' + JSON.stringify(event));
-        },
         onMouseDown(event){
             console.log('onMouseDown event: ' + JSON.stringify(event));
+            this.mouseDownTime = Date.now();
         },
         onMouseUp(event){
             console.log('onMouseUp event: ' + JSON.stringify(event));
+            if (Date.now() - this.mouseDownTime > 500) {
+                this.$emit('component-touch-press', this);
+            } else {
+                this.$emit('component-touch-hold', this);
+            }
         }
     },
     mounted() {
         this.refresh()
     },
     template: `
-      <div id="component_{{this.keyId}}" :class="{ active: isActive}" class="col m-0 p-0 keyMapKey" >
-        <img alt="" class="img-fluid me-2 mb-2 keyMapKeyImage" @click="onComponentIconClick(this)" draggable="true"
-             @dragstart="onDragStart" @dragend="ondrop" @drop="onDragDrop" @dragover="onDragOver" @mousedown="onMouseDown" @mouseup="onMouseUp"
-             :src="calculateIconUrl()"/>
+      <div id="component_{{this.keyId}}" :class="{ active: isActive}" class="col m-0 p-0 keyMapKey">
+        <img alt="" class="img-fluid me-2 mb-2 keyMapKeyImage"
+             @click="onComponentIconClick(this)"
+             @mousedown="onMouseDown"
+             @mouseup="onMouseUp"
+             :src="calculateIconUrl()"
+             draggable="true"
+        />
       </div>
-      
+
     `
 }

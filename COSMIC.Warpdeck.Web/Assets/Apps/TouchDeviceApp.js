@@ -7,17 +7,23 @@ let api;
 let app = createApp({
     data() {
         return {
-            api: null,
+            api: null
         }
     },
     methods: {
-       
+        pressed(e) {
+            this.api.triggerComponentHold(e.deviceId, e.keyId).then()
+            
+        },
+        held(e) {
+            this.api.triggerComponentPress(e.deviceId, e.keyId).then()
+        }
     },
     mounted() {
         api = new WarpdeckApi("http://localhost:4300/api")
         this.api = api;
 
-    },
+    }
 });
 
 

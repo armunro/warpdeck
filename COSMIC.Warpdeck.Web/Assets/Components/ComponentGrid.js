@@ -24,6 +24,12 @@ export default {
         },
         component_refresh_request(component){
             this.activeComponent.refresh();
+        },
+        component_touch_press(e){
+            this.$emit('component-touch-press', e);
+        },
+        component_touch_hold(e){
+            this.$emit('component-touch-hold', e);
         }
     },
     mounted() {
@@ -33,6 +39,8 @@ export default {
         <wdcomponent :deviceId="this.deviceid" :layerId="this.layerid"
                      :keyId="(((r-1) * this.columns) + (c-1)).toString()"
                      @component-click="component_clicked"
+                     @component-touch-press="component_touch_press"
+                     @component-touch-hold="component_touch_hold"
                      v-for="c in range(this.columns)"></wdcomponent>
       </div>
     `
