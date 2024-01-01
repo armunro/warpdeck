@@ -17,9 +17,6 @@ export default {
             this.$emit('component-save', this.componentmodel);
             this.$emit('component-reload', this.componentmodel);
         },
-        bindComponent() {
-
-        },
         formatId(test) {
             return "test_" + test
         }
@@ -28,7 +25,7 @@ export default {
     mounted() {
     },
     template: `
-      <div id="propertiesCard" class="active">
+      <div id="propertiesCard" class="active" v-if="componentmodel !== null">
         <div class="card mb-2">
           <div class="card-header">
             Behavior

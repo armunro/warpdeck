@@ -13,7 +13,8 @@ let app = createApp({
             editingComponentModel: null,
             editingIconProperties: null,
             editingComponentProperties: null,
-            editingTriggers: null
+            editingTriggers: null,
+            componentGrid: null
 
         }
     }, methods: {
@@ -45,12 +46,19 @@ let app = createApp({
         },
         component_drag_drop: function (event) {
             console.log(event);
-            if (event.isCopy) this.api.copyDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey).then();
-            else this.api.moveDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey).then();
+            if (event.isCopy) this.api.copyDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey)
+                .then(() => {
+                    this.componentGrid.refreshComponent(event.destinationKey)
+                });
+            else this.api.moveDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey)
+                .then(() => {
+                    this.componentGrid.refreshComponent(event.sourceKey)
+                    this.componentGrid.refreshComponent(event.destinationKey);
+                });
         }
 
     }, mounted() {
-
+        this.componentGrid = this.$refs.componentGrid;
 
     }
 });

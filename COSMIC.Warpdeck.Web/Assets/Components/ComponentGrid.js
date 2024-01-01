@@ -36,8 +36,6 @@ export default {
         },
         component_drag_drop(e) {
             this.$emit('component-drag-drop', e);
-            this.refreshComponent(e.sourceKey);
-            this.refreshComponent(e.destinationKey);
         }
     },
     mounted() {
