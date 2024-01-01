@@ -37,6 +37,24 @@ export default {
             } else {
                 this.$emit('component-touch-hold', this);
             }
+        },
+        onKeyDragOver(event) {
+            event.preventDefault();
+        },
+        onKeyDragStart(event) {
+            let keyDiv = event.target.parentNode
+            event.dataTransfer.setData("deviceId", this.deviceId);
+            event.dataTransfer.setData("layerId", this.layerId);
+            event.dataTransfer.setData("componentId", this.keyId);
+        },
+        onKeyDrop(event) {
+            event.preventDefault();
+            let sourceDevice = event.dataTransfer.getData("deviceId");
+            let sourceLayer = event.dataTransfer.getData("layerId");
+            let sourceKey = event.dataTransfer.getData("componentId");
+            let destinationKey = event.target.dataset.index;
+            let isCopy = event.ctrlKey;
+            this.$emit("component-drag-drop", {sourceDevice, sourceLayer, sourceKey, destinationKey, isCopy})
         }
     },
     mounted() {
@@ -48,7 +66,11 @@ export default {
              @click="onComponentIconClick(this)"
              @mousedown="onMouseDown"
              @mouseup="onMouseUp"
+             @dragstart="onKeyDragStart"
+             @dragover="onKeyDragOver"
+             @drop="onKeyDrop"
              :src="calculateIconUrl()"
+             :data-index.attr="keyId"
              draggable="true"
         />
       </div>

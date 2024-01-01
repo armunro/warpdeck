@@ -7,14 +7,14 @@ export default {
     },
     data() {
         return {
-            activeComponent: null
+            activeComponent: null,
+            children: null
         }
     },
     methods: {
         range(end) {
-            return Array.from({length: end}, (_, i) => i + 1)
+            return Array.from({ length: end }, (_, i) => i + 1)
         },
-        
         component_clicked(clickedComponent) {
             if (this.activeComponent)
                 this.activeComponent.deactivate();
@@ -22,17 +22,21 @@ export default {
             this.activeComponent = clickedComponent;
             this.$emit('component-click', this.activeComponent);
         },
-        component_refresh_request(component){
+        component_refresh_request(component) {
             this.activeComponent.refresh();
         },
-        component_touch_press(e){
+        component_touch_press(e) {
             this.$emit('component-touch-press', e);
         },
-        component_touch_hold(e){
+        component_touch_hold(e) {
             this.$emit('component-touch-hold', e);
+        },
+        component_drag_drop(e) {
+            this.$emit('component-drag-drop', e);
         }
     },
     mounted() {
+        this.children = this.$refs.child;
     },
     template: `
       <div class="row" v-for='r in range(this.rows)'>
@@ -41,6 +45,8 @@ export default {
                      @component-click="component_clicked"
                      @component-touch-press="component_touch_press"
                      @component-touch-hold="component_touch_hold"
+                     @component-drag-drop="component_drag_drop"
+                     ref="child"
                      v-for="c in range(this.columns)"></wdcomponent>
       </div>
     `

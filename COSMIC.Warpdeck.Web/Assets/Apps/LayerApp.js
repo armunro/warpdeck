@@ -17,7 +17,7 @@ let app = createApp({
 
         }
     }, methods: {
-        fetchAndBindKey(component) {
+        editKey(component) {
             api.getDeviceLayerComponent(component.deviceId, component.layerId, component.keyId).then(x => {
                 this.editingComponent = component;
                 this.editingComponentModel = x;
@@ -31,14 +31,31 @@ let app = createApp({
                 this.editingIconProperties = properties[0].properties;
             })
             triggersPromise.then(x => this.editingTriggers = x.actions)
-            this.fetchAndBindKey(component);
+            this.editKey(component);
         }, componentSave: function (component) {
-            this.api.saveDeviceLayerComponent(this.editingComponent.deviceId, this.editingComponent.layerId, this.editingComponent.keyId, component)
-                .then(() => this.editingComponent.refresh());
+            this.api.saveDeviceLayerComponent(
+                this.editingComponent.deviceId,
+                this.editingComponent.layerId,
+                this.editingComponent.keyId, component
+            ).then(() => this.editingComponent.refresh());
 
+        },
+        refreshComponent(index){
+          //console.log(this.$children[index].refresh())
+        },
+        component_drag_drop(event){
+            let promise = null;
+            if(event.isCopy)
+                promise = this.api.copyDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey)
+            else
+                promise = this.api.moveDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey)
+            promise.then(x=>{
+               // this.refreshComponent(event.sourceKey);
+                // this.refreshComponent(event.destinationKey);
+            });
         }
     }, mounted() {
-
+       
 
     }
 });

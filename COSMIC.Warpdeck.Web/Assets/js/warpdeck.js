@@ -84,15 +84,15 @@ class WarpdeckApi {
     }
 
     deleteDeviceLayerComponent(deviceId, layerId, keyId) {
-        return fetch(`${this.apiBase}/device/ ${deviceId}/layer/${layerId}/key/${keyId}`, this.buildRequest("DELETE"))
+        return fetch(`${this.apiBase}/device/${deviceId}/layer/${layerId}/key/${keyId}`, this.buildRequest("DELETE"))
     }
 
     copyDeviceLayerComponent(deviceId, layerId, componentId, targetComponentId) {
-        return fetch(`${this.apiBase}/device/ ${deviceId}/layer/${layerId}/key/${componentId}/copy/${targetComponentId}`);
+        return fetch(`${this.apiBase}/device/${deviceId}/layer/${layerId}/key/${componentId}/copy/${targetComponentId}`);
     }
 
     moveDeviceLayerComponent(deviceId, layerId, componentId, targetComponentId) {
-        return fetch(`${this.apiBase}/device/ ${deviceId}/layer/${layerId}/key/${componentId}/move/${targetComponentId}`);
+        return fetch(`${this.apiBase}/device/${deviceId}/layer/${layerId}/key/${componentId}/move/${targetComponentId}`);
     }
 
     createDevice(name, hardware) {

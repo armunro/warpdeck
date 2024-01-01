@@ -19,6 +19,7 @@
                     <div class="card-body bg-dark rounded-3">
                         <div class="container-fluid" id="keymapGrid">
                             <WdComponentGrid @@component-click="componentClick"
+                                             @@component-drag-drop="component_drag_drop"
                                              deviceId="@Model.DeviceId"
                                              layerId="@Model.LayerId"
                                              rows="@Model.DeviceModel.Info.Rows"
