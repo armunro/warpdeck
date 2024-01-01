@@ -31,8 +31,13 @@ export default {
         component_touch_hold(e) {
             this.$emit('component-touch-hold', e);
         },
+        refreshComponent(index){
+            this.children[index].refresh();
+        },
         component_drag_drop(e) {
             this.$emit('component-drag-drop', e);
+            this.refreshComponent(e.sourceKey);
+            this.refreshComponent(e.destinationKey);
         }
     },
     mounted() {

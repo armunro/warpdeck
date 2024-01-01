@@ -40,22 +40,17 @@ let app = createApp({
             ).then(() => this.editingComponent.refresh());
 
         },
-        refreshComponent(index){
-          //console.log(this.$children[index].refresh())
+        refreshComponent(index) {
+            //console.log(this.$children[index].refresh())
         },
-        component_drag_drop(event){
-            let promise = null;
-            if(event.isCopy)
-                promise = this.api.copyDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey)
-            else
-                promise = this.api.moveDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey)
-            promise.then(x=>{
-               // this.refreshComponent(event.sourceKey);
-                // this.refreshComponent(event.destinationKey);
-            });
+        component_drag_drop: function (event) {
+            console.log(event);
+            if (event.isCopy) this.api.copyDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey).then();
+            else this.api.moveDeviceLayerComponent(event.sourceDevice, event.sourceLayer, event.sourceKey, event.destinationKey).then();
         }
+
     }, mounted() {
-       
+
 
     }
 });
