@@ -8,25 +8,23 @@
                 <div class="card mb-1">
                     <div class="card-header">
                         <div class="float-start">
-                            <a class="deviceHeaderLink" aria-current="page" href="/device/@deviceModel.DeviceId">
-                                @deviceModel.DeviceId
-                            </a>
+                            <h5 class="m-0 mt-1">
+                                <a class="deviceHeaderLink" aria-current="page" href="/device/@deviceModel.DeviceId">
+                                    @deviceModel.DeviceId
+                                </a>
+                            </h5>
                         </div>
                         <div class="float-end">
-                                                    <a class=" me-1" href="javascript:fetch('/api/devicehost/@deviceModel.DeviceId/start')">
-                                                        Open
-                                                    </a>
-
+                            <a class="btn btn-sm btn-secondary me-1"
+                               href="javascript:fetch('/api/devicehost/@deviceModel.DeviceId/start')">
+                                Open
+                            </a>
                         </div>
-
-
                     </div>
                     <div class="card-body">
-                        <h5 class="">LAYERS |       <a href="/device/@deviceModel.DeviceId/actions">
-                                                                          ACTIONS
-                                                                      </a></h5>
-                  
-
+                        <h5 class="">
+                            LAYERS
+                        </h5>
                         @foreach (var j in deviceModel.Layers)
                         {
                             <li class="nav-item">
@@ -35,26 +33,22 @@
                                 </a>
                             </li>
                         }
-
                     </div>
                     <div class="card-footer text-muted">
-
-
                         <a class="btn btn-secondary btn-sm position-relative me-1"
                            href="/device/@deviceModel.DeviceId/monitor">
                             Monitors
                             <span class="badge bg-primary">@deviceModel.MonitorRules.Rules.Count</span>
-
                         </a>
                         <a class="btn btn-secondary btn-sm position-relative"
                            href="/device/@deviceModel.DeviceId/property">
                             Properties
                             <span class="badge bg-primary"> @deviceModel.PropertyRules.Count</span>
-
-
+                        </a>
+                        <a class="btn btn-secondary btn-sm" href="/device/@deviceModel.DeviceId/actions">
+                            Actions
                         </a>
                     </div>
-
                 </div>
             }
         </ul>
