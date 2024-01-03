@@ -1,4 +1,5 @@
 using System.Diagnostics.CodeAnalysis;
+using System.Net.Http.Headers;
 using System.Text.Json.Serialization;
 using COSMIC.Warpdeck.Domain.Action;
 using COSMIC.Warpdeck.Domain.Button;
@@ -17,14 +18,11 @@ namespace COSMIC.Warpdeck.Domain.Device
         public string DeviceId { get; set; }
         [JsonIgnore, YamlIgnore] public LayerMap Layers { get; set; } = new();
         [JsonIgnore, YamlIgnore] public LayerMap ActiveLayers { get; set; } = new();
-        [JsonIgnore, YamlIgnore] public MonitorRuleList MonitorRules { get; set; }
+        [JsonIgnore, YamlIgnore] public MonitorRuleList MonitorRules { get; set; } = new();
         [JsonIgnore, YamlIgnore] public ButtonMap ButtonStates { get; set; } = new();
         [JsonIgnore, YamlIgnore] public List<PropertyRuleModel> PropertyRules { get; set; } = new();
         [JsonIgnore, YamlIgnore] public Dictionary<String,ActionModel> ActionsCombined { get; set; } = new();
         
-        
-        
-
         public bool IsLayerActive(string layerId) => ActiveLayers.ContainsKey(layerId);
 
         public void ActivateLayer(string layerId)

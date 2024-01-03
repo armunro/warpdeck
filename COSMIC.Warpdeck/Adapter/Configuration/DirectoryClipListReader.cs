@@ -19,12 +19,15 @@ public class DirectoryClipListReader : IClipListReader
     public List<ClipList> ReadClipLists()
     {
         List<ClipList> returnLists = new List<ClipList>();
+        
+        if(Directory.Exists(_configBaseDir))
+        {
         string[] directories = Directory.GetDirectories(_configBaseDir);
-
         foreach (string directory in directories)
         {
             ClipList clips = ProcessDirectory(directory);
             returnLists.Add(clips);
+        }
         }
 
         return returnLists;

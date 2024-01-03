@@ -18,21 +18,25 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
 
         public List<ClipPattern> ReadPatterns()
         {
+            string devicesDir = Path.Join(_configBaseDir, "clip-patterns");
+            if (!Directory.Exists(devicesDir))
+                return new List<ClipPattern>() { };
+
             var deserializer = new DeserializerBuilder()
-                .WithNamingConvention(CamelCaseNamingConvention.Instance) 
+                .WithNamingConvention(CamelCaseNamingConvention.Instance)
                 .Build();
 
             List<ClipPattern> patterns = new List<ClipPattern>();
-  
+
             string clipPatternConfigPath = Path.Join(_configBaseDir, "clip-patterns");
             string[] patternConfigFiles = Directory.GetFiles(clipPatternConfigPath, "*.clippattern.yaml");
-            
+
             foreach (string patternConfigFile in patternConfigFiles)
             {
                 ClipPattern pattern = deserializer.Deserialize<ClipPattern>(File.ReadAllText(patternConfigFile));
                 patterns.Add(pattern);
             }
-            
+
             return patterns;
         }
 
@@ -45,7 +49,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
                 Directory.CreateDirectory(_configBaseDir);
             if (!Directory.Exists(clipPatternConfigDir))
                 Directory.CreateDirectory(clipPatternConfigDir);
-         
+
             foreach (ClipPattern pattern in patterns)
             {
                 string patternPath = Path.Join(clipPatternConfigDir, pattern.Name + ".clippattern.yaml");

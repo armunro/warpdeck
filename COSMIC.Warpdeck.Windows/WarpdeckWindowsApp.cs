@@ -28,11 +28,11 @@ namespace COSMIC.Warpdeck.Windows
             ContainerBuilder builder = new ContainerBuilder();
 
             //Register Core dependencies 
-            builder.RegisterModule<WarpdeckStandardDependancies.LayersModule>();
-            builder.RegisterModule<WarpdeckStandardDependancies.ConfigModule>();
-            builder.RegisterModule<WarpdeckStandardDependancies.BehaviorsModule>();
-            builder.RegisterModule<WarpdeckStandardDependancies.Property>();
-            builder.RegisterModule<WarpdeckStandardDependancies.DevicesModule>();
+            builder.RegisterModule<WarpdeckStandardDependencies.LayersModule>();
+            builder.RegisterModule<WarpdeckStandardDependencies.ConfigModule>();
+            builder.RegisterModule<WarpdeckStandardDependencies.BehaviorsModule>();
+            builder.RegisterModule<WarpdeckStandardDependencies.Property>();
+            builder.RegisterModule<WarpdeckStandardDependencies.DevicesModule>();
            
             //Register Windows dependencies
             builder.RegisterModule<WarpdeckWindowsDependencies.BoardModule>();

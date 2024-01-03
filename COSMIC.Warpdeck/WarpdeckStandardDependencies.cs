@@ -20,7 +20,7 @@ using COSMIC.Warpdeck.UseCase.Property;
 namespace COSMIC.Warpdeck
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class WarpdeckStandardDependancies
+    public class WarpdeckStandardDependencies
     {
         public class BehaviorsModule : Module
         {
@@ -80,20 +80,25 @@ namespace COSMIC.Warpdeck
         {
             protected override void Load(ContainerBuilder builder)
             {
+                string[] args = Environment.GetCommandLineArgs();
+                string configPath = string.Empty;
+                if ( args.Length <= 0 || string.IsNullOrWhiteSpace(configPath))
+                    configPath = "./";
+                
                 builder.RegisterType<YamlFileDeviceReaderWriter>()
                     .As<IDeviceReader>()
-                    .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
+                    .WithParameter("configBaseDir", configPath)
                     .SingleInstance();
                 builder.RegisterType<YamlFileDeviceReaderWriter>()
                     .As<IDeviceWriter>()
-                    .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
+                    .WithParameter("configBaseDir", configPath)
                     .SingleInstance();
                 builder.RegisterType<YamlFileClipPatternReaderWriter>()
                     .As<IClipPatternReader>()
                     .As<IClipPatternWriter>()
-                    .WithParameter("configBaseDir", Environment.GetCommandLineArgs()[1])
+                    .WithParameter("configBaseDir", configPath)
                     .SingleInstance();
-                builder.RegisterType<DirectoryClipListReader>().As<IClipListReader>().SingleInstance().WithParameter("configBaseDir", Path.Join(Environment.GetCommandLineArgs()[1], "clip-lists") );
+                builder.RegisterType<DirectoryClipListReader>().As<IClipListReader>().SingleInstance().WithParameter("configBaseDir", Path.Join(configPath, "clip-lists") );
 
                 base.Load(builder);
             }

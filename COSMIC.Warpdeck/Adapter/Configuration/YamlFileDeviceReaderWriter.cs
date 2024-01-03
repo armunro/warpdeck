@@ -27,7 +27,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
             
             string devicesDir = Path.Join(_configBaseDir, "devices");
             if (!Directory.Exists(devicesDir))
-                return new DeviceModelList() { new DeviceModel() };
+                return new DeviceModelList() { };
             string[] deviceBaseDirs = Directory.GetDirectories(devicesDir);
 
             DeviceModelList devices = new DeviceModelList();

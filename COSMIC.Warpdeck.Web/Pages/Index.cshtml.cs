@@ -8,7 +8,7 @@ namespace COSMIC.Warpdeck.Web.Pages
     public class Index : PageModel
     {
         private readonly DeviceManager _deviceManager;
-        public DeviceModel Device { get; private set; }
+        
 
         public Index(DeviceManager deviceManager)
         {
@@ -18,7 +18,7 @@ namespace COSMIC.Warpdeck.Web.Pages
         // ReSharper disable once UnusedMember.Global
         public void OnGet()
         {
-            Device = _deviceManager.GetAllDevices().First();
+        
         }
     }
 }

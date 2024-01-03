@@ -6,7 +6,7 @@
             @foreach (var deviceModel in COSMIC.Warpdeck.Web.WarpDeckFrontend.Container.Resolve<DeviceManager>().GetAllDevices())
             {
                 <div class="card mb-1">
-                    <div class="card-header">
+                    <div class="card-header pe-0">
                         <div class="float-start">
                             <h5 class="m-0 mt-1">
                                 <a class="deviceHeaderLink" aria-current="page" href="/device/@deviceModel.DeviceId">
@@ -15,7 +15,7 @@
                             </h5>
                         </div>
                         <div class="float-end">
-                            <a class="btn btn-sm btn-secondary me-1"
+                            <a class="btn btn-sm btn-primary" style="border-top-right-radius: 0; border-bottom-right-radius: 0; border-right: 0"
                                href="javascript:fetch('/api/devicehost/@deviceModel.DeviceId/start')">
                                 Open
                             </a>
