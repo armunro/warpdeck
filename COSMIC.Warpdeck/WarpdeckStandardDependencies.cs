@@ -81,8 +81,10 @@ namespace COSMIC.Warpdeck
             protected override void Load(ContainerBuilder builder)
             {
                 string[] args = Environment.GetCommandLineArgs();
-                string configPath = string.Empty;
-                if ( args.Length <= 0 || string.IsNullOrWhiteSpace(configPath))
+                string configPath;
+                if (args.Length > 1 && !string.IsNullOrWhiteSpace(args[1]))
+                    configPath = args[1];
+                else
                     configPath = "./";
                 
                 builder.RegisterType<YamlFileDeviceReaderWriter>()

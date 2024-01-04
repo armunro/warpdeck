@@ -2,6 +2,7 @@
 @using COSMIC.Warpdeck.Managers
 <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse d-block">
     <div class="position-sticky">
+        <a href="/device/new" class="btn btn-sm btn-primary w-100">New Device</a>
         <ul class="nav d-block">
             @foreach (var deviceModel in COSMIC.Warpdeck.Web.WarpDeckFrontend.Container.Resolve<DeviceManager>().GetAllDevices())
             {

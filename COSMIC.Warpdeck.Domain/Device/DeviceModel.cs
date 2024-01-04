@@ -21,7 +21,7 @@ namespace COSMIC.Warpdeck.Domain.Device
         [JsonIgnore, YamlIgnore] public MonitorRuleList MonitorRules { get; set; } = new();
         [JsonIgnore, YamlIgnore] public ButtonMap ButtonStates { get; set; } = new();
         [JsonIgnore, YamlIgnore] public List<PropertyRuleModel> PropertyRules { get; set; } = new();
-        [JsonIgnore, YamlIgnore] public Dictionary<String,ActionModel> ActionsCombined { get; set; } = new();
+        [JsonIgnore, YamlIgnore] public Dictionary<string,ActionModel> ActionsCombined { get; set; } = new();
         
         public bool IsLayerActive(string layerId) => ActiveLayers.ContainsKey(layerId);
 
@@ -35,15 +35,8 @@ namespace COSMIC.Warpdeck.Domain.Device
 
         public void DeactivateLayer(string layerId)
         {
-            if (ActiveLayers.ContainsKey(layerId))
-            {
-                ActiveLayers.Remove(layerId);
-            }
-
-            foreach (string key in Layers[layerId].Buttons.Keys)
-            {
-                ButtonStates[key] = null;
-            }
+            if (ActiveLayers.ContainsKey(layerId)) ActiveLayers.Remove(layerId);
+            foreach (string key in Layers[layerId].Buttons.Keys) ButtonStates[key] = null!;
         }
     }
 }
