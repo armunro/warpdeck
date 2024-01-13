@@ -33,8 +33,8 @@ namespace COSMIC.Warpdeck
                 base.Load(builder);
             }
         }
-        
-            public class Property : Module
+
+        public class Property : Module
         {
             protected override void Load(ContainerBuilder builder)
             {
@@ -86,7 +86,7 @@ namespace COSMIC.Warpdeck
                     configPath = args[1];
                 else
                     configPath = "./";
-                
+
                 builder.RegisterType<YamlFileDeviceReaderWriter>()
                     .As<IDeviceReader>()
                     .WithParameter("configBaseDir", configPath)
@@ -100,11 +100,11 @@ namespace COSMIC.Warpdeck
                     .As<IClipPatternWriter>()
                     .WithParameter("configBaseDir", configPath)
                     .SingleInstance();
-                builder.RegisterType<DirectoryClipListReader>().As<IClipListReader>().SingleInstance().WithParameter("configBaseDir", Path.Join(configPath, "clip-lists") );
+                builder.RegisterType<DirectoryClipListReader>().As<IClipListReader>().SingleInstance()
+                    .WithParameter("configBaseDir", Path.Join(configPath, "clip-lists"));
 
                 base.Load(builder);
             }
         }
-    
     }
 }

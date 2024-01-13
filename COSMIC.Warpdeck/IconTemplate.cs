@@ -57,8 +57,8 @@ namespace COSMIC.Warpdeck
                 var glyph = (SvgPath)glyphDoc.Children[0];
                 glyphDoc.Transforms = new SvgTransformCollection()
                 {
-                    new SvgScale(.35f),
-                    new SvgTranslate(230, 360)
+                    new SvgScale(.4f),
+                    new SvgTranslate(180, 250)
                 };
                 glyph.Fill = new SvgColourServer(fill);
                 Document.GetElementById(elementId).Children.Add(glyphDoc);

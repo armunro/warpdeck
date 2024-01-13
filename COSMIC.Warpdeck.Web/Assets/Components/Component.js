@@ -62,7 +62,7 @@ export default {
     },
     template: `
       <div id="component_{{this.keyId}}" :class="{ active: isActive}" class="col m-0 p-0 keyMapKey">
-        <img alt="" class="img-fluid me-2 mb-2 keyMapKeyImage"
+        <img alt="" class="img-fluid keyMapKeyImage"
              @click="onComponentIconClick(this)"
              @mousedown="onMouseDown"
              @mouseup="onMouseUp"

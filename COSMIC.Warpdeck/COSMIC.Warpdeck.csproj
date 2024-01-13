@@ -22,6 +22,10 @@
       <Content Include="Presentation\**">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="Untitled2.svg" />
+      <Content Include="Untitled2.svg">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
     </ItemGroup>
 
     <ItemGroup>

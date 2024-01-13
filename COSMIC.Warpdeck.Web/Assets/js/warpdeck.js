@@ -106,19 +106,21 @@ class WarpdeckApi {
     }
 
     triggerComponentPress(deviceId, componentId) {
-        return fetch(`${this.apiBase}/device/${deviceId}/keys/${componentId}/press`, {method: "POST"}).then(
-            (response) => {
-                return response.json();
-            }
-        );
+        return fetch(`${this.apiBase}/device/${deviceId}/keys/${componentId}/press`, {method: "POST"}).then((response) => {
+            return response.json();
+        });
+    }
+
+    getAvailableHardware() {
+        return fetch(`${this.apiBase}/hardware/available`).then(response => {
+            return response.json();
+        })
     }
 
     triggerComponentHold(deviceId, componentId) {
-        return fetch(`${this.apiBase}/device/${deviceId}/keys/${componentId}/hold`, {method: "POST"}).then(
-            (response) => {
-                return response.json();
-            }
-        );
+        return fetch(`${this.apiBase}/device/${deviceId}/keys/${componentId}/hold`, {method: "POST"}).then((response) => {
+            return response.json();
+        });
     }
 
 }

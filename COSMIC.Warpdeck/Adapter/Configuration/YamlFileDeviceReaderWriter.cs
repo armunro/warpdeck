@@ -40,10 +40,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
                 device.Info =
                     deserializer.Deserialize<DeviceInfo>(
                         File.ReadAllText(Path.Join(deviceBaseDir, "device.yaml")));
-                //monitor rules
-                device.MonitorRules =
-                    deserializer.Deserialize<MonitorRuleList>(
-                        File.ReadAllText(Path.Join(deviceBaseDir, "monitorRules.yaml")));
+
                 device.PropertyRules =
                     deserializer.Deserialize<List<PropertyRuleModel>>(
                         File.ReadAllText(Path.Join(deviceBaseDir, "propertyRules.yaml")));
@@ -73,9 +70,7 @@ namespace COSMIC.Warpdeck.Adapter.Configuration
             string specPath = Path.Join(deviceBaseDir, "device.yaml");
             File.WriteAllText(specPath, serializer.Serialize(deviceModel.Info));
 
-            //Monitors
-            string monitorFilePath = Path.Join(deviceBaseDir, "monitorRules.yaml");
-            File.WriteAllText(monitorFilePath, serializer.Serialize(deviceModel.MonitorRules));
+      
 
             //Property Rules
             string propertyRulesPath = Path.Join(deviceBaseDir, "propertyRules.yaml");

@@ -59,9 +59,8 @@ namespace COSMIC.Warpdeck
                 graphicColorCalc = PropertyRule.GetProperty(button, IconColor);
             }
 
-
-            AddGraphic("__wd_pb_glyph", svgPath,IconHelpers.GetColorFromHex(graphicColorCalc));
-            SetFill("__wd_pb_accent_line", IconHelpers.GetColorFromHex(PropertyRule.GetProperty(button, AccentColor)));
+            SetFill("__wd_pb_background", IconHelpers.GetColorFromHex(graphicColorCalc));
+            AddGraphic("__wd_pb_glyph", svgPath,IconHelpers.GetColorFromHex("#FFF"));
             SetElementText("__wd_pb_text", PropertyRule.GetProperty(button, Text),IconHelpers.GetColorFromHex("#FFFFFF"));
         }
     }

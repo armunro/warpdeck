@@ -11,12 +11,15 @@ let app = createApp({
     },
     methods: {
         bindHardware(){
-            this.api.getAv
+            this.api.getAvailableHardware().then(x=>{
+                this.availableHardware = x;
+            });
         }
     },
     mounted() {
         api = new WarpdeckApi("http://localhost:4300/api")
         this.api = api;
+        this.bindHardware();
 
     },
 });
