@@ -11,6 +11,7 @@ using COSMIC.Warpdeck.Domain.Device;
 using COSMIC.Warpdeck.Domain.Icon;
 using COSMIC.Warpdeck.Domain.Layer;
 using COSMIC.Warpdeck.Domain.Monitor;
+using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using OpenMacroBoard.SDK;
 using StreamDeckSharp;
 
@@ -33,8 +34,7 @@ namespace COSMIC.Warpdeck.Managers
 
         public void BindVirtualDevice(DeviceModel newDevice)
         {
-         
-                BindDevice(new VirtualBoard(), newDevice);
+            BindDevice(new VirtualBoard(), newDevice);
         }
 
         public void BindDevice(IMacroBoard macroBoard, DeviceModel deviceModel)
@@ -62,7 +62,6 @@ namespace COSMIC.Warpdeck.Managers
 
         private void CombineDeviceActions(DeviceModel deviceModel)
         {
-            
             foreach (LayerModel layerModel in deviceModel.Layers.Values.ToList())
             {
                 foreach (var button in layerModel.Buttons)
@@ -71,10 +70,7 @@ namespace COSMIC.Warpdeck.Managers
                     {
                         string key = $"{layerModel.LayerId}.{button.Key}.{actionName}";
                         deviceModel.ActionsCombined.Add(key, button.Value.Actions[actionName]);
-                        
                     }
-
-                    
                 }
             }
         }
@@ -217,5 +213,10 @@ namespace COSMIC.Warpdeck.Managers
 
         public IEnumerable<DeviceModel> GetAllDevices() => Devices.Values;
         public void RedrawDevices() => Devices.Keys.ToList().ForEach(RedrawDevice);
+
+        public void AddMonitorRules(MonitorRuleList monitorRules)
+        {
+            monitorRules.Rules.ForEach(x=> this._monitorManager.AddMonitorRule(x)); 
+        }
     }
 }

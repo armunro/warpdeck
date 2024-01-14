@@ -87,6 +87,9 @@ namespace COSMIC.Warpdeck
                 else
                     configPath = "./";
 
+                builder.RegisterType<YamlMonitorRulesReaderWriter>().As<IMonitorRuleReader>()
+                    .WithParameter("configBaseDir", configPath)
+                    .SingleInstance();
                 builder.RegisterType<YamlFileDeviceReaderWriter>()
                     .As<IDeviceReader>()
                     .WithParameter("configBaseDir", configPath)

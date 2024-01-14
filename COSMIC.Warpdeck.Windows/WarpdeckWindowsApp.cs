@@ -4,6 +4,7 @@ using Autofac;
 using COSMIC.Warpdeck.Domain.Clipboard;
 using COSMIC.Warpdeck.Domain.Configuration;
 using COSMIC.Warpdeck.Domain.Device;
+using COSMIC.Warpdeck.Domain.Monitor.Rules;
 using COSMIC.Warpdeck.Managers;
 using COSMIC.Warpdeck.Windows.Adapter.Monitor;
 using StreamDeckSharp;
@@ -57,8 +58,12 @@ namespace COSMIC.Warpdeck.Windows
         public void LoadConfig()
         {
             IDeviceReader deviceReader = Container.Resolve<IDeviceReader>();
-            var deviceManager = Container.Resolve<DeviceManager>();
+            IMonitorRuleReader monitorRuleReader = Container.Resolve<IMonitorRuleReader>();
+            DeviceManager deviceManager = Container.Resolve<DeviceManager>();
+            
             DeviceModelList deviceModels = deviceReader.ReadDevices();
+            MonitorRuleList monitorRules = monitorRuleReader.ReadMonitorRules();
+            deviceManager.AddMonitorRules(monitorRules);
             IEnumerable<IStreamDeckRefHandle> deckRefHandles = StreamDeck.EnumerateDevices();
             foreach (DeviceModel deviceModel in deviceModels)
             {
