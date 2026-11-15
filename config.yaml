@@ -1,0 +1,336 @@
+layers:
+  - name: Default
+    priority: 0
+    color: "#000000"
+    buttons:
+      # Window Management (DodgerBlue: #1E90FF)
+      - index: 0
+        color: "#1E90FF"
+        caption: "Snap Left"
+        action: { type: macro, value: "{{win+left}}" }
+      - index: 1
+        color: "#1E90FF"
+        caption: "Snap Right"
+        action: { type: macro, value: "{{win+right}}" }
+      - index: 2
+        color: "#1E90FF"
+        caption: "Maximize"
+        action: { type: macro, value: "{{win+up}}" }
+      - index: 3
+        color: "#1E90FF"
+        caption: "Minimize"
+        action: { type: macro, value: "{{win+down}}" }
+
+      # Navigation / Desktop (SlateBlue: #7B68EE)
+      - index: 4
+        color: "#7B68EE"
+        caption: "Task View"
+        action: { type: macro, value: "{{win+tab}}" }
+      - index: 5
+        color: "#7B68EE"
+        caption: "New Desktop"
+        action: { type: macro, value: "{{win+ctrl+d}}" }
+      - index: 6
+        color: "#7B68EE"
+        caption: "Next Desktop"
+        action: { type: macro, value: "{{win+ctrl+right}}" }
+      - index: 7
+        color: "#7B68EE"
+        caption: "Prev Desktop"
+        action: { type: macro, value: "{{win+ctrl+left}}" }
+
+      # System Tools (Orange: #FFA500)
+      - index: 8
+        color: "#FFA500"
+        caption: "Settings"
+        action: { type: macro, value: "{{win+i}}" }
+      - index: 9
+        color: "#FFA500"
+        caption: "Explorer"
+        action: { type: macro, value: "{{win+e}}" }
+      - index: 10
+        color: "#FFA500"
+        caption: "Search"
+        action: { type: macro, value: "{{win+s}}" }
+      - index: 11
+        color: "#FFA500"
+        caption: "Run"
+        action: { type: macro, value: "{{win+r}}" }
+
+      # Media / Volume (LimeGreen: #32CD32)
+      - index: 12
+        color: "#32CD32"
+        caption: "Mute"
+        action: { type: macro, value: "{{win+alt+m}}" } # Note: Win+Alt+M is Game Bar mute, standard Win doesn't have a direct toggle often without special keys
+      - index: 13
+        color: "#32CD32"
+        caption: "Vol Up"
+        action: { type: macro, value: "{{f3}}" } # Often mapped on laptops, but standard KB varies.
+      - index: 14
+        color: "#32CD32"
+        caption: "Vol Down"
+        action: { type: macro, value: "{{f2}}" }
+      - index: 15
+        color: "#32CD32"
+        caption: "Play/Pause"
+        action: { type: macro, value: "{{space}}" } # Context dependent
+
+      # Productivity / Screenshots (Gold: #FFD700)
+      - index: 16
+        color: "#FFD700"
+        caption: "Snippet"
+        action: { type: macro, value: "{{win+shift+s}}" }
+      - index: 17
+        color: "#FFD700"
+        caption: "Clipboard"
+        action: { type: macro, value: "{{win+v}}" }
+      - index: 18
+        color: "#FFD700"
+        caption: "Emoji"
+        action: { type: macro, value: "{{win+.}}" }
+      - index: 19
+        color: "#FFD700"
+        caption: "Action Center"
+        action: { type: macro, value: "{{win+a}}" }
+
+      # Browser / Web (MediumOrchid: #BA55D3)
+      - index: 20
+        color: "#BA55D3"
+        caption: "New Tab"
+        action: { type: macro, value: "{{ctrl+t}}" }
+      - index: 21
+        color: "#BA55D3"
+        caption: "Close Tab"
+        action: { type: macro, value: "{{ctrl+w}}" }
+      - index: 22
+        color: "#BA55D3"
+        caption: "Reopen Tab"
+        action: { type: macro, value: "{{ctrl+shift+t}}" }
+      - index: 23
+        color: "#BA55D3"
+        caption: "Private"
+        action: { type: macro, value: "{{ctrl+shift+n}}" }
+
+      # App Switching (Silver: #C0C0C0)
+      - index: 24
+        color: "#C0C0C0"
+        caption: "Alt+Tab"
+        action: { type: macro, value: "{{alt+tab}}" }
+      - index: 25
+        color: "#C0C0C0"
+        caption: "Show Desktop"
+        action: { type: macro, value: "{{win+d}}" }
+      - index: 26
+        color: "#C0C0C0"
+        caption: "Lock"
+        action: { type: macro, value: "{{win+l}}" }
+      - index: 27
+        color: "#C0C0C0"
+        caption: "Task Mgr"
+        action: { type: macro, value: "{{ctrl+shift+esc}}" }
+
+      # General (White: #FFFFFF)
+      - index: 28
+        color: "#FFFFFF"
+        caption: "Undo"
+        action: { type: macro, value: "{{ctrl+z}}" }
+      - index: 29
+        color: "#FFFFFF"
+        caption: "Redo"
+        action: { type: macro, value: "{{ctrl+y}}" }
+      - index: 30
+        color: "#FFFFFF"
+        caption: "Copy"
+        action: { type: macro, value: "{{ctrl+c}}" }
+      - index: 31
+        color: "#FFFFFF"
+        caption: "Paste"
+        action: { type: macro, value: "{{ctrl+v}}" }
+  - name: Notepad
+    priority: 10
+    color: "#00FF00" # Green
+    fontColor: "#000000" # Black font for green background
+    condition:
+      processName: notepad
+    buttons:
+      - index: 0
+        color: "#FFFFFF"
+        # fontColor will be automatically black because #FFFFFF is light
+        caption: "Save"
+        action:
+          type: macro
+          value: "thisissometext{{ctrl+s}}" # Text + Save
+      - index: 1
+        color: "#000000"
+        fontColor: "#FF0000" # Explicitly red font on black
+        caption: "Close"
+        action:
+          type: macro
+          value: "{{alt+f4}}" # Close
+  - name: Calculator
+    priority: 10
+    color: "#FF0000" # Red
+    condition:
+      windowTitle: Calculator
+    buttons:
+      - index: 0
+        color: "#0000FF"
+        caption: "Tasks"
+        action:
+          type: macro
+          value: "{{win+tab}}" # Task View
+      - index: 1
+        color: "#FFFF00"
+        caption: "Close"
+        action:
+          type: macro
+          value: "{{alt+f4}}" # Close
+  - name: Rider
+    priority: 20
+    color: "#000000" # Black background
+    condition:
+      processName: Rider64
+    buttons:
+      # Navigation (SlateBlue: #7B68EE)
+      - index: 0
+        color: "#7B68EE"
+        caption: "Search Everywhere"
+        action: { type: macro, value: "{{ctrl+t}}" }
+      - index: 1
+        color: "#7B68EE"
+        caption: "Go to File"
+        action: { type: macro, value: "{{ctrl+shift+n}}" }
+      - index: 2
+        color: "#7B68EE"
+        caption: "Go to Symbol"
+        action: { type: macro, value: "{{ctrl+alt+shift+n}}" }
+      - index: 3
+        color: "#7B68EE"
+        caption: "Find Usages"
+        action: { type: macro, value: "{{shift+f12}}" }
+      
+      # Editing / Context (Orange: #FFA500)
+      - index: 4
+        color: "#FFA500"
+        caption: "Context Action"
+        action: { type: macro, value: "{{alt+enter}}" }
+      - index: 5
+        color: "#FFA500"
+        caption: "Rename"
+        action: { type: macro, value: "{{f2}}" }
+      - index: 6
+        color: "#FFA500"
+        caption: "Refactor This"
+        action: { type: macro, value: "{{ctrl+shift+r}}" }
+      - index: 7
+        color: "#FFA500"
+        caption: "Format Code"
+        action: { type: macro, value: "{{ctrl+alt+l}}" }
+
+      # Build & Run (Green: #32CD32, Red: #FF4500)
+      - index: 8
+        color: "#32CD32"
+        caption: "Build"
+        action: { type: macro, value: "{{ctrl+shift+b}}" }
+      - index: 9
+        color: "#32CD32"
+        caption: "Run"
+        action: { type: macro, value: "{{ctrl+f5}}" }
+      - index: 10
+        color: "#32CD32"
+        caption: "Debug"
+        action: { type: macro, value: "{{f5}}" }
+      - index: 11
+        color: "#FF4500"
+        caption: "Stop"
+        action: { type: macro, value: "{{shift+f5}}" }
+
+      # Debugging (DodgerBlue: #1E90FF)
+      - index: 12
+        color: "#1E90FF"
+        caption: "Step Over"
+        action: { type: macro, value: "{{f8}}" }
+      - index: 13
+        color: "#1E90FF"
+        caption: "Step Into"
+        action: { type: macro, value: "{{f7}}" }
+      - index: 14
+        color: "#1E90FF"
+        caption: "Step Out"
+        action: { type: macro, value: "{{shift+f8}}" }
+      - index: 15
+        color: "#1E90FF"
+        caption: "Resume"
+        action: { type: macro, value: "{{f5}}" }
+
+      # Version Control (Khaki: #F0E68C)
+      - index: 16
+        color: "#F0E68C"
+        caption: "Commit"
+        action: { type: macro, value: "{{ctrl+k}}" }
+      - index: 17
+        color: "#F0E68C"
+        caption: "Push"
+        action: { type: macro, value: "{{ctrl+shift+k}}" }
+      - index: 18
+        color: "#F0E68C"
+        caption: "Pull"
+        action: { type: macro, value: "{{ctrl+alt+w}}" }
+      - index: 19
+        color: "#F0E68C"
+        caption: "History"
+        action: { type: macro, value: "{{alt+`}}" }
+
+      # Code structure (Plum: #DDA0DD)
+      - index: 20
+        color: "#DDA0DD"
+        caption: "File Structure"
+        action: { type: macro, value: "{{ctrl+f11}}" }
+      - index: 21
+        color: "#DDA0DD"
+        caption: "Hierarchy"
+        action: { type: macro, value: "{{ctrl+e}}" }
+      - index: 22
+        color: "#DDA0DD"
+        caption: "Terminal"
+        action: { type: macro, value: "{{ctrl+alt+1}}" }
+      - index: 23
+        color: "#DDA0DD"
+        caption: "Solution"
+        action: { type: macro, value: "{{alt+1}}" }
+
+      # Miscellaneous (White: #FFFFFF)
+      - index: 24
+        color: "#FFFFFF"
+        caption: "Comment"
+        action: { type: macro, value: "{{ctrl+/}}" }
+      - index: 25
+        color: "#FFFFFF"
+        caption: "Inspect"
+        action: { type: macro, value: "{{ctrl+alt+shift+i}}" }
+      - index: 26
+        color: "#FFFFFF"
+        caption: "Implement"
+        action: { type: macro, value: "{{ctrl+i}}" }
+      - index: 27
+        color: "#FFFFFF"
+        caption: "Override"
+        action: { type: macro, value: "{{ctrl+o}}" }
+
+      # Navigation bookmarks (Silver: #C0C0C0)
+      - index: 28
+        color: "#C0C0C0"
+        caption: "Toggle Bookmark"
+        action: { type: macro, value: "{{ctrl+f11}}" }
+      - index: 29
+        color: "#C0C0C0"
+        caption: "Show Bookmarks"
+        action: { type: macro, value: "{{shift+f11}}" }
+      - index: 30
+        color: "#FF00FF" # Magenta for UI
+        caption: "Rider UI"
+        action: { type: macro, value: "{{ctrl+shift+f12}}" }
+      - index: 31
+        color: "#B22222" # Firebrick for Tab Actions
+        caption: "Close Tab"
+        action: { type: macro, value: "{{ctrl+f4}}" }
