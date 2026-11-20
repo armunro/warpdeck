@@ -25,15 +25,20 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
         _keyCount = 32; 
 
         var directory = Path.GetDirectoryName(_configPath);
+        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
         var fileName = Path.GetFileName(_configPath);
 
-        _watcher = new FileSystemWatcher(directory!)
+        _watcher = new FileSystemWatcher(string.IsNullOrEmpty(directory) ? "." : directory)
         {
             Filter = fileName,
             NotifyFilter = NotifyFilters.LastWrite | NotifyFilters.FileName | NotifyFilters.Size
         };
 
         _watcher.Changed += OnFileChanged;
+        _watcher.Created += OnFileChanged;
         _watcher.Renamed += OnFileChanged;
         _watcher.EnableRaisingEvents = true;
 

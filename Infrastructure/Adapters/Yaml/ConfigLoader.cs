@@ -5,8 +5,203 @@ namespace Warpdeck.Infrastructure.Adapters.Yaml;
 
 public static class ConfigLoader
 {
+    public const string DefaultSampleConfig = """
+layers:
+  - name: Default
+    priority: 0
+    theme: "cyber"
+    color: "#000000"
+    buttons:
+      # Window Management (Electric Blue: #0070F3)
+      - index: 0
+        color: "#0070F3"
+        caption: "Snap Left"
+        icon: "solid/arrow-left.svg"
+        action: { type: macro, value: "{{win+left}}" }
+      - index: 1
+        color: "#0070F3"
+        caption: "Snap Right"
+        icon: "solid/arrow-right.svg"
+        action: { type: macro, value: "{{win+right}}" }
+      - index: 2
+        color: "#0070F3"
+        caption: "Maximize"
+        icon: "solid/window-maximize.svg"
+        action: { type: macro, value: "{{win+up}}" }
+      - index: 3
+        color: "#0070F3"
+        caption: "Minimize"
+        icon: "solid/window-minimize.svg"
+        action: { type: macro, value: "{{win+down}}" }
+
+      # Navigation / Desktop (Electric Purple: #7928CA)
+      - index: 4
+        color: "#7928CA"
+        caption: "Task View"
+        icon: "solid/table-columns.svg"
+        action: { type: macro, value: "{{win+tab}}" }
+      - index: 5
+        color: "#7928CA"
+        caption: "New Desktop"
+        icon: "solid/desktop.svg"
+        action: { type: macro, value: "{{win+ctrl+d}}" }
+      - index: 6
+        color: "#7928CA"
+        caption: "Next Desktop"
+        icon: "solid/angles-right.svg"
+        action: { type: macro, value: "{{win+ctrl+right}}" }
+      - index: 7
+        color: "#7928CA"
+        caption: "Prev Desktop"
+        icon: "solid/angles-left.svg"
+        action: { type: macro, value: "{{win+ctrl+left}}" }
+
+      # System Tools (Vibrant Orange: #FF6B00)
+      - index: 8
+        color: "#FF6B00"
+        caption: "Settings"
+        icon: "solid/gear.svg"
+        action: { type: macro, value: "{{win+i}}" }
+      - index: 9
+        color: "#FF6B00"
+        caption: "Explorer"
+        icon: "solid/folder.svg"
+        action: { type: macro, value: "{{win+e}}" }
+      - index: 10
+        color: "#FF6B00"
+        caption: "Search"
+        icon: "solid/magnifying-glass.svg"
+        action: { type: macro, value: "{{win+s}}" }
+      - index: 11
+        color: "#FF6B00"
+        caption: "Run"
+        icon: "solid/play.svg"
+        action: { type: macro, value: "{{win+r}}" }
+
+      # Media / Volume (Neon Green: #00E676)
+      - index: 12
+        color: "#00E676"
+        caption: "Mute"
+        icon: "solid/volume-xmark.svg"
+        action: { type: macro, value: "{{win+alt+m}}" }
+      - index: 13
+        color: "#00E676"
+        caption: "Vol Up"
+        icon: "solid/volume-high.svg"
+        action: { type: macro, value: "{{f3}}" }
+      - index: 14
+        color: "#00E676"
+        caption: "Vol Down"
+        icon: "solid/volume-low.svg"
+        action: { type: macro, value: "{{f2}}" }
+      - index: 15
+        color: "#00E676"
+        caption: "Play/Pause"
+        icon: "solid/play-pause.svg"
+        action: { type: macro, value: "{{space}}" }
+
+      # Productivity / Screenshots (Vibrant Yellow: #FFD600)
+      - index: 16
+        color: "#FFD600"
+        caption: "Snippet"
+        icon: "solid/scissors.svg"
+        action: { type: macro, value: "{{win+shift+s}}" }
+      - index: 17
+        color: "#FFD600"
+        caption: "Clipboard"
+        icon: "solid/clipboard.svg"
+        action: { type: macro, value: "{{win+v}}" }
+      - index: 18
+        color: "#FFD600"
+        caption: "Emoji"
+        icon: "solid/face-smile.svg"
+        action: { type: macro, value: "{{win+.}}" }
+      - index: 19
+        color: "#FFD600"
+        caption: "Action Center"
+        icon: "solid/bell.svg"
+        action: { type: macro, value: "{{win+a}}" }
+
+      # Browser / Web (Vibrant Magenta: #E040FB)
+      - index: 20
+        color: "#E040FB"
+        caption: "New Tab"
+        icon: "solid/plus.svg"
+        action: { type: macro, value: "{{ctrl+t}}" }
+      - index: 21
+        color: "#E040FB"
+        caption: "Close Tab"
+        icon: "solid/xmark.svg"
+        action: { type: macro, value: "{{ctrl+w}}" }
+      - index: 22
+        color: "#E040FB"
+        caption: "Reopen Tab"
+        icon: "solid/arrow-rotate-left.svg"
+        action: { type: macro, value: "{{ctrl+shift+t}}" }
+      - index: 23
+        color: "#E040FB"
+        caption: "Private"
+        icon: "solid/user-secret.svg"
+        action: { type: macro, value: "{{ctrl+shift+n}}" }
+
+      # App Switching (Electric Cyan: #00E5FF)
+      - index: 24
+        color: "#00E5FF"
+        caption: "Alt+Tab"
+        icon: "solid/window-restore.svg"
+        action: { type: macro, value: "{{alt+tab}}" }
+      - index: 25
+        color: "#00E5FF"
+        caption: "Show Desktop"
+        icon: "solid/display.svg"
+        action: { type: macro, value: "{{win+d}}" }
+      - index: 26
+        color: "#00E5FF"
+        caption: "Lock"
+        icon: "solid/lock.svg"
+        action: { type: macro, value: "{{win+l}}" }
+      - index: 27
+        color: "#00E5FF"
+        caption: "Task Mgr"
+        icon: "solid/chart-simple.svg"
+        action: { type: macro, value: "{{ctrl+shift+esc}}" }
+
+      # General (White: #FFFFFF)
+      - index: 28
+        color: "#FFFFFF"
+        caption: "Undo"
+        icon: "solid/rotate-left.svg"
+        action: { type: macro, value: "{{ctrl+z}}" }
+      - index: 29
+        color: "#FFFFFF"
+        caption: "Redo"
+        icon: "solid/rotate-right.svg"
+        action: { type: macro, value: "{{ctrl+y}}" }
+      - index: 30
+        color: "#FFFFFF"
+        caption: "Copy"
+        icon: "solid/copy.svg"
+        action: { type: macro, value: "{{ctrl+c}}" }
+      - index: 31
+        color: "#FFFFFF"
+        caption: "Paste"
+        icon: "solid/paste.svg"
+        action: { type: macro, value: "{{ctrl+v}}" }
+""";
+
     public static AppConfig Load(string path)
     {
+        if (!File.Exists(path))
+        {
+            var directory = Path.GetDirectoryName(path);
+            if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+            {
+                Directory.CreateDirectory(directory);
+            }
+            File.WriteAllText(path, DefaultSampleConfig);
+            Console.WriteLine($"Configuration file not found. Created sample configuration with default layer at: {path}");
+        }
+
         var deserializer = new DeserializerBuilder()
             .WithNamingConvention(CamelCaseNamingConvention.Instance)
             .Build();
