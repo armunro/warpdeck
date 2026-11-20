@@ -1,6 +1,7 @@
 ﻿layers:
   - name: Default
     priority: 0
+    theme: "cyber"
     color: "#000000"
     buttons:
       # Window Management (Electric Blue: #0070F3)

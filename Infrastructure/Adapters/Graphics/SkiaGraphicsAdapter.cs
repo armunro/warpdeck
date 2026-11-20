@@ -59,6 +59,13 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
         {
             DrawKorryTheme(canvas, r, g, b, fontR, fontG, fontB, text, iconPath, isPressed);
         }
+        else if (string.Equals(theme, "cyber", StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(theme, "neon", StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(theme, "hud", StringComparison.OrdinalIgnoreCase) ||
+                 string.Equals(theme, "scifi", StringComparison.OrdinalIgnoreCase))
+        {
+            DrawCyberTheme(canvas, r, g, b, fontR, fontG, fontB, text, iconPath, isPressed);
+        }
         else
         {
             DrawDefaultTheme(canvas, r, g, b, fontR, fontG, fontB, text, iconPath, isPressed);
@@ -520,6 +527,276 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
             IsAntialias = true
         };
         canvas.DrawRoundRect(new SKRect(innerRect.Left + 0.5f, innerRect.Top + 0.5f, innerRect.Right - 0.5f, innerRect.Bottom - 0.5f), litBorderCornerRadius, litBorderCornerRadius, litBorderPaint);
+    }
+
+    private void DrawCyberTheme(SKCanvas canvas, byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string? text, string? iconPath, bool isPressed)
+    {
+        // Cyberpunk / Sci-Fi Tactical HUD Theme:
+        // - Deep tech obsidian background with subtle horizontal scanlines
+        // - Radial ambient neon bloom in accent color
+        // - Tactical HUD corner brackets with glowing neon accents
+        // - Mini status LED ticks and tactical indicator marks
+        // - Neon bloom & vibrant backlit icon and high-contrast HUD typography
+        // - Overdrive neon pulse and compression effect when pressed
+
+        canvas.Clear(SKColors.Black);
+
+        const float cornerRadius = 8f;
+        float yOffset = isPressed ? 1.5f : 0f;
+        float iconScaleFactor = isPressed ? 0.94f : 1.0f;
+
+        SKRect buttonRect = isPressed
+            ? new SKRect(2f, 2.5f, Width - 2f, Height - 0.5f)
+            : new SKRect(0.5f, 0.5f, Width - 0.5f, Height - 0.5f);
+
+        // Determine neon accent color
+        bool hasAccent = (r > 30 || g > 30 || b > 30);
+        var accentColor = hasAccent ? new SKColor(r, g, b) : new SKColor(fontR, fontG, fontB);
+        if (accentColor.Red < 40 && accentColor.Green < 40 && accentColor.Blue < 40)
+        {
+            accentColor = new SKColor(0, 229, 255); // Default to Electric Cyan
+        }
+
+        canvas.Save();
+        canvas.ClipRoundRect(new SKRoundRect(buttonRect, cornerRadius, cornerRadius), SKClipOperation.Intersect, antialias: true);
+
+        // 1. Tech Obsidian Background with subtle vertical gradient
+        byte bgTop = isPressed ? (byte)10 : (byte)14;
+        byte bgBottom = isPressed ? (byte)4 : (byte)6;
+        SKColor topGrad = new SKColor(
+            (byte)Math.Clamp(bgTop + (accentColor.Red * 0.08f), 0, 255),
+            (byte)Math.Clamp(bgTop + (accentColor.Green * 0.08f), 0, 255),
+            (byte)Math.Clamp(bgTop + (accentColor.Blue * 0.08f), 0, 255)
+        );
+        SKColor bottomGrad = new SKColor(
+            (byte)Math.Clamp(bgBottom + (accentColor.Red * 0.03f), 0, 255),
+            (byte)Math.Clamp(bgBottom + (accentColor.Green * 0.03f), 0, 255),
+            (byte)Math.Clamp(bgBottom + (accentColor.Blue * 0.03f), 0, 255)
+        );
+
+        using (var bgShader = SKShader.CreateLinearGradient(
+            new SKPoint(0, buttonRect.Top),
+            new SKPoint(0, buttonRect.Bottom),
+            new[] { topGrad, bottomGrad },
+            null,
+            SKShaderTileMode.Clamp))
+        using (var bgPaint = new SKPaint
+        {
+            Shader = bgShader,
+            IsAntialias = true,
+            Style = SKPaintStyle.Fill
+        })
+        {
+            canvas.DrawRect(buttonRect, bgPaint);
+        }
+
+        // 2. High-tech scanlines
+        using (var scanlinePaint = new SKPaint
+        {
+            Color = new SKColor(255, 255, 255, 12),
+            StrokeWidth = 0.5f,
+            IsAntialias = false,
+            Style = SKPaintStyle.Stroke
+        })
+        {
+            for (float y = buttonRect.Top + 2f; y < buttonRect.Bottom - 1f; y += 3f)
+            {
+                canvas.DrawLine(buttonRect.Left, y, buttonRect.Right, y, scanlinePaint);
+            }
+        }
+
+        // 3. Cyber Neon Ambient Bloom / Core Glow
+        using (var glowShader = SKShader.CreateRadialGradient(
+            new SKPoint(buttonRect.MidX, buttonRect.MidY),
+            buttonRect.Width * 0.7f,
+            new[] { accentColor.WithAlpha(isPressed ? (byte)70 : (byte)35), accentColor.WithAlpha(0) },
+            null,
+            SKShaderTileMode.Clamp))
+        using (var glowPaint = new SKPaint
+        {
+            Shader = glowShader,
+            IsAntialias = true,
+            Style = SKPaintStyle.Fill
+        })
+        {
+            canvas.DrawRect(buttonRect, glowPaint);
+        }
+
+        // 4. Subtle Outer Cyber Grid / Border Frame
+        using (var framePaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = 1f,
+            Color = accentColor.WithAlpha(isPressed ? (byte)160 : (byte)50),
+            IsAntialias = true
+        })
+        {
+            canvas.DrawRoundRect(new SKRect(buttonRect.Left + 0.5f, buttonRect.Top + 0.5f, buttonRect.Right - 0.5f, buttonRect.Bottom - 0.5f), cornerRadius, cornerRadius, framePaint);
+        }
+
+        // 5. Tactical HUD Corner Brackets (Glowing neon brackets on 4 corners)
+        float pad = 3f;
+        float bLeft = buttonRect.Left + pad;
+        float bTop = buttonRect.Top + pad;
+        float bRight = buttonRect.Right - pad;
+        float bBottom = buttonRect.Bottom - pad;
+        float bracketLen = 8f;
+
+        using (var bracketPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = isPressed ? 2.0f : 1.5f,
+            Color = accentColor.WithAlpha(isPressed ? (byte)255 : (byte)230),
+            StrokeCap = SKStrokeCap.Square,
+            IsAntialias = true
+        })
+        {
+            // Top-Left bracket
+            canvas.DrawLine(bLeft, bTop, bLeft + bracketLen, bTop, bracketPaint);
+            canvas.DrawLine(bLeft, bTop, bLeft, bTop + bracketLen, bracketPaint);
+
+            // Top-Right bracket
+            canvas.DrawLine(bRight, bTop, bRight - bracketLen, bTop, bracketPaint);
+            canvas.DrawLine(bRight, bTop, bRight, bTop + bracketLen, bracketPaint);
+
+            // Bottom-Left bracket
+            canvas.DrawLine(bLeft, bBottom, bLeft + bracketLen, bBottom, bracketPaint);
+            canvas.DrawLine(bLeft, bBottom, bLeft, bBottom - bracketLen, bracketPaint);
+
+            // Bottom-Right bracket
+            canvas.DrawLine(bRight, bBottom, bRight - bracketLen, bBottom, bracketPaint);
+            canvas.DrawLine(bRight, bBottom, bRight, bBottom - bracketLen, bracketPaint);
+        }
+
+        // 6. Mini Tactical Status Ticks (3 mini LED dots at the top right)
+        using (var ledPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            Color = accentColor.WithAlpha(isPressed ? (byte)255 : (byte)180),
+            IsAntialias = true
+        })
+        {
+            float dotY = bTop + 2.5f;
+            float dotStartX = bRight - bracketLen - 12f;
+            for (int i = 0; i < 3; i++)
+            {
+                canvas.DrawRect(new SKRect(dotStartX + i * 4.5f, dotY, dotStartX + i * 4.5f + 2f, dotY + 2f), ledPaint);
+            }
+        }
+
+        // 7. Mini Tech Slash Marks in bottom left
+        using (var tickPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = 1f,
+            Color = accentColor.WithAlpha(isPressed ? (byte)200 : (byte)120),
+            IsAntialias = true
+        })
+        {
+            float slashX = bLeft + bracketLen + 2f;
+            float slashY = bBottom - 2f;
+            canvas.DrawLine(slashX, slashY, slashX + 2f, slashY - 4f, tickPaint);
+            canvas.DrawLine(slashX + 3.5f, slashY, slashX + 5.5f, slashY - 4f, tickPaint);
+        }
+
+        var picture = LoadSvgPicture(iconPath);
+        bool hasPicture = picture != null;
+        bool hasText = !string.IsNullOrWhiteSpace(text);
+
+        // Futuristic typography & Neon lighting
+        SKTypeface fontTypeface = SKTypeface.FromFamilyName("Consolas", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright) ?? _typeface;
+        
+        SKColor textColor = new SKColor(245, 250, 255);
+        SKColor glowColor = accentColor.WithAlpha(180);
+
+        if (hasPicture && hasText)
+        {
+            float iconSize = 27f * iconScaleFactor;
+            float iconTop = 8.5f + yOffset;
+
+            // Draw glowing neon icon background bloom
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize + 2f, iconTop - 1f, (byte)(accentColor.Red / 2), (byte)(accentColor.Green / 2), (byte)(accentColor.Blue / 2));
+            // Draw crisp neon icon
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize, iconTop, accentColor.Red, accentColor.Green, accentColor.Blue);
+
+            using var textPaint = new SKPaint
+            {
+                Color = textColor,
+                IsAntialias = true,
+                Typeface = fontTypeface,
+                TextSize = 11.5f,
+                FakeBoldText = true
+            };
+
+            using var shadowPaint = new SKPaint
+            {
+                Color = glowColor,
+                IsAntialias = true,
+                Typeface = fontTypeface,
+                TextSize = 11.5f,
+                FakeBoldText = true
+            };
+
+            var lines = WrapText(text!.ToUpperInvariant(), textPaint, Width - 10);
+            float lineHeight = textPaint.FontSpacing;
+            float totalHeight = lines.Count * lineHeight;
+            float textStartY = (36f + yOffset) + (31f - totalHeight) / 2f + textPaint.TextSize;
+
+            foreach (var line in lines)
+            {
+                float x = (Width - textPaint.MeasureText(line)) / 2f;
+                // Neon glow under text
+                canvas.DrawText(line, x, textStartY, shadowPaint);
+                // Crisp text
+                canvas.DrawText(line, x, textStartY, textPaint);
+                textStartY += lineHeight;
+            }
+        }
+        else if (hasPicture && !hasText)
+        {
+            float iconSize = 40f * iconScaleFactor;
+            float iconTop = (Height - iconSize) / 2f + yOffset;
+            
+            // Neon bloom
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize + 2f, iconTop - 1f, (byte)(accentColor.Red / 2), (byte)(accentColor.Green / 2), (byte)(accentColor.Blue / 2));
+            // Sharp vector
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize, iconTop, accentColor.Red, accentColor.Green, accentColor.Blue);
+        }
+        else if (!hasPicture && hasText)
+        {
+            using var textPaint = new SKPaint
+            {
+                Color = textColor,
+                IsAntialias = true,
+                Typeface = fontTypeface,
+                TextSize = 13f,
+                FakeBoldText = true
+            };
+
+            using var shadowPaint = new SKPaint
+            {
+                Color = glowColor,
+                IsAntialias = true,
+                Typeface = fontTypeface,
+                TextSize = 13f,
+                FakeBoldText = true
+            };
+
+            var lines = WrapText(text!.ToUpperInvariant(), textPaint, Width - 10);
+            float lineHeight = textPaint.FontSpacing;
+            float totalHeight = lines.Count * lineHeight;
+            float y = (Height - totalHeight) / 2f + textPaint.TextSize + yOffset;
+
+            foreach (var line in lines)
+            {
+                float x = (Width - textPaint.MeasureText(line)) / 2f;
+                canvas.DrawText(line, x, y, shadowPaint);
+                canvas.DrawText(line, x, y, textPaint);
+                y += lineHeight;
+            }
+        }
+
+        canvas.Restore();
     }
 
     private void DrawPictureScaledAndTinted(SKCanvas canvas, SKPicture picture, float iconSize, float iconTop, byte fontR, byte fontG, byte fontB)
