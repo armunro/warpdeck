@@ -38,6 +38,7 @@ public class LayerManager : IDisposable
         _deck = deck;
         _deck.KeyStateChanged += OnKeyStateChanged;
         _deck.SetBrightness(100);
+        Console.WriteLine($"[DEVICE] Type: {deck.GetType().FullName}, Keys: {deck.Keys.Count}");
         
         // Force re-apply layer if we have one
         if (_activeLayer != null)
@@ -57,11 +58,16 @@ public class LayerManager : IDisposable
 
     private void OnKeyStateChanged(object? sender, KeyEventArgs e)
     {
-        if (e.IsDown && _activeLayer != null)
+        if (_activeLayer != null)
         {
-            if (_activeLayer.Actions.TryGetValue(e.Key, out var action))
+            UpdateKeyBitmap(e.Key, e.IsDown);
+
+            if (e.IsDown)
             {
-                action.Execute();
+                if (_activeLayer.Actions.TryGetValue(e.Key, out var action))
+                {
+                    action.Execute();
+                }
             }
         }
     }
@@ -136,19 +142,30 @@ public class LayerManager : IDisposable
 
         for (int i = 0; i < _deck.Keys.Count; i++)
         {
-            KeyBitmap bitmap = KeyBitmap.Black;
-            if (layer.Keys.TryGetValue(i, out var keyBmp))
-                bitmap = keyBmp;
-
-            if (layer.Captions.TryGetValue(i, out var caption))
-            {
-                var (r, g, b) = layer.Colors.TryGetValue(i, out var color) ? color : (R: (byte)0, G: (byte)0, B: (byte)0);
-                var (fr, fg, fb) = layer.FontColors.TryGetValue(i, out var fColor) ? fColor : (R: (byte)255, G: (byte)255, B: (byte)255);
-                bitmap = _graphics.DrawCaption(r, g, b, fr, fg, fb, caption);
-            }
-
-            _deck.SetKeyBitmap(i, bitmap);
+            UpdateKeyBitmap(i, false);
         }
+    }
+
+    private void UpdateKeyBitmap(int keyIndex, bool isPressed)
+    {
+        if (_deck == null || _activeLayer == null) return;
+
+        KeyBitmap bitmap = KeyBitmap.Black;
+        if (_activeLayer.Keys.TryGetValue(keyIndex, out var keyBmp) && !isPressed)
+            bitmap = keyBmp;
+
+        bool hasCaption = _activeLayer.Captions.TryGetValue(keyIndex, out var caption) && !string.IsNullOrWhiteSpace(caption);
+        bool hasIcon = _activeLayer.Icons.TryGetValue(keyIndex, out var icon) && !string.IsNullOrWhiteSpace(icon);
+        _activeLayer.Themes.TryGetValue(keyIndex, out var theme);
+
+        if (hasCaption || hasIcon || !string.IsNullOrWhiteSpace(theme))
+        {
+            var (r, g, b) = _activeLayer.Colors.TryGetValue(keyIndex, out var color) ? color : (R: (byte)0, G: (byte)0, B: (byte)0);
+            var (fr, fg, fb) = _activeLayer.FontColors.TryGetValue(keyIndex, out var fColor) ? fColor : (R: (byte)255, G: (byte)255, B: (byte)255);
+            bitmap = _graphics.DrawKey(r, g, b, fr, fg, fb, caption, icon, theme, isPressed);
+        }
+
+        _deck.SetKeyBitmap(keyIndex, bitmap);
     }
 
     public void Dispose()

@@ -11,6 +11,8 @@ public class Layer
     public Dictionary<int, (byte R, byte G, byte B)> Colors { get; } = new();
     public Dictionary<int, (byte R, byte G, byte B)> FontColors { get; } = new();
     public Dictionary<int, string> Captions { get; } = new();
+    public Dictionary<int, string> Icons { get; } = new();
+    public Dictionary<int, string> Themes { get; } = new();
     public Dictionary<int, IAction> Actions { get; } = new();
 
     public Layer(string name, ICondition? condition = null, int priority = 0)

@@ -12,6 +12,7 @@
       <PackageReference Include="Autofac" Version="9.1.0" />
       <PackageReference Include="SkiaSharp" Version="2.88.9" />
       <PackageReference Include="SkiaSharp.NativeAssets.Win32" Version="2.88.9" />
+      <PackageReference Include="SkiaSharp.Svg" Version="1.60.0" />
       <PackageReference Include="StreamDeckSharp" Version="6.1.0" />
       <PackageReference Include="YamlDotNet" Version="17.1.0" />
     </ItemGroup>

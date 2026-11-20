@@ -1,5 +1,7 @@
+using System.Collections.Concurrent;
 using OpenMacroBoard.SDK;
 using SkiaSharp;
+using SkiaSharp.Extended.Svg;
 using Warpdeck.Core.Domain;
 
 namespace Warpdeck.Infrastructure.Adapters.Graphics;
@@ -9,6 +11,29 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
     private readonly SKTypeface _typeface;
     private const int Width = 72;
     private const int Height = 72;
+    private readonly ConcurrentDictionary<string, SKPicture?> _pictureCache = new(StringComparer.OrdinalIgnoreCase);
+
+    private static readonly string[] FontAwesomeBaseDirs = new[]
+    {
+        @"C:\Tools\fontawesome-pro-7.3.1-desktop\svgs",
+        @"C:\Tools\fontawesome-free-7.3.1-desktop\svgs",
+        @"C:\Tools\_CatalystIcons",
+        @"C:\Tools"
+    };
+
+    private static readonly string[] SubDirs = new[]
+    {
+        "solid",
+        "brands",
+        "regular",
+        "duotone",
+        "light",
+        "thin",
+        "sharp-solid",
+        "sharp-regular",
+        "sharp-light",
+        "sharp-thin"
+    };
 
     public SkiaGraphicsAdapter()
     {
@@ -17,54 +42,40 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
 
     public KeyBitmap DrawCaption(byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string text)
     {
-        using var surface = SKSurface.Create(new SKImageInfo(Width, Height, SKColorType.Bgra8888));
-        var canvas = surface.Canvas;
+        return DrawKey(r, g, b, fontR, fontG, fontB, text, null, null, false);
+    }
 
-        // Use the passed background color
-        canvas.Clear(new SKColor(r, g, b));
+    public KeyBitmap DrawKey(byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string? text, string? iconPath = null, string? theme = null, bool isPressed = false)
+    {
+        const int renderScale = 4;
+        int renderWidth = Width * renderScale;
+        int renderHeight = Height * renderScale;
 
-        using var paint = new SKPaint
+        using var highResSurface = SKSurface.Create(new SKImageInfo(renderWidth, renderHeight, SKColorType.Bgra8888, SKAlphaType.Premul));
+        var canvas = highResSurface.Canvas;
+        canvas.Scale(renderScale);
+
+        if (string.Equals(theme, "korry", StringComparison.OrdinalIgnoreCase))
         {
-            Color = new SKColor(fontR, fontG, fontB),
+            DrawKorryTheme(canvas, r, g, b, fontR, fontG, fontB, text, iconPath, isPressed);
+        }
+        else
+        {
+            DrawDefaultTheme(canvas, r, g, b, fontR, fontG, fontB, text, iconPath, isPressed);
+        }
+
+        using var highResImage = highResSurface.Snapshot();
+        
+        using var finalSurface = SKSurface.Create(new SKImageInfo(Width, Height, SKColorType.Bgra8888, SKAlphaType.Premul));
+        using var filterPaint = new SKPaint
+        {
             IsAntialias = true,
-            Typeface = _typeface,
-            TextSize = 12
+            FilterQuality = SKFilterQuality.High
         };
-
-        // Text wrapping logic
-        var words = text.Split(' ');
-        var lines = new List<string>();
-        var currentLine = "";
-
-        foreach (var word in words)
-        {
-            var testLine = string.IsNullOrEmpty(currentLine) ? word : $"{currentLine} {word}";
-            if (paint.MeasureText(testLine) > Width - 4)
-            {
-                lines.Add(currentLine);
-                currentLine = word;
-            }
-            else
-            {
-                currentLine = testLine;
-            }
-        }
-        lines.Add(currentLine);
-
-        // Calculate vertical start position to center text
-        float lineHeight = paint.FontSpacing;
-        float totalHeight = lines.Count * lineHeight;
-        float y = (Height - totalHeight) / 2 + paint.TextSize; // TextSize adjustment for baseline
-
-        foreach (var line in lines)
-        {
-            float x = (Width - paint.MeasureText(line)) / 2;
-            canvas.DrawText(line, x, y, paint);
-            y += lineHeight;
-        }
+        finalSurface.Canvas.DrawImage(highResImage, new SKRect(0, 0, Width, Height), filterPaint);
 
         using var bitmap = new SKBitmap(Width, Height);
-        surface.ReadPixels(bitmap.Info, bitmap.GetPixels(), bitmap.RowBytes, 0, 0);
+        finalSurface.ReadPixels(bitmap.Info, bitmap.GetPixels(), bitmap.RowBytes, 0, 0);
 
         byte[] bgr24 = new byte[Width * Height * 3];
         for (int row = 0; row < Height; row++)
@@ -82,8 +93,550 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
         return KeyBitmap.Create.FromBgr24Array(Width, Height, bgr24);
     }
 
+    private void DrawDefaultTheme(SKCanvas canvas, byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string? text, string? iconPath, bool isPressed)
+    {
+        // Professional Pro-Deck / Dark Glassmorphic Modern UI Theme:
+        // - Dark sleek graphite/slate background with subtle vertical gradient and specular top sheen
+        // - Category/accent color used as a stylish accent glow, subtle top/bottom accent bar or perimeter border, and tinted icon/caption
+        // - High readability, clean professional typography with subtle shadow drop
+        // - Tactile mechanical depression effect when pressed
+
+        // Clear base background with deep black
+        canvas.Clear(SKColors.Black);
+
+        const float cornerRadius = 10f;
+        
+        SKRect buttonRect;
+        float yOffset = isPressed ? 2f : 0f;
+        float iconScaleFactor = isPressed ? 0.92f : 1.0f;
+
+        if (isPressed)
+        {
+            // Inset button rect slightly to simulate physical key depression
+            buttonRect = new SKRect(2f, 3f, Width - 2f, Height - 1f);
+        }
+        else
+        {
+            buttonRect = new SKRect(0.5f, 0.5f, Width - 0.5f, Height - 0.5f);
+        }
+
+        // Determine accent color
+        bool hasAccent = (r > 30 || g > 30 || b > 30);
+        var accentColor = hasAccent ? new SKColor(r, g, b) : new SKColor(fontR, fontG, fontB);
+        if (accentColor.Red < 40 && accentColor.Green < 40 && accentColor.Blue < 40)
+        {
+            accentColor = new SKColor(220, 225, 230);
+        }
+
+        // Clip to rounded rectangle to ensure all gradient & inner content respects the curved key corners
+        canvas.Save();
+        canvas.ClipRoundRect(new SKRoundRect(buttonRect, cornerRadius, cornerRadius), SKClipOperation.Intersect, antialias: true);
+
+        // 1. Sleek dark gradient background (charcoal/slate dark pro aesthetic)
+        byte baseTop = isPressed ? (byte)20 : (byte)32;
+        byte baseBottom = isPressed ? (byte)12 : (byte)18;
+        
+        // Blend in a subtle tint of the button's accent color into the dark slate
+        SKColor topGradColor = new SKColor(
+            (byte)Math.Clamp(baseTop + (accentColor.Red * 0.15f), 0, 255),
+            (byte)Math.Clamp(baseTop + (accentColor.Green * 0.15f), 0, 255),
+            (byte)Math.Clamp(baseTop + (accentColor.Blue * 0.15f), 0, 255)
+        );
+        SKColor bottomGradColor = new SKColor(
+            (byte)Math.Clamp(baseBottom + (accentColor.Red * 0.05f), 0, 255),
+            (byte)Math.Clamp(baseBottom + (accentColor.Green * 0.05f), 0, 255),
+            (byte)Math.Clamp(baseBottom + (accentColor.Blue * 0.05f), 0, 255)
+        );
+
+        using (var bgShader = SKShader.CreateLinearGradient(
+            new SKPoint(0, buttonRect.Top),
+            new SKPoint(0, buttonRect.Bottom),
+            new[] { topGradColor, bottomGradColor },
+            null,
+            SKShaderTileMode.Clamp))
+        using (var bgPaint = new SKPaint
+        {
+            Shader = bgShader,
+            IsAntialias = true,
+            Style = SKPaintStyle.Fill
+        })
+        {
+            canvas.DrawRect(buttonRect, bgPaint);
+        }
+
+        // 2. Subtle radial ambient glow matching accent color
+        using (var glowShader = SKShader.CreateRadialGradient(
+            new SKPoint(buttonRect.MidX, buttonRect.Top + (buttonRect.Height * 0.35f)),
+            buttonRect.Width * 0.65f,
+            new[] { accentColor.WithAlpha(isPressed ? (byte)45 : (byte)30), accentColor.WithAlpha(0) },
+            null,
+            SKShaderTileMode.Clamp))
+        using (var glowPaint = new SKPaint
+        {
+            Shader = glowShader,
+            IsAntialias = true,
+            Style = SKPaintStyle.Fill
+        })
+        {
+            canvas.DrawRect(buttonRect, glowPaint);
+        }
+
+        // 3. Subtle top accent highlight bar (modern studio console indicator)
+        if (hasAccent)
+        {
+            using var barPaint = new SKPaint
+            {
+                Color = accentColor.WithAlpha(isPressed ? (byte)220 : (byte)180),
+                IsAntialias = true,
+                Style = SKPaintStyle.Fill
+            };
+            canvas.DrawRoundRect(new SKRect(buttonRect.Left + 8f, buttonRect.Top + 2.5f, buttonRect.Right - 8f, buttonRect.Top + 4.5f), 1f, 1f, barPaint);
+        }
+
+        // 4. Subtle top glass specular reflection / bevel
+        using (var sheenShader = SKShader.CreateLinearGradient(
+            new SKPoint(0, buttonRect.Top),
+            new SKPoint(0, buttonRect.Top + 14f),
+            new[] { SKColors.White.WithAlpha(isPressed ? (byte)15 : (byte)40), SKColors.White.WithAlpha(0) },
+            null,
+            SKShaderTileMode.Clamp))
+        using (var sheenPaint = new SKPaint
+        {
+            Shader = sheenShader,
+            IsAntialias = true,
+            Style = SKPaintStyle.Fill
+        })
+        {
+            canvas.DrawRect(new SKRect(buttonRect.Left, buttonRect.Top, buttonRect.Right, buttonRect.Top + 14f), sheenPaint);
+        }
+
+        // If pressed, draw top inner shadow for depth inside the key well
+        if (isPressed)
+        {
+            using var shadowPaint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                Color = new SKColor(0, 0, 0, 140),
+                IsAntialias = true
+            };
+            canvas.DrawRect(new SKRect(buttonRect.Left, buttonRect.Top, buttonRect.Right, buttonRect.Top + 6f), shadowPaint);
+        }
+
+        var picture = LoadSvgPicture(iconPath);
+        bool hasPicture = picture != null;
+        bool hasText = !string.IsNullOrWhiteSpace(text);
+
+        // Professional typography & icon colors
+        // Text is crisp clean off-white / light silver with subtle drop shadow for maximum legibility on dark surfaces
+        SKColor textColor = (fontR == 0 && fontG == 0 && fontB == 0) 
+            ? new SKColor(240, 242, 245) 
+            : new SKColor(fontR, fontG, fontB);
+
+        // Icon uses the vibrant accent color (or crisp white if no accent)
+        SKColor iconColor = hasAccent ? accentColor : textColor;
+
+        if (hasPicture && hasText)
+        {
+            // Draw icon in top/upper-middle region
+            float iconSize = 28f * iconScaleFactor;
+            float iconTop = 8f + yOffset;
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize, iconTop, iconColor.Red, iconColor.Green, iconColor.Blue);
+
+            using var textPaint = new SKPaint
+            {
+                Color = textColor,
+                IsAntialias = true,
+                Typeface = _typeface,
+                TextSize = 12f,
+                FakeBoldText = true
+            };
+
+            using var shadowPaint = new SKPaint
+            {
+                Color = new SKColor(0, 0, 0, 160),
+                IsAntialias = true,
+                Typeface = _typeface,
+                TextSize = 12f,
+                FakeBoldText = true
+            };
+
+            var lines = WrapText(text!, textPaint, Width - 6);
+            float lineHeight = textPaint.FontSpacing;
+            float totalHeight = lines.Count * lineHeight;
+            float textStartY = (36f + yOffset) + (32f - totalHeight) / 2f + textPaint.TextSize;
+
+            foreach (var line in lines)
+            {
+                float x = (Width - textPaint.MeasureText(line)) / 2f;
+                // Draw text shadow
+                canvas.DrawText(line, x, textStartY + 1f, shadowPaint);
+                // Draw text
+                canvas.DrawText(line, x, textStartY, textPaint);
+                textStartY += lineHeight;
+            }
+        }
+        else if (hasPicture && !hasText)
+        {
+            // Draw icon centered in full button
+            float iconSize = 42f * iconScaleFactor;
+            float iconTop = (Height - iconSize) / 2f + yOffset;
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize, iconTop, iconColor.Red, iconColor.Green, iconColor.Blue);
+        }
+        else if (!hasPicture && hasText)
+        {
+            // Centered text-only
+            using var textPaint = new SKPaint
+            {
+                Color = textColor,
+                IsAntialias = true,
+                Typeface = _typeface,
+                TextSize = 14f,
+                FakeBoldText = true
+            };
+
+            using var shadowPaint = new SKPaint
+            {
+                Color = new SKColor(0, 0, 0, 160),
+                IsAntialias = true,
+                Typeface = _typeface,
+                TextSize = 14f,
+                FakeBoldText = true
+            };
+
+            var lines = WrapText(text!, textPaint, Width - 6);
+            float lineHeight = textPaint.FontSpacing;
+            float totalHeight = lines.Count * lineHeight;
+            float y = (Height - totalHeight) / 2f + textPaint.TextSize + yOffset;
+
+            foreach (var line in lines)
+            {
+                float x = (Width - textPaint.MeasureText(line)) / 2f;
+                // Draw text shadow
+                canvas.DrawText(line, x, y + 1f, shadowPaint);
+                // Draw text
+                canvas.DrawText(line, x, y, textPaint);
+                y += lineHeight;
+            }
+        }
+
+        // 5. Outer subtle border / bevel stroke for sleek hardware finish
+        using var borderPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = 1f,
+            Color = hasAccent 
+                ? accentColor.WithAlpha(isPressed ? (byte)100 : (byte)50) 
+                : new SKColor(255, 255, 255, isPressed ? (byte)40 : (byte)25),
+            IsAntialias = true
+        };
+        canvas.DrawRoundRect(new SKRect(buttonRect.Left + 0.5f, buttonRect.Top + 0.5f, buttonRect.Right - 0.5f, buttonRect.Bottom - 0.5f), cornerRadius, cornerRadius, borderPaint);
+
+        canvas.Restore();
+    }
+
+    private void DrawKorryTheme(SKCanvas canvas, byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string? text, string? iconPath, bool isPressed)
+    {
+        // KORRY 389 / aviation switch style:
+        // 1. Dark cockpit bezel background (almost black / charcoal)
+        // 2. Beveled outer border with metallic/matte cockpit trim
+        // 3. Inner recessed indicator display with split top/bottom annunciator windows
+        // 4. Glowing illuminated annunciator indicators (white/amber/cyan/green depending on theme color or fontColor)
+        
+        // Clear background with black
+        canvas.Clear(SKColors.Black);
+
+        const float outerCornerRadius = 10f;
+        const float innerCornerRadius = 8f;
+        const float litBorderCornerRadius = 7.5f;
+
+        // Outer Bezel / Housing
+        using var bezelPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = 2f,
+            Color = new SKColor(48, 52, 58),
+            IsAntialias = true
+        };
+        canvas.DrawRoundRect(new SKRect(1, 1, Width - 1, Height - 1), outerCornerRadius, outerCornerRadius, bezelPaint);
+
+        // Inner recessed button face (when pressed, push deeper down and inward)
+        var innerRect = isPressed 
+            ? new SKRect(4f, 5.5f, Width - 4f, Height - 2.5f) 
+            : new SKRect(3, 3, Width - 3, Height - 3);
+
+        using var innerFacePaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            Color = isPressed ? new SKColor(6, 6, 8) : new SKColor(10, 10, 12),
+            IsAntialias = true
+        };
+        canvas.DrawRoundRect(innerRect, innerCornerRadius, innerCornerRadius, innerFacePaint);
+
+        // If pressed, draw dark top shadow inside bezel to simulate deep mechanical recess
+        if (isPressed)
+        {
+            using var recessShadowPaint = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                Color = new SKColor(0, 0, 0, 190),
+                IsAntialias = true
+            };
+            canvas.DrawRect(new SKRect(2, 2, Width - 2, 6f), recessShadowPaint);
+        }
+
+        // If a distinct non-black accent background is provided, use it as the illumination color.
+        // Otherwise, use font color (if non-black) or default to white.
+        bool hasAccent = (r > 30 || g > 30 || b > 30);
+        SKColor litColor;
+        if (hasAccent)
+        {
+            litColor = new SKColor(r, g, b);
+        }
+        else if (fontR > 40 || fontG > 40 || fontB > 40)
+        {
+            litColor = new SKColor(fontR, fontG, fontB);
+        }
+        else
+        {
+            litColor = new SKColor(255, 255, 255);
+        }
+
+        float yOffset = isPressed ? 2f : 0f;
+        float iconScaleFactor = isPressed ? 0.90f : 1.0f;
+        float dividerY = (Height / 2f) + yOffset;
+
+        // Korry horizontal divider line (classic split legend)
+        using var dividerPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = isPressed ? 1.8f : 1.5f,
+            Color = litColor,
+            IsAntialias = true
+        };
+        canvas.DrawLine(innerRect.Left + 1f, dividerY, innerRect.Right - 1f, dividerY, dividerPaint);
+
+        // Top and bottom annunciator cell backgrounds (subtle dark glass effect with soft tint, clipped to rounded inner face)
+        canvas.Save();
+        canvas.ClipRoundRect(new SKRoundRect(innerRect, innerCornerRadius, innerCornerRadius), SKClipOperation.Intersect, antialias: true);
+
+        // When pressed, backlighting intensity increases (annunciator shines brighter when active/engaged)
+        byte cellAlpha = isPressed ? (byte)55 : (byte)24;
+        using var cellGlowPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            Color = litColor.WithAlpha(cellAlpha),
+            IsAntialias = true
+        };
+        canvas.DrawRect(new SKRect(innerRect.Left, innerRect.Top, innerRect.Right, dividerY - 1), cellGlowPaint);
+        canvas.DrawRect(new SKRect(innerRect.Left, dividerY + 1, innerRect.Right, innerRect.Bottom), cellGlowPaint);
+
+        if (isPressed)
+        {
+            // Inner shadow along top of lens
+            using var topLensShadow = new SKPaint
+            {
+                Style = SKPaintStyle.Fill,
+                Color = new SKColor(0, 0, 0, 110),
+                IsAntialias = true
+            };
+            canvas.DrawRect(new SKRect(innerRect.Left, innerRect.Top, innerRect.Right, innerRect.Top + 4f), topLensShadow);
+        }
+
+        canvas.Restore();
+
+        var picture = LoadSvgPicture(iconPath);
+        bool hasPicture = picture != null;
+        bool hasText = !string.IsNullOrWhiteSpace(text);
+
+        if (hasPicture && hasText)
+        {
+            // Upper half: Icon (annunciator symbol)
+            float iconSize = 24f * iconScaleFactor;
+            float iconTop = 6f + yOffset;
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize, iconTop, litColor.Red, litColor.Green, litColor.Blue);
+
+            // Lower half: Aviation uppercase stencil/sans text
+            using var fontTypeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright);
+            using var textPaint = new SKPaint
+            {
+                Color = litColor,
+                IsAntialias = true,
+                Typeface = fontTypeface,
+                TextSize = 11.5f
+            };
+
+            string korryText = text!.ToUpperInvariant();
+            var lines = WrapText(korryText, textPaint, Width - 8);
+            float lineHeight = textPaint.FontSpacing;
+            float totalHeight = lines.Count * lineHeight;
+            float textStartY = dividerY + ((innerRect.Bottom - dividerY) - totalHeight) / 2f + textPaint.TextSize - 1f;
+
+            foreach (var line in lines)
+            {
+                float x = (Width - textPaint.MeasureText(line)) / 2f;
+                canvas.DrawText(line, x, textStartY, textPaint);
+                textStartY += lineHeight;
+            }
+        }
+        else if (hasPicture && !hasText)
+        {
+            // Centered Illuminated Icon
+            float iconSize = 36f * iconScaleFactor;
+            float iconTop = (Height - iconSize) / 2f + yOffset;
+            DrawPictureScaledAndTinted(canvas, picture!, iconSize, iconTop, litColor.Red, litColor.Green, litColor.Blue);
+        }
+        else if (!hasPicture && hasText)
+        {
+            // Split or centered aviation text
+            using var fontTypeface = SKTypeface.FromFamilyName("Arial", SKFontStyleWeight.Bold, SKFontStyleWidth.Normal, SKFontStyleSlant.Upright);
+            using var textPaint = new SKPaint
+            {
+                Color = litColor,
+                IsAntialias = true,
+                Typeface = fontTypeface,
+                TextSize = 13f
+            };
+
+            string korryText = text!.ToUpperInvariant();
+            var lines = WrapText(korryText, textPaint, Width - 8);
+            float lineHeight = textPaint.FontSpacing;
+            float totalHeight = lines.Count * lineHeight;
+            float y = (Height - totalHeight) / 2f + textPaint.TextSize + yOffset;
+
+            foreach (var line in lines)
+            {
+                float x = (Width - textPaint.MeasureText(line)) / 2f;
+                canvas.DrawText(line, x, y, textPaint);
+                y += lineHeight;
+            }
+        }
+
+        // Inner glowing border indicator highlight
+        using var litBorderPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = isPressed ? 1.5f : 1f,
+            Color = litColor.WithAlpha(isPressed ? (byte)120 : (byte)70),
+            IsAntialias = true
+        };
+        canvas.DrawRoundRect(new SKRect(innerRect.Left + 0.5f, innerRect.Top + 0.5f, innerRect.Right - 0.5f, innerRect.Bottom - 0.5f), litBorderCornerRadius, litBorderCornerRadius, litBorderPaint);
+    }
+
+    private void DrawPictureScaledAndTinted(SKCanvas canvas, SKPicture picture, float iconSize, float iconTop, byte fontR, byte fontG, byte fontB)
+    {
+        var bounds = picture.CullRect;
+        if (bounds.Width <= 0 || bounds.Height <= 0) return;
+
+        float scale = Math.Min(iconSize / bounds.Width, iconSize / bounds.Height);
+        float scaledW = bounds.Width * scale;
+        float scaledH = bounds.Height * scale;
+
+        float dx = (Width - scaledW) / 2f - bounds.Left * scale;
+        float dy = iconTop + (iconSize - scaledH) / 2f - bounds.Top * scale;
+
+        using var iconPaint = new SKPaint
+        {
+            ColorFilter = SKColorFilter.CreateBlendMode(new SKColor(fontR, fontG, fontB), SKBlendMode.SrcIn),
+            IsAntialias = true,
+            FilterQuality = SKFilterQuality.High,
+            SubpixelText = true
+        };
+
+        canvas.Save();
+        canvas.Translate(dx, dy);
+        canvas.Scale(scale);
+        canvas.DrawPicture(picture, iconPaint);
+        canvas.Restore();
+    }
+
+    private SKPicture? LoadSvgPicture(string? iconPath)
+    {
+        if (string.IsNullOrWhiteSpace(iconPath)) return null;
+
+        var resolved = ResolveIconPath(iconPath);
+        if (resolved == null) return null;
+
+        return _pictureCache.GetOrAdd(resolved, path =>
+        {
+            try
+            {
+                var svg = new SkiaSharp.Extended.Svg.SKSvg();
+                svg.Load(path);
+                return svg.Picture;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[ERROR] Failed to load SVG icon '{path}': {ex.Message}");
+                return null;
+            }
+        });
+    }
+
+    private string? ResolveIconPath(string iconPath)
+    {
+        if (string.IsNullOrWhiteSpace(iconPath)) return null;
+
+        if (File.Exists(iconPath)) return Path.GetFullPath(iconPath);
+
+        var normalized = iconPath.Replace('/', '\\');
+
+        if (File.Exists(Path.Combine(AppContext.BaseDirectory, normalized)))
+            return Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, normalized));
+
+        foreach (var baseDir in FontAwesomeBaseDirs)
+        {
+            if (!Directory.Exists(baseDir)) continue;
+
+            var direct = Path.Combine(baseDir, normalized);
+            if (File.Exists(direct)) return direct;
+            if (!direct.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) && File.Exists(direct + ".svg"))
+                return direct + ".svg";
+
+            foreach (var sub in SubDirs)
+            {
+                var subPath = Path.Combine(baseDir, sub, normalized);
+                if (File.Exists(subPath)) return subPath;
+                if (!subPath.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) && File.Exists(subPath + ".svg"))
+                    return subPath + ".svg";
+            }
+        }
+
+        return null;
+    }
+
+    private static List<string> WrapText(string text, SKPaint paint, float maxWidth)
+    {
+        var words = text.Split(' ');
+        var lines = new List<string>();
+        var currentLine = "";
+
+        foreach (var word in words)
+        {
+            var testLine = string.IsNullOrEmpty(currentLine) ? word : $"{currentLine} {word}";
+            if (paint.MeasureText(testLine) > maxWidth)
+            {
+                if (!string.IsNullOrEmpty(currentLine))
+                    lines.Add(currentLine);
+                currentLine = word;
+            }
+            else
+            {
+                currentLine = testLine;
+            }
+        }
+        if (!string.IsNullOrEmpty(currentLine))
+            lines.Add(currentLine);
+
+        return lines;
+    }
+
     public void Dispose()
     {
         _typeface.Dispose();
+        foreach (var picture in _pictureCache.Values)
+        {
+            picture?.Dispose();
+        }
+        _pictureCache.Clear();
     }
 }

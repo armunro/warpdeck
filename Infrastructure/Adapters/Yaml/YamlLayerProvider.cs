@@ -101,6 +101,10 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
                 layer.Keys[i] = baseKeyBitmap;
                 layer.Colors[i] = (baseR, baseG, baseB);
                 layer.FontColors[i] = (baseFontR, baseFontG, baseFontB);
+                if (layerConfig.Theme != null)
+                {
+                    layer.Themes[i] = layerConfig.Theme;
+                }
             }
 
             // Apply specific button overrides
@@ -130,6 +134,16 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
                 if (buttonConfig.Caption != null)
                 {
                     layer.Captions[buttonConfig.Index] = buttonConfig.Caption;
+                }
+
+                if (buttonConfig.Icon != null)
+                {
+                    layer.Icons[buttonConfig.Index] = buttonConfig.Icon;
+                }
+
+                if (buttonConfig.Theme != null)
+                {
+                    layer.Themes[buttonConfig.Index] = buttonConfig.Theme;
                 }
 
                 if (buttonConfig.Action != null)
