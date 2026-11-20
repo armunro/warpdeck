@@ -7,6 +7,7 @@ public class ButtonConfig
     public string? FontColor { get; set; }
     public string? Caption { get; set; }
     public string? Icon { get; set; }
+    public string? IconRoot { get; set; }
     public string? Theme { get; set; }
     public ActionConfig? Action { get; set; }
 }

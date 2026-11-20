@@ -6,6 +6,7 @@ namespace Warpdeck.Infrastructure.Adapters.Yaml;
 public static class ConfigLoader
 {
     public const string DefaultSampleConfig = """
+iconRoot: "C:\\Tools\\fontawesome-pro-7.3.1-desktop\\svgs"
 layers:
   - name: Default
     priority: 0

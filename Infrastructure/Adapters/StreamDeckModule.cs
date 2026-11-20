@@ -34,7 +34,7 @@ public class StreamDeckModule : Module
             .SingleInstance();
 
         // Register Layer Provider
-        builder.Register(c => new YamlLayerProvider("config.yaml", c.Resolve<IWindowService>()))
+        builder.Register(c => new YamlLayerProvider("config.yaml", c.Resolve<IWindowService>(), c.Resolve<IGraphicsAdapter>()))
             .As<ILayerProvider>()
             .SingleInstance();
     }

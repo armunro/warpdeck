@@ -2,6 +2,14 @@
 
 A lightweight layer and macro management system for Elgato Stream Deck with dynamic context switching, FontAwesome icon support, and custom button themes.
 
+## Icon Configuration
+
+Warpdeck supports SVG icons (such as FontAwesome) with configurable root directories. You can specify `iconRoot` at the root configuration level, layer level, or per-button level in `config.yaml`:
+
+```yaml
+iconRoot: "C:\\Tools\\fontawesome-pro-7.3.1-desktop\\svgs"
+```
+
 ## Button Themes
 
 Warpdeck supports themes configurable at both the layer level and per button:
@@ -13,6 +21,8 @@ Warpdeck supports themes configurable at both the layer level and per button:
 ### YAML Configuration Example
 
 ```yaml
+iconRoot: "C:\\Tools\\fontawesome-pro-7.3.1-desktop\\svgs"
+
 layers:
   - name: Cockpit
     priority: 0

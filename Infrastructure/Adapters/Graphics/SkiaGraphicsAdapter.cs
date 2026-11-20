@@ -12,14 +12,26 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
     private const int Width = 72;
     private const int Height = 72;
     private readonly ConcurrentDictionary<string, SKPicture?> _pictureCache = new(StringComparer.OrdinalIgnoreCase);
+    private string? _iconRoot;
 
-    private static readonly string[] FontAwesomeBaseDirs = new[]
+    public string? IconRoot
     {
-        @"C:\Tools\fontawesome-pro-7.3.1-desktop\svgs",
-        @"C:\Tools\fontawesome-free-7.3.1-desktop\svgs",
-        @"C:\Tools\_CatalystIcons",
-        @"C:\Tools"
-    };
+        get => _iconRoot;
+        set => SetIconRoot(value);
+    }
+
+    public void SetIconRoot(string? iconRoot)
+    {
+        if (!string.Equals(_iconRoot, iconRoot, StringComparison.OrdinalIgnoreCase))
+        {
+            _iconRoot = iconRoot;
+            foreach (var picture in _pictureCache.Values)
+            {
+                picture?.Dispose();
+            }
+            _pictureCache.Clear();
+        }
+    }
 
     private static readonly string[] SubDirs = new[]
     {
@@ -831,22 +843,79 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
         if (string.IsNullOrWhiteSpace(iconPath)) return null;
 
         var resolved = ResolveIconPath(iconPath);
-        if (resolved == null) return null;
-
-        return _pictureCache.GetOrAdd(resolved, path =>
+        if (resolved != null)
         {
-            try
+            var picture = _pictureCache.GetOrAdd(resolved, path =>
             {
-                var svg = new SkiaSharp.Extended.Svg.SKSvg();
-                svg.Load(path);
-                return svg.Picture;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"[ERROR] Failed to load SVG icon '{path}': {ex.Message}");
-                return null;
-            }
-        });
+                try
+                {
+                    var svg = new SkiaSharp.Extended.Svg.SKSvg();
+                    svg.Load(path);
+                    return svg.Picture;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"[ERROR] Failed to load SVG icon '{path}': {ex.Message}");
+                    return null;
+                }
+            });
+
+            if (picture != null) return picture;
+        }
+
+        // Icon path was specified but could not be resolved or loaded.
+        // Return preprogrammed indicator showing the icon is not available.
+        return GetMissingIconPicture();
+    }
+
+    private static readonly Lazy<SKPicture> MissingIconPictureLazy = new(CreateMissingIconPicture);
+
+    private static SKPicture GetMissingIconPicture() => MissingIconPictureLazy.Value;
+
+    private static SKPicture CreateMissingIconPicture()
+    {
+        using var recorder = new SKPictureRecorder();
+        var canvas = recorder.BeginRecording(new SKRect(0, 0, 512, 512));
+
+        using var strokePaint = new SKPaint
+        {
+            Style = SKPaintStyle.Stroke,
+            StrokeWidth = 32f,
+            StrokeCap = SKStrokeCap.Round,
+            StrokeJoin = SKStrokeJoin.Round,
+            Color = SKColors.White,
+            IsAntialias = true
+        };
+
+        using var fillPaint = new SKPaint
+        {
+            Style = SKPaintStyle.Fill,
+            Color = SKColors.White,
+            IsAntialias = true
+        };
+
+        // 1. Outer rounded image frame
+        canvas.DrawRoundRect(new SKRect(56, 56, 456, 456), 40, 40, strokePaint);
+
+        // 2. Sun circle in upper right
+        canvas.DrawCircle(350, 165, 34, fillPaint);
+
+        // 3. Mountain peaks
+        using (var mountainPath = new SKPath())
+        {
+            mountainPath.MoveTo(90, 410);
+            mountainPath.LineTo(200, 270);
+            mountainPath.LineTo(285, 370);
+            mountainPath.LineTo(345, 310);
+            mountainPath.LineTo(422, 410);
+            mountainPath.Close();
+            canvas.DrawPath(mountainPath, fillPaint);
+        }
+
+        // 4. Prominent diagonal slash indicating unavailable/broken
+        canvas.DrawLine(36, 36, 476, 476, strokePaint);
+
+        return recorder.EndRecording();
     }
 
     private string? ResolveIconPath(string iconPath)
@@ -860,22 +929,33 @@ public class SkiaGraphicsAdapter : IGraphicsAdapter, IDisposable
         if (File.Exists(Path.Combine(AppContext.BaseDirectory, normalized)))
             return Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, normalized));
 
-        foreach (var baseDir in FontAwesomeBaseDirs)
+        if (!string.IsNullOrWhiteSpace(_iconRoot))
         {
-            if (!Directory.Exists(baseDir)) continue;
+            var resolvedInCustomRoot = TryResolveInBaseDir(_iconRoot, normalized);
+            if (resolvedInCustomRoot != null) return resolvedInCustomRoot;
+        }
 
-            var direct = Path.Combine(baseDir, normalized);
-            if (File.Exists(direct)) return direct;
-            if (!direct.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) && File.Exists(direct + ".svg"))
-                return direct + ".svg";
+        var baseAppResolved = TryResolveInBaseDir(AppContext.BaseDirectory, normalized);
+        if (baseAppResolved != null) return baseAppResolved;
 
-            foreach (var sub in SubDirs)
-            {
-                var subPath = Path.Combine(baseDir, sub, normalized);
-                if (File.Exists(subPath)) return subPath;
-                if (!subPath.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) && File.Exists(subPath + ".svg"))
-                    return subPath + ".svg";
-            }
+        return null;
+    }
+
+    private static string? TryResolveInBaseDir(string baseDir, string normalized)
+    {
+        if (!Directory.Exists(baseDir)) return null;
+
+        var direct = Path.Combine(baseDir, normalized);
+        if (File.Exists(direct)) return direct;
+        if (!direct.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) && File.Exists(direct + ".svg"))
+            return direct + ".svg";
+
+        foreach (var sub in SubDirs)
+        {
+            var subPath = Path.Combine(baseDir, sub, normalized);
+            if (File.Exists(subPath)) return subPath;
+            if (!subPath.EndsWith(".svg", StringComparison.OrdinalIgnoreCase) && File.Exists(subPath + ".svg"))
+                return subPath + ".svg";
         }
 
         return null;

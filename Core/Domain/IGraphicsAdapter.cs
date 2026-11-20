@@ -6,4 +6,6 @@ public interface IGraphicsAdapter
 {
     KeyBitmap DrawCaption(byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string text);
     KeyBitmap DrawKey(byte r, byte g, byte b, byte fontR, byte fontG, byte fontB, string? text, string? iconPath = null, string? theme = null, bool isPressed = false);
+    string? IconRoot { get; set; }
+    void SetIconRoot(string? iconRoot);
 }

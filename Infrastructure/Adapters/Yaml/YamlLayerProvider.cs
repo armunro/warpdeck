@@ -9,15 +9,17 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
     private readonly string _configPath;
     private int _keyCount;
     private readonly IWindowService _windowService;
+    private readonly IGraphicsAdapter? _graphicsAdapter;
     private readonly FileSystemWatcher _watcher;
     private List<Layer> _currentLayers = new();
 
     public event Action? LayersChanged;
 
-    public YamlLayerProvider(string configPath, IWindowService windowService)
+    public YamlLayerProvider(string configPath, IWindowService windowService, IGraphicsAdapter? graphicsAdapter = null)
     {
         _configPath = Path.GetFullPath(configPath);
         _windowService = windowService;
+        _graphicsAdapter = graphicsAdapter;
 
         // Default key count for common Stream Decks if not yet connected
         // We will update it when we reload if we have a device, 
@@ -77,6 +79,20 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
     private IEnumerable<Layer> LoadLayers()
     {
         var config = ConfigLoader.Load(_configPath);
+        if (_graphicsAdapter != null)
+        {
+            var iconRootPath = config.IconRoot;
+            if (!string.IsNullOrWhiteSpace(iconRootPath) && !Path.IsPathRooted(iconRootPath))
+            {
+                var configDir = Path.GetDirectoryName(_configPath);
+                if (!string.IsNullOrEmpty(configDir))
+                {
+                    iconRootPath = Path.GetFullPath(Path.Combine(configDir, iconRootPath));
+                }
+            }
+            _graphicsAdapter.SetIconRoot(iconRootPath);
+        }
+
         var layers = new List<Layer>();
 
         foreach (var layerConfig in config.Layers)
@@ -143,7 +159,22 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
 
                 if (buttonConfig.Icon != null)
                 {
-                    layer.Icons[buttonConfig.Index] = buttonConfig.Icon;
+                    var iconPath = buttonConfig.Icon;
+                    var localIconRoot = buttonConfig.IconRoot ?? layerConfig.IconRoot;
+                    if (!string.IsNullOrWhiteSpace(localIconRoot) && !Path.IsPathRooted(iconPath))
+                    {
+                        var resolvedRoot = localIconRoot;
+                        if (!Path.IsPathRooted(resolvedRoot))
+                        {
+                            var configDir = Path.GetDirectoryName(_configPath);
+                            if (!string.IsNullOrEmpty(configDir))
+                            {
+                                resolvedRoot = Path.GetFullPath(Path.Combine(configDir, resolvedRoot));
+                            }
+                        }
+                        iconPath = Path.Combine(resolvedRoot, iconPath);
+                    }
+                    layer.Icons[buttonConfig.Index] = iconPath;
                 }
 
                 if (buttonConfig.Theme != null)
