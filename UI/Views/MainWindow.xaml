@@ -154,6 +154,9 @@
                                 <Setter Property="HorizontalContentAlignment" Value="Stretch" />
                                 <Setter Property="Padding" Value="0" />
                                 <Setter Property="Margin" Value="0,0,0,6" />
+                                <Setter Property="AllowDrop" Value="True" />
+                                <EventSetter Event="DragOver" Handler="LayerItem_DragOver" />
+                                <EventSetter Event="Drop" Handler="LayerItem_Drop" />
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="ListBoxItem">
@@ -339,15 +342,33 @@
                                     <DataTemplate>
                                         <Button Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SelectButtonCommand}"
                                                 CommandParameter="{Binding}"
+                                                Tag="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext}"
                                                 Margin="4" Cursor="Hand"
                                                 HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
                                                 AllowDrop="True"
                                                 PreviewMouseLeftButtonDown="MatrixButton_PreviewMouseLeftButtonDown"
+                                                PreviewMouseRightButtonDown="MatrixButton_PreviewMouseRightButtonDown"
                                                 PreviewMouseMove="MatrixButton_PreviewMouseMove"
                                                 DragEnter="MatrixButton_DragEnter"
                                                 DragOver="MatrixButton_DragOver"
                                                 DragLeave="MatrixButton_DragLeave"
                                                 Drop="MatrixButton_Drop">
+                                            <Button.ContextMenu>
+                                                <ContextMenu Tag="{Binding PlacementTarget.Tag, RelativeSource={RelativeSource Self}}">
+                                                    <MenuItem Header="📋 Copy Button" Command="{Binding Tag.CopyButtonCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" InputGestureText="Ctrl+C"/>
+                                                    <MenuItem Header="📥 Paste Button" Command="{Binding Tag.PasteButtonCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" InputGestureText="Ctrl+V"/>
+                                                    <Separator/>
+                                                    <MenuItem Header="📁 Copy to Layer" ItemsSource="{Binding Tag.OtherLayers, RelativeSource={RelativeSource AncestorType=ContextMenu}}" Click="CopyToLayerMenuItem_Click">
+                                                        <MenuItem.ItemContainerStyle>
+                                                            <Style TargetType="MenuItem" BasedOn="{StaticResource {x:Type MenuItem}}">
+                                                                <Setter Property="Header" Value="{Binding Name}"/>
+                                                            </Style>
+                                                        </MenuItem.ItemContainerStyle>
+                                                    </MenuItem>
+                                                    <Separator/>
+                                                    <MenuItem Header="🗑 Delete / Clear" Command="{Binding Tag.DeleteButtonCommand, RelativeSource={RelativeSource AncestorType=ContextMenu}}" CommandParameter="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource AncestorType=ContextMenu}}" InputGestureText="Del"/>
+                                                </ContextMenu>
+                                            </Button.ContextMenu>
                                             <Button.Template>
                                                 <ControlTemplate TargetType="Button">
                                                     <Border x:Name="btnBorder" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1.5" CornerRadius="8" ClipToBounds="True">
@@ -439,11 +460,27 @@
                                 <TextBlock Text="{Binding Index, StringFormat='BUTTON #{0}'}" FontWeight="Bold" FontSize="16" Foreground="{StaticResource TextPrimary}"/>
                                 <TextBlock Text="{Binding DisplayTitle}" FontSize="12" Foreground="{StaticResource TextSecondary}" TextTrimming="CharacterEllipsis"/>
                             </StackPanel>
-                            <Button Grid.Column="2" Content="🗑 Delete" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.DeleteButtonCommand}" Style="{StaticResource DangerButton}" FontSize="11" Padding="8,4" VerticalAlignment="Center" ToolTip="Delete / Clear this button (Delete key)"/>
+                            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                                <Button Content="📋 Copy" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CopyButtonCommand}" Style="{StaticResource SecondaryButton}" FontSize="11" Padding="8,4" Margin="0,0,4,0" ToolTip="Copy button configuration (Ctrl+C)"/>
+                                <Button Content="📥 Paste" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.PasteButtonCommand}" Style="{StaticResource SecondaryButton}" FontSize="11" Padding="8,4" Margin="0,0,4,0" ToolTip="Paste copied button into this slot (Ctrl+V)"/>
+                                <Button Content="🗑 Delete" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.DeleteButtonCommand}" Style="{StaticResource DangerButton}" FontSize="11" Padding="8,4" ToolTip="Delete / Clear this button (Delete key)"/>
+                            </StackPanel>
                         </Grid>
 
+                        <!-- Cross-Layer Operations -->
+                        <GroupBox Grid.Row="1" Header="Cross-Layer Operations" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ComboBox x:Name="targetLayerCombo" Grid.Column="0" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.OtherLayers}" DisplayMemberPath="Name" SelectedIndex="0" Height="28" Margin="0,0,6,0" ToolTip="Select target layer to copy this button to"/>
+                                <Button Grid.Column="1" Content="📁 Copy to Layer" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.CopyButtonToLayerCommand}" CommandParameter="{Binding ElementName=targetLayerCombo, Path=SelectedItem}" Style="{StaticResource SecondaryButton}" Height="28" Padding="10,4" FontSize="11" ToolTip="Copy this button to the selected target layer at the same slot"/>
+                            </Grid>
+                        </GroupBox>
+
                         <!-- Lock & Protection Status -->
-                        <GroupBox Grid.Row="1" Header="Button Lock &amp; Layer Protection" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                        <GroupBox Grid.Row="2" Header="Button Lock &amp; Layer Protection" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
                             <StackPanel>
                                 <CheckBox IsChecked="{Binding IsLocked, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4">
                                     <StackPanel Orientation="Horizontal">
@@ -474,7 +511,7 @@
                         </GroupBox>
 
                         <!-- Caption & Icon -->
-                        <GroupBox Grid.Row="2" Header="Appearance" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                        <GroupBox Grid.Row="3" Header="Appearance" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
                             <StackPanel>
                                 <Grid Margin="0,0,0,10">
                                     <Grid.ColumnDefinitions>
@@ -567,7 +604,7 @@
                         </GroupBox>
 
                         <!-- Action Configuration -->
-                        <GroupBox Grid.Row="3" Header="Action &amp; Macro Trigger" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                        <GroupBox Grid.Row="4" Header="Action &amp; Macro Trigger" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
                             <StackPanel>
                                 <TextBlock Text="Action Type" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
                                 <ComboBox SelectedItem="{Binding ActionType}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableActionTypes}" Height="28" Margin="0,0,0,10"/>

@@ -38,6 +38,7 @@ public class MainViewModel : ViewModelBase
     private bool _isRecordingKeystrokes;
     private bool _appendRecordedKeystrokes = true;
     private string _recordedShortcutPreview = "Press keys to record...";
+    private ButtonConfig? _buttonClipboard;
 
     public ObservableCollection<LayerViewModel> Layers { get; } = new();
 
@@ -45,6 +46,14 @@ public class MainViewModel : ViewModelBase
     public IReadOnlyList<string> AvailableActionTypes { get; } = new[] { "macro", "brightness", "none" };
     public IReadOnlyList<string> AvailableEmptyButtonModes { get; } = new[] { "Theme Icon", "Black Background" };
     public IReadOnlyList<string> AvailableFonts { get; } = new[] { "(Default)", "Arial", "Segoe UI", "Consolas", "Impact", "Trebuchet MS", "Verdana", "Tahoma", "Courier New", "Georgia", "Lucida Console", "Calibri" };
+
+    public bool HasClipboardButton => _buttonClipboard != null;
+
+    public string ClipboardButtonTitle => _buttonClipboard != null
+        ? (!string.IsNullOrWhiteSpace(_buttonClipboard.Caption) ? _buttonClipboard.Caption : (!string.IsNullOrWhiteSpace(_buttonClipboard.Icon) ? Path.GetFileNameWithoutExtension(_buttonClipboard.Icon) : $"Button #{_buttonClipboard.Index}"))
+        : "Empty";
+
+    public IEnumerable<LayerViewModel> OtherLayers => Layers.Where(l => l != SelectedLayer);
 
     public bool CanUndo => _undoStack.Count > 0 || _pendingSnapshot != null;
     public bool CanRedo => _redoStack.Count > 0;
@@ -99,6 +108,7 @@ public class MainViewModel : ViewModelBase
                 IsRecordingKeystrokes = false;
                 UpdateButtonSubscription();
                 OnPropertyChanged(nameof(SelectedButton));
+                OnPropertyChanged(nameof(OtherLayers));
                 RefreshCurrentLayerPreviews();
             }
         }
@@ -232,6 +242,9 @@ public class MainViewModel : ViewModelBase
     public ICommand UndoCommand { get; }
     public ICommand RedoCommand { get; }
     public ICommand DeleteButtonCommand { get; }
+    public ICommand CopyButtonCommand { get; }
+    public ICommand PasteButtonCommand { get; }
+    public ICommand CopyButtonToLayerCommand { get; }
     public ICommand AddLayerCommand { get; }
     public ICommand RemoveLayerCommand { get; }
     public ICommand DuplicateLayerCommand { get; }
@@ -274,8 +287,39 @@ public class MainViewModel : ViewModelBase
         // Initialize Commands
         UndoCommand = new RelayCommand(Undo, () => CanUndo);
         RedoCommand = new RelayCommand(Redo, () => CanRedo);
-        DeleteButtonCommand = new RelayCommand(DeleteSelectedButton, () => SelectedButton != null);
-        ClearButtonCommand = new RelayCommand(DeleteSelectedButton, () => SelectedButton != null);
+        DeleteButtonCommand = new RelayCommand(p => DeleteSelectedButton(p as ButtonViewModel), _ => SelectedButton != null);
+        ClearButtonCommand = new RelayCommand(p => DeleteSelectedButton(p as ButtonViewModel), _ => SelectedButton != null);
+
+        CopyButtonCommand = new RelayCommand(p =>
+        {
+            var btn = p as ButtonViewModel ?? SelectedButton;
+            if (btn != null) CopyButton(btn);
+        }, _ => SelectedButton != null);
+
+        PasteButtonCommand = new RelayCommand(p =>
+        {
+            var btn = p as ButtonViewModel ?? SelectedButton;
+            if (btn != null) PasteButton(btn);
+        }, _ => SelectedButton != null && HasClipboardButton);
+
+        CopyButtonToLayerCommand = new RelayCommand(p =>
+        {
+            if (SelectedButton == null) return;
+            LayerViewModel? targetLayer = null;
+            if (p is LayerViewModel lvm)
+            {
+                targetLayer = lvm;
+            }
+            else if (p is string layerName)
+            {
+                targetLayer = Layers.FirstOrDefault(l => string.Equals(l.Name, layerName, StringComparison.OrdinalIgnoreCase));
+            }
+
+            if (targetLayer != null)
+            {
+                CopyButtonToLayer(SelectedButton, targetLayer);
+            }
+        }, _ => SelectedButton != null);
 
         AddLayerCommand = new RelayCommand(AddLayer);
         RemoveLayerCommand = new RelayCommand(RemoveLayer, () => SelectedLayer != null && Layers.Count > 1);
@@ -325,6 +369,8 @@ public class MainViewModel : ViewModelBase
 
         BackspaceMacroCommand = new RelayCommand(BackspaceMacro, () => SelectedButton != null);
         ClearMacroCommand = new RelayCommand(ClearMacro, () => SelectedButton != null);
+
+        Layers.CollectionChanged += (s, e) => OnPropertyChanged(nameof(OtherLayers));
 
         // Device Connection Events
         _deviceService.DeviceConnected += _ =>
@@ -766,16 +812,83 @@ public class MainViewModel : ViewModelBase
         }
     }
 
-    public void DeleteSelectedButton()
+    public void DeleteSelectedButton(ButtonViewModel? button = null)
     {
-        if (SelectedButton == null) return;
+        var btn = button ?? SelectedButton;
+        if (btn == null) return;
 
-        RecordSnapshot($"Delete Button #{SelectedButton.Index}");
-        int index = SelectedButton.Index;
-        SelectedButton.Clear();
-        RefreshCurrentButtonPreview();
+        RecordSnapshot($"Delete Button #{btn.Index}");
+        int index = btn.Index;
+        btn.Clear();
+        if (btn == SelectedButton)
+        {
+            RefreshCurrentButtonPreview();
+        }
+        else if (SelectedLayer != null)
+        {
+            var effectiveRoot = !string.IsNullOrWhiteSpace(SelectedLayer.IconRoot) ? SelectedLayer.IconRoot : IconRoot;
+            btn.UpdatePreview(_graphicsAdapter, SelectedLayer.Theme, SelectedLayer.Color, SelectedLayer.FontColor, effectiveRoot, SelectedLayer.ShowEmptyButtons, SelectedLayer.Font);
+        }
         _currentSnapshot = CreateSnapshot($"Delete Button #{index}");
         StatusMessage = $"Deleted button {index}";
+    }
+
+    public void CopyButton(ButtonViewModel? button = null)
+    {
+        var btn = button ?? SelectedButton;
+        if (btn == null) return;
+
+        _buttonClipboard = btn.ToConfig() ?? new ButtonConfig { Index = btn.Index };
+        OnPropertyChanged(nameof(HasClipboardButton));
+        OnPropertyChanged(nameof(ClipboardButtonTitle));
+        if (PasteButtonCommand is RelayCommand pasteCmd) pasteCmd.RaiseCanExecuteChanged();
+        StatusMessage = $"Copied '{btn.DisplayTitle}' (Button #{btn.Index}) to clipboard.";
+    }
+
+    public void PasteButton(ButtonViewModel? targetButton = null)
+    {
+        var target = targetButton ?? SelectedButton;
+        if (target == null || _buttonClipboard == null) return;
+
+        string layerName = SelectedLayer?.Name ?? "Layer";
+        RecordSnapshot($"Paste Button #{target.Index} on {layerName}");
+
+        target.Caption = _buttonClipboard.Caption;
+        target.Icon = _buttonClipboard.Icon;
+        target.Theme = _buttonClipboard.Theme;
+        target.Color = _buttonClipboard.Color;
+        target.FontColor = _buttonClipboard.FontColor;
+        target.Font = _buttonClipboard.Font;
+        target.ActionType = _buttonClipboard.Action?.Type ?? "macro";
+        target.ActionValue = _buttonClipboard.Action?.Value ?? string.Empty;
+        target.IsLocked = _buttonClipboard.Locked;
+
+        _currentSnapshot = CreateSnapshot($"Paste Button #{target.Index} on {layerName}");
+        RefreshCurrentButtonPreview();
+        StatusMessage = $"Pasted '{target.DisplayTitle}' to Button #{target.Index}.";
+    }
+
+    public void CopyButtonToLayer(ButtonViewModel sourceButton, LayerViewModel targetLayer, int? targetIndex = null)
+    {
+        if (sourceButton == null || targetLayer == null) return;
+
+        int destIndex = targetIndex ?? sourceButton.Index;
+        var targetButton = targetLayer.Buttons.FirstOrDefault(b => b.Index == destIndex);
+        if (targetButton == null) return;
+
+        RecordSnapshot($"Copy Button #{sourceButton.Index} to Layer '{targetLayer.Name}'");
+        targetButton.CopyFrom(sourceButton);
+        _currentSnapshot = CreateSnapshot($"Copy Button #{sourceButton.Index} to Layer '{targetLayer.Name}'");
+        var effectiveRoot = !string.IsNullOrWhiteSpace(targetLayer.IconRoot) ? targetLayer.IconRoot : IconRoot;
+        targetLayer.RefreshPreviews(_graphicsAdapter, effectiveRoot);
+
+        // Also save to clipboard buffer
+        _buttonClipboard = sourceButton.ToConfig() ?? new ButtonConfig { Index = sourceButton.Index };
+        OnPropertyChanged(nameof(HasClipboardButton));
+        OnPropertyChanged(nameof(ClipboardButtonTitle));
+        if (PasteButtonCommand is RelayCommand pasteCmd) pasteCmd.RaiseCanExecuteChanged();
+
+        StatusMessage = $"Copied Button #{sourceButton.Index} ('{sourceButton.DisplayTitle}') to Layer '{targetLayer.Name}' (Slot #{destIndex}).";
     }
 
     public void MoveOrSwapButton(ButtonViewModel source, ButtonViewModel target, bool isCopy)

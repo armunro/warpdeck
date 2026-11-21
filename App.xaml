@@ -11,6 +11,7 @@
         <SolidColorBrush x:Key="BgInputHover" Color="#323745" />
         <SolidColorBrush x:Key="BgInputActive" Color="#3A4050" />
         <SolidColorBrush x:Key="BgPopup" Color="#1F232B" />
+        <SolidColorBrush x:Key="BgDropdown" Color="#1F232B" />
         <SolidColorBrush x:Key="BgHover" Color="#2D323F" />
         <SolidColorBrush x:Key="BgSelected" Color="#252D3D" />
 
@@ -458,6 +459,81 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
+        </Style>
+
+        <!-- ========================================== -->
+        <!-- DARK CONTEXTMENU, MENU & MENUITEM STYLES   -->
+        <!-- ========================================== -->
+        <Style TargetType="ContextMenu">
+            <Setter Property="Background" Value="{StaticResource BgDropdown}" />
+            <Setter Property="BorderBrush" Value="{StaticResource BorderDark}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Padding" Value="4,4" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ContextMenu">
+                        <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="6" Padding="{TemplateBinding Padding}">
+                            <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="MenuItem">
+            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="SnapsToDevicePixels" Value="True" />
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="MenuItem">
+                        <Border x:Name="menuBorder" Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter Grid.Column="0" ContentSource="Icon" Margin="0,0,8,0" VerticalAlignment="Center" />
+                                <ContentPresenter Grid.Column="1" ContentSource="Header" VerticalAlignment="Center" />
+                                <TextBlock Grid.Column="2" Text="{TemplateBinding InputGestureText}" Foreground="{StaticResource TextSecondary}" Margin="20,0,0,0" VerticalAlignment="Center" FontSize="11" />
+                                <TextBlock Grid.Column="3" x:Name="arrow" Text="▶" Foreground="{StaticResource TextSecondary}" Margin="8,0,0,0" VerticalAlignment="Center" FontSize="9" Visibility="Collapsed" />
+                                <Popup x:Name="PART_Popup" AllowsTransparency="True" Focusable="False" IsOpen="{Binding IsSubmenuOpen, RelativeSource={RelativeSource TemplatedParent}}" Placement="Right" VerticalOffset="-4">
+                                    <Border Background="{StaticResource BgDropdown}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="6" Padding="4">
+                                        <StackPanel IsItemsHost="True" KeyboardNavigation.DirectionalNavigation="Cycle" />
+                                    </Border>
+                                </Popup>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="HasItems" Value="True">
+                                <Setter TargetName="arrow" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="menuBorder" Property="Background" Value="#2D323F" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+                                <Setter TargetName="menuBorder" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Separator">
+            <Setter Property="Background" Value="{StaticResource BorderDark}" />
+            <Setter Property="Height" Value="1" />
+            <Setter Property="Margin" Value="2,4" />
         </Style>
 
         <!-- ========================================== -->

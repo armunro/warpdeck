@@ -18,13 +18,6 @@ public partial class App : Application
     {
         base.OnStartup(e);
 
-        if (Environment.GetCommandLineArgs().Contains("--test") || (e.Args != null && e.Args.Contains("--test")))
-        {
-            TestNamespace.TestRecording.RunTests();
-            Shutdown(0);
-            return;
-        }
-
         var builder = new ContainerBuilder();
         builder.RegisterModule<StreamDeckModule>();
 

@@ -176,6 +176,48 @@ public partial class MainWindow : Window
         }
     }
 
+    private void MatrixButton_PreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
+    {
+        if (sender is FrameworkElement element && element.DataContext is ButtonViewModel btnVm)
+        {
+            if (_viewModel?.SelectedLayer != null)
+            {
+                _viewModel.SelectButtonCommand.Execute(btnVm);
+            }
+        }
+    }
+
+    private void CopyToLayerMenuItem_Click(object sender, RoutedEventArgs e)
+    {
+        if (e.OriginalSource is MenuItem menuItem && menuItem.DataContext is LayerViewModel targetLayer)
+        {
+            var btnVm = _viewModel?.SelectedButton;
+            if (btnVm == null)
+            {
+                var cm = menuItem.Parent as ContextMenu ?? FindVisualAncestor<ContextMenu>(menuItem);
+                if (cm?.PlacementTarget is FrameworkElement elem && elem.DataContext is ButtonViewModel vm)
+                {
+                    btnVm = vm;
+                }
+            }
+
+            if (btnVm != null && _viewModel != null)
+            {
+                _viewModel.CopyButtonToLayer(btnVm, targetLayer);
+            }
+        }
+    }
+
+    private static T? FindVisualAncestor<T>(DependencyObject? current) where T : DependencyObject
+    {
+        while (current != null)
+        {
+            if (current is T match) return match;
+            current = System.Windows.Media.VisualTreeHelper.GetParent(current) ?? System.Windows.LogicalTreeHelper.GetParent(current);
+        }
+        return null;
+    }
+
     private void MatrixButton_PreviewMouseMove(object sender, MouseEventArgs e)
     {
         if (e.LeftButton != MouseButtonState.Pressed || _dragStartPoint == null || _draggedButton == null)
@@ -290,6 +332,32 @@ public partial class MainWindow : Window
         e.Handled = true;
     }
 
+    private void LayerItem_DragOver(object sender, DragEventArgs e)
+    {
+        if (e.Data.GetData(typeof(ButtonViewModel)) is ButtonViewModel)
+        {
+            e.Effects = DragDropEffects.Copy;
+            e.Handled = true;
+        }
+    }
+
+    private void LayerItem_Drop(object sender, DragEventArgs e)
+    {
+        if (sender is FrameworkElement element && element.DataContext is LayerViewModel targetLayer)
+        {
+            if (e.Data.GetData(typeof(ButtonViewModel)) is ButtonViewModel sourceButton)
+            {
+                if (DataContext is MainViewModel mainVm)
+                {
+                    mainVm.CopyButtonToLayer(sourceButton, targetLayer);
+                    mainVm.SelectedLayer = targetLayer;
+                    targetLayer.SelectedButton = targetLayer.Buttons.FirstOrDefault(b => b.Index == sourceButton.Index);
+                }
+            }
+        }
+        e.Handled = true;
+    }
+
     private void MainWindow_PreviewKeyDown(object sender, KeyEventArgs e)
     {
         if (_keyboardHook.IsHooked)
@@ -333,7 +401,7 @@ public partial class MainWindow : Window
                 return;
             }
 
-            // If focus is in a TextBox or editable control, let standard text editing handle Delete/Undo
+            // If focus is in a TextBox or editable control, let standard text editing handle Delete/Undo/Copy/Paste
             if (e.OriginalSource is System.Windows.Controls.Primitives.TextBoxBase ||
                 e.OriginalSource is PasswordBox ||
                 Keyboard.FocusedElement is System.Windows.Controls.Primitives.TextBoxBase ||
@@ -342,8 +410,28 @@ public partial class MainWindow : Window
                 return;
             }
 
+            // Copy Button: Ctrl+C
+            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.C)
+            {
+                if (vm.SelectedButton != null && vm.CopyButtonCommand.CanExecute(null))
+                {
+                    vm.CopyButtonCommand.Execute(null);
+                    e.Handled = true;
+                    return;
+                }
+            }
+            // Paste Button: Ctrl+V
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.V)
+            {
+                if (vm.SelectedButton != null && vm.PasteButtonCommand.CanExecute(null))
+                {
+                    vm.PasteButtonCommand.Execute(null);
+                    e.Handled = true;
+                    return;
+                }
+            }
             // Undo: Ctrl+Z
-            if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Z)
+            else if (Keyboard.Modifiers == ModifierKeys.Control && e.Key == Key.Z)
             {
                 if (vm.CanUndo)
                 {
