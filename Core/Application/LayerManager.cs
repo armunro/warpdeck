@@ -11,6 +11,7 @@ public class LayerManager : IDisposable
     private readonly IGraphicsAdapter _graphics;
     private readonly IWindowService _windowService;
     private readonly List<Layer> _layers = new();
+    private readonly List<Layer> _activeLayers = new();
     private Layer? _activeLayer;
     private string? _lastProcessName;
     private string? _lastWindowTitle;
@@ -37,14 +38,41 @@ public class LayerManager : IDisposable
     {
         _deck = deck;
         _deck.KeyStateChanged += OnKeyStateChanged;
-        _deck.SetBrightness(100);
-        Console.WriteLine($"[DEVICE] Type: {deck.GetType().FullName}, Keys: {deck.Keys.Count}");
+        _deck.SetBrightness(_deviceService.Brightness);
         
-        // Force re-apply layer if we have one
-        if (_activeLayer != null)
+        int keySize = 96;
+        if (deck.Keys.Count == 32)
         {
-            ApplyLayer(_activeLayer);
+            keySize = 96;
         }
+        else if (deck.Keys.Count == 15)
+        {
+            keySize = 72;
+        }
+        else if (deck.Keys.Count == 6)
+        {
+            keySize = 80;
+        }
+        else if (deck.Keys.Count == 8)
+        {
+            keySize = 96;
+        }
+        _graphics.SetKeySize(keySize, keySize);
+        Console.WriteLine($"[DEVICE] Type: {deck.GetType().FullName}, Keys: {deck.Keys.Count}, KeySize: {keySize}x{keySize}");
+        
+        // Force re-apply layers if we have active layers
+        lock (_layers)
+        {
+            if (_activeLayers.Count > 0)
+            {
+                ApplyActiveLayers();
+            }
+        }
+    }
+
+    public void SetBrightness(byte percent)
+    {
+        _deviceService.SetBrightness(percent);
     }
 
     private void OnDeviceDisconnected()
@@ -58,13 +86,19 @@ public class LayerManager : IDisposable
 
     private void OnKeyStateChanged(object? sender, KeyEventArgs e)
     {
-        if (_activeLayer != null)
+        Layer? effectiveLayer = null;
+        lock (_layers)
+        {
+            effectiveLayer = GetEffectiveLayerForKey(e.Key);
+        }
+
+        if (effectiveLayer != null)
         {
             UpdateKeyBitmap(e.Key, e.IsDown);
 
             if (e.IsDown)
             {
-                if (_activeLayer.Actions.TryGetValue(e.Key, out var action))
+                if (effectiveLayer.Actions.TryGetValue(e.Key, out var action))
                 {
                     action.Execute();
                 }
@@ -74,8 +108,11 @@ public class LayerManager : IDisposable
 
     public void AddLayer(Layer layer)
     {
-        _layers.Add(layer);
-        _layers.Sort((a, b) => b.Priority.CompareTo(a.Priority));
+        lock (_layers)
+        {
+            _layers.Add(layer);
+            _layers.Sort((a, b) => b.Priority.CompareTo(a.Priority));
+        }
     }
 
     public void SetLayers(IEnumerable<Layer> layers)
@@ -85,6 +122,7 @@ public class LayerManager : IDisposable
             _layers.Clear();
             _layers.AddRange(layers);
             _layers.Sort((a, b) => b.Priority.CompareTo(a.Priority));
+            _activeLayers.Clear();
             _activeLayer = null; // Force re-evaluation
         }
     }
@@ -93,7 +131,7 @@ public class LayerManager : IDisposable
     {
         LogForegroundWindow();
 
-        Layer? bestLayer = null;
+        List<Layer> newActiveLayers = new();
 
         lock (_layers)
         {
@@ -101,16 +139,20 @@ public class LayerManager : IDisposable
             {
                 if (layer.Condition == null || layer.Condition.IsMet())
                 {
-                    bestLayer = layer;
-                    break;
+                    newActiveLayers.Add(layer);
                 }
             }
-        }
 
-        if (bestLayer != _activeLayer)
-        {
-            _activeLayer = bestLayer;
-            ApplyLayer(_activeLayer);
+            bool changed = newActiveLayers.Count != _activeLayers.Count ||
+                           !newActiveLayers.SequenceEqual(_activeLayers);
+
+            if (changed)
+            {
+                _activeLayers.Clear();
+                _activeLayers.AddRange(newActiveLayers);
+                _activeLayer = _activeLayers.FirstOrDefault();
+                ApplyActiveLayers();
+            }
         }
     }
 
@@ -127,18 +169,18 @@ public class LayerManager : IDisposable
         }
     }
 
-    private void ApplyLayer(Layer? layer)
+    private void ApplyActiveLayers()
     {
         if (_deck == null) return;
 
-        if (layer == null)
+        if (_activeLayers.Count == 0)
         {
             for (int i = 0; i < _deck.Keys.Count; i++)
                 _deck.SetKeyBitmap(i, KeyBitmap.Black);
             return;
         }
 
-        Console.WriteLine($"Activating layer: {layer.Name}");
+        Console.WriteLine($"Activating active layers: {string.Join(" -> ", _activeLayers.Select(l => l.Name))}");
 
         for (int i = 0; i < _deck.Keys.Count; i++)
         {
@@ -146,23 +188,64 @@ public class LayerManager : IDisposable
         }
     }
 
+    private Layer? GetEffectiveLayerForKey(int keyIndex)
+    {
+        if (_activeLayers.Count == 0) return null;
+
+        // Check if any active layer has explicitly locked this button slot (e.g. Default layer window actions).
+        // Locked buttons cannot be covered or blocked by any other layer.
+        foreach (var layer in _activeLayers)
+        {
+            if (layer.LockedKeys.Contains(keyIndex))
+            {
+                return layer;
+            }
+        }
+
+        // Find highest-priority active layer that explicitly defines a button on this slot
+        foreach (var layer in _activeLayers)
+        {
+            if (layer.DefinedKeys.Contains(keyIndex))
+            {
+                return layer;
+            }
+        }
+
+        // If no active layer explicitly defined this key, fall back to the base (last/lowest-priority, usually Default) active layer
+        return _activeLayers.LastOrDefault() ?? _activeLayers.FirstOrDefault();
+    }
+
     private void UpdateKeyBitmap(int keyIndex, bool isPressed)
     {
-        if (_deck == null || _activeLayer == null) return;
+        if (_deck == null || _activeLayers.Count == 0) return;
+
+        var effectiveLayer = GetEffectiveLayerForKey(keyIndex);
+        if (effectiveLayer == null)
+        {
+            _deck.SetKeyBitmap(keyIndex, KeyBitmap.Black);
+            return;
+        }
+
+        bool hasCaption = effectiveLayer.Captions.TryGetValue(keyIndex, out var caption) && !string.IsNullOrWhiteSpace(caption);
+        bool hasIcon = effectiveLayer.Icons.TryGetValue(keyIndex, out var icon) && !string.IsNullOrWhiteSpace(icon);
+        effectiveLayer.Themes.TryGetValue(keyIndex, out var theme);
+        effectiveLayer.Fonts.TryGetValue(keyIndex, out var font);
+
+        if (!hasCaption && !hasIcon && !effectiveLayer.ShowEmptyButtons)
+        {
+            _deck.SetKeyBitmap(keyIndex, KeyBitmap.Black);
+            return;
+        }
 
         KeyBitmap bitmap = KeyBitmap.Black;
-        if (_activeLayer.Keys.TryGetValue(keyIndex, out var keyBmp) && !isPressed)
+        if (effectiveLayer.Keys.TryGetValue(keyIndex, out var keyBmp) && !isPressed)
             bitmap = keyBmp;
-
-        bool hasCaption = _activeLayer.Captions.TryGetValue(keyIndex, out var caption) && !string.IsNullOrWhiteSpace(caption);
-        bool hasIcon = _activeLayer.Icons.TryGetValue(keyIndex, out var icon) && !string.IsNullOrWhiteSpace(icon);
-        _activeLayer.Themes.TryGetValue(keyIndex, out var theme);
 
         if (hasCaption || hasIcon || !string.IsNullOrWhiteSpace(theme))
         {
-            var (r, g, b) = _activeLayer.Colors.TryGetValue(keyIndex, out var color) ? color : (R: (byte)0, G: (byte)0, B: (byte)0);
-            var (fr, fg, fb) = _activeLayer.FontColors.TryGetValue(keyIndex, out var fColor) ? fColor : (R: (byte)255, G: (byte)255, B: (byte)255);
-            bitmap = _graphics.DrawKey(r, g, b, fr, fg, fb, caption, icon, theme, isPressed);
+            var (r, g, b) = effectiveLayer.Colors.TryGetValue(keyIndex, out var color) ? color : (R: (byte)0, G: (byte)0, B: (byte)0);
+            var (fr, fg, fb) = effectiveLayer.FontColors.TryGetValue(keyIndex, out var fColor) ? fColor : (R: (byte)255, G: (byte)255, B: (byte)255);
+            bitmap = _graphics.DrawKey(r, g, b, fr, fg, fb, caption, icon, theme, isPressed, font);
         }
 
         _deck.SetKeyBitmap(keyIndex, bitmap);

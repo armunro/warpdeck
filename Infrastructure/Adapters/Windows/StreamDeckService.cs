@@ -9,15 +9,33 @@ public class StreamDeckService : IDeviceService, IDisposable
     private IMacroBoard? _currentDevice;
     private readonly System.Threading.Timer _timer;
     private bool _isScanning;
+    private byte _brightness = 100;
 
     public event Action<IMacroBoard>? DeviceConnected;
     public event Action? DeviceDisconnected;
 
     public IMacroBoard? CurrentDevice => _currentDevice;
+    public byte Brightness => _brightness;
 
     public StreamDeckService()
     {
         _timer = new System.Threading.Timer(ScanForDevice, null, Timeout.Infinite, 2000);
+    }
+
+    public void SetBrightness(byte percent)
+    {
+        _brightness = Math.Clamp(percent, (byte)0, (byte)100);
+        if (_currentDevice != null)
+        {
+            try
+            {
+                _currentDevice.SetBrightness(_brightness);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"[DEBUG] Error setting device brightness: {ex.Message}");
+            }
+        }
     }
 
     public void Start()
@@ -42,6 +60,14 @@ public class StreamDeckService : IDeviceService, IDisposable
                         _currentDevice = device;
                         // Use a simple check if ConnectionEventArgs isn't what I thought
                         _currentDevice.ConnectionStateChanged += OnConnectionStateChanged;
+                        try
+                        {
+                            _currentDevice.SetBrightness(_brightness);
+                        }
+                        catch
+                        {
+                        }
+
                         Console.WriteLine("Stream Deck connected.");
                         DeviceConnected?.Invoke(_currentDevice);
                     }
@@ -50,10 +76,10 @@ public class StreamDeckService : IDeviceService, IDisposable
                 {
                     // If it's not found, it might throw a specific exception or a general one.
                     // We'll log only if it's NOT a "not found" type error if we can identify it.
-                    if (ex.Message.Contains("found", StringComparison.OrdinalIgnoreCase) || 
+                    if (ex.Message.Contains("found", StringComparison.OrdinalIgnoreCase) ||
                         ex.GetType().Name.Contains("NotFound", StringComparison.OrdinalIgnoreCase))
                     {
-                         // Silent or debug log
+                        // Silent or debug log
                     }
                     else
                     {
@@ -74,9 +100,9 @@ public class StreamDeckService : IDeviceService, IDisposable
         // If we can't be sure of the property name, we can just re-check if the device is still functional
         // or wait for the next scan to confirm if it's gone.
         // For now, let's try to see if it has a common property name.
-        
+
         bool connected = true;
-        try 
+        try
         {
             // Reflection-like check or just rely on the fact that if this event fires with disconnect,
             // we'll find out. Some SDKs pass ConnectionEventArgs : EventArgs
@@ -86,7 +112,9 @@ public class StreamDeckService : IDeviceService, IDisposable
                 connected = (bool)prop.GetValue(e)!;
             }
         }
-        catch { }
+        catch
+        {
+        }
 
         if (!connected)
         {
@@ -100,16 +128,16 @@ public class StreamDeckService : IDeviceService, IDisposable
         {
             Console.WriteLine("Stream Deck disconnected. Waiting for reconnect...");
             _currentDevice.ConnectionStateChanged -= OnConnectionStateChanged;
-            
-            try 
+
+            try
             {
                 _currentDevice.Dispose();
             }
-            catch 
+            catch
             {
                 // Ignore dispose errors on disconnected device
             }
-            
+
             _currentDevice = null;
             DeviceDisconnected?.Invoke();
         }

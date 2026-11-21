@@ -1,184 +1,190 @@
 ﻿iconRoot: "C:\\Tools\\fontawesome-pro-7.3.1-desktop\\svgs"
+brightness: 100
 layers:
   - name: Default
     priority: 0
     theme: "cyber"
+    showEmptyButtons: true
     color: "#000000"
     buttons:
-      # Window Management (Electric Blue: #0070F3)
+      # Window Management (Electric Blue: #0070F3) - Locked so window controls stay on all screens
       - index: 0
         color: "#0070F3"
         caption: "Snap Left"
-        icon: "solid/arrow-left.svg"
+        icon: "regular/arrow-left.svg"
+        locked: true
         action: { type: macro, value: "{{win+left}}" }
       - index: 1
         color: "#0070F3"
         caption: "Snap Right"
-        icon: "solid/arrow-right.svg"
+        icon: "regular/arrow-right.svg"
+        locked: true
         action: { type: macro, value: "{{win+right}}" }
       - index: 2
         color: "#0070F3"
         caption: "Maximize"
-        icon: "solid/window-maximize.svg"
+        icon: "regular/window-maximize.svg"
+        locked: true
         action: { type: macro, value: "{{win+up}}" }
       - index: 3
         color: "#0070F3"
         caption: "Minimize"
-        icon: "solid/window-minimize.svg"
+        icon: "regular/window-minimize.svg"
+        locked: true
         action: { type: macro, value: "{{win+down}}" }
 
       # Navigation / Desktop (Electric Purple: #7928CA)
       - index: 4
         color: "#7928CA"
         caption: "Task View"
-        icon: "solid/table-columns.svg"
+        icon: "regular/table-columns.svg"
         action: { type: macro, value: "{{win+tab}}" }
       - index: 5
         color: "#7928CA"
         caption: "New Desktop"
-        icon: "solid/desktop.svg"
+        icon: "regular/desktop.svg"
         action: { type: macro, value: "{{win+ctrl+d}}" }
       - index: 6
         color: "#7928CA"
         caption: "Next Desktop"
-        icon: "solid/angles-right.svg"
+        icon: "regular/angles-right.svg"
         action: { type: macro, value: "{{win+ctrl+right}}" }
       - index: 7
         color: "#7928CA"
         caption: "Prev Desktop"
-        icon: "solid/angles-left.svg"
+        icon: "regular/angles-left.svg"
         action: { type: macro, value: "{{win+ctrl+left}}" }
 
       # System Tools (Vibrant Orange: #FF6B00)
       - index: 8
         color: "#FF6B00"
         caption: "Settings"
-        icon: "solid/gear.svg"
+        icon: "regular/gear.svg"
         action: { type: macro, value: "{{win+i}}" }
       - index: 9
         color: "#FF6B00"
         caption: "Explorer"
-        icon: "solid/folder.svg"
+        icon: "regular/folder.svg"
         action: { type: macro, value: "{{win+e}}" }
       - index: 10
         color: "#FF6B00"
         caption: "Search"
-        icon: "solid/magnifying-glass.svg"
+        icon: "regular/magnifying-glass.svg"
         action: { type: macro, value: "{{win+s}}" }
       - index: 11
         color: "#FF6B00"
         caption: "Run"
-        icon: "solid/play.svg"
+        icon: "regular/play.svg"
         action: { type: macro, value: "{{win+r}}" }
 
       # Media / Volume (Neon Green: #00E676)
       - index: 12
         color: "#00E676"
         caption: "Mute"
-        icon: "solid/volume-xmark.svg"
+        icon: "regular/volume-xmark.svg"
         action: { type: macro, value: "{{win+alt+m}}" } # Note: Win+Alt+M is Game Bar mute, standard Win doesn't have a direct toggle often without special keys
       - index: 13
         color: "#00E676"
         caption: "Vol Up"
-        icon: "solid/volume-high.svg"
+        icon: "regular/volume-high.svg"
         action: { type: macro, value: "{{f3}}" } # Often mapped on laptops, but standard KB varies.
       - index: 14
         color: "#00E676"
         caption: "Vol Down"
-        icon: "solid/volume-low.svg"
+        icon: "regular/volume-low.svg"
         action: { type: macro, value: "{{f2}}" }
       - index: 15
         color: "#00E676"
         caption: "Play/Pause"
-        icon: "solid/play-pause.svg"
+        icon: "regular/play-pause.svg"
         action: { type: macro, value: "{{space}}" } # Context dependent
 
       # Productivity / Screenshots (Vibrant Yellow: #FFD600)
       - index: 16
         color: "#FFD600"
         caption: "Snippet"
-        icon: "solid/scissors.svg"
+        icon: "regular/scissors.svg"
         action: { type: macro, value: "{{win+shift+s}}" }
       - index: 17
         color: "#FFD600"
         caption: "Clipboard"
-        icon: "solid/clipboard.svg"
+        icon: "regular/clipboard.svg"
         action: { type: macro, value: "{{win+v}}" }
       - index: 18
         color: "#FFD600"
         caption: "Emoji"
-        icon: "solid/face-smile.svg"
+        icon: "regular/face-smile.svg"
         action: { type: macro, value: "{{win+.}}" }
       - index: 19
         color: "#FFD600"
         caption: "Action Center"
-        icon: "solid/bell.svg"
+        icon: "regular/bell.svg"
         action: { type: macro, value: "{{win+a}}" }
 
       # Browser / Web (Vibrant Magenta: #E040FB)
       - index: 20
         color: "#E040FB"
         caption: "New Tab"
-        icon: "solid/plus.svg"
+        icon: "regular/plus.svg"
         action: { type: macro, value: "{{ctrl+t}}" }
       - index: 21
         color: "#E040FB"
         caption: "Close Tab"
-        icon: "solid/xmark.svg"
+        icon: "regular/xmark.svg"
         action: { type: macro, value: "{{ctrl+w}}" }
       - index: 22
         color: "#E040FB"
         caption: "Reopen Tab"
-        icon: "solid/arrow-rotate-left.svg"
+        icon: "regular/arrow-rotate-left.svg"
         action: { type: macro, value: "{{ctrl+shift+t}}" }
       - index: 23
         color: "#E040FB"
         caption: "Private"
-        icon: "solid/user-secret.svg"
+        icon: "regular/user-secret.svg"
         action: { type: macro, value: "{{ctrl+shift+n}}" }
 
       # App Switching (Electric Cyan: #00E5FF)
       - index: 24
         color: "#00E5FF"
         caption: "Alt+Tab"
-        icon: "solid/window-restore.svg"
+        icon: "regular/window-restore.svg"
         action: { type: macro, value: "{{alt+tab}}" }
       - index: 25
         color: "#00E5FF"
         caption: "Show Desktop"
-        icon: "solid/display.svg"
+        icon: "regular/display.svg"
         action: { type: macro, value: "{{win+d}}" }
       - index: 26
         color: "#00E5FF"
         caption: "Lock"
-        icon: "solid/lock.svg"
+        icon: "regular/lock.svg"
         action: { type: macro, value: "{{win+l}}" }
       - index: 27
         color: "#00E5FF"
         caption: "Task Mgr"
-        icon: "solid/chart-simple.svg"
+        icon: "regular/chart-simple.svg"
         action: { type: macro, value: "{{ctrl+shift+esc}}" }
 
       # General (White: #FFFFFF)
       - index: 28
         color: "#FFFFFF"
         caption: "Undo"
-        icon: "solid/rotate-left.svg"
+        icon: "regular/rotate-left.svg"
         action: { type: macro, value: "{{ctrl+z}}" }
       - index: 29
         color: "#FFFFFF"
         caption: "Redo"
-        icon: "solid/rotate-right.svg"
+        icon: "regular/rotate-right.svg"
         action: { type: macro, value: "{{ctrl+y}}" }
       - index: 30
         color: "#FFFFFF"
         caption: "Copy"
-        icon: "solid/copy.svg"
+        icon: "regular/copy.svg"
         action: { type: macro, value: "{{ctrl+c}}" }
       - index: 31
         color: "#FFFFFF"
         caption: "Paste"
-        icon: "solid/paste.svg"
+        icon: "regular/paste.svg"
         action: { type: macro, value: "{{ctrl+v}}" }
   - name: Notepad
     priority: 10
@@ -191,7 +197,7 @@ layers:
         color: "#FFFFFF"
         # fontColor will be automatically black because #FFFFFF is light
         caption: "Save"
-        icon: "solid/floppy-disk.svg"
+        icon: "regular/floppy-disk.svg"
         action:
           type: macro
           value: "thisissometext{{ctrl+s}}" # Text + Save
@@ -199,7 +205,7 @@ layers:
         color: "#000000"
         fontColor: "#FF1744" # Vibrant Red font on black
         caption: "Close"
-        icon: "solid/xmark.svg"
+        icon: "regular/xmark.svg"
         action:
           type: macro
           value: "{{alt+f4}}" # Close
@@ -212,14 +218,14 @@ layers:
       - index: 0
         color: "#0070F3"
         caption: "Tasks"
-        icon: "solid/calculator.svg"
+        icon: "regular/calculator.svg"
         action:
           type: macro
           value: "{{win+tab}}" # Task View
       - index: 1
         color: "#FFD600"
         caption: "Close"
-        icon: "solid/xmark.svg"
+        icon: "regular/xmark.svg"
         action:
           type: macro
           value: "{{alt+f4}}" # Close
@@ -234,174 +240,174 @@ layers:
       - index: 0
         color: "#7928CA"
         caption: "Search Everywhere"
-        icon: "solid/magnifying-glass.svg"
+        icon: "regular/magnifying-glass.svg"
         action: { type: macro, value: "{{ctrl+t}}" }
       - index: 1
         color: "#7928CA"
         caption: "Go to File"
-        icon: "solid/file.svg"
+        icon: "regular/file.svg"
         action: { type: macro, value: "{{ctrl+shift+n}}" }
       - index: 2
         color: "#7928CA"
         caption: "Go to Symbol"
-        icon: "solid/shapes.svg"
+        icon: "regular/shapes.svg"
         action: { type: macro, value: "{{ctrl+alt+shift+n}}" }
       - index: 3
         color: "#7928CA"
         caption: "Find Usages"
-        icon: "solid/cube.svg"
+        icon: "regular/cube.svg"
         action: { type: macro, value: "{{shift+f12}}" }
       
       # Editing / Context (Vibrant Orange: #FF6B00)
       - index: 4
         color: "#FF6B00"
         caption: "Context Action"
-        icon: "solid/lightbulb.svg"
+        icon: "regular/lightbulb.svg"
         action: { type: macro, value: "{{alt+enter}}" }
       - index: 5
         color: "#FF6B00"
         caption: "Rename"
-        icon: "solid/i-cursor.svg"
+        icon: "regular/i-cursor.svg"
         action: { type: macro, value: "{{f2}}" }
       - index: 6
         color: "#FF6B00"
         caption: "Refactor This"
-        icon: "solid/wand-magic-sparkles.svg"
+        icon: "regular/wand-magic-sparkles.svg"
         action: { type: macro, value: "{{ctrl+shift+r}}" }
       - index: 7
         color: "#FF6B00"
         caption: "Format Code"
-        icon: "solid/align-left.svg"
+        icon: "regular/align-left.svg"
         action: { type: macro, value: "{{ctrl+alt+l}}" }
 
       # Build & Run (Neon Green: #00E676, Crimson: #FF1744)
       - index: 8
         color: "#00E676"
         caption: "Build"
-        icon: "solid/hammer.svg"
+        icon: "regular/hammer.svg"
         action: { type: macro, value: "{{ctrl+shift+b}}" }
       - index: 9
         color: "#00E676"
         caption: "Run"
-        icon: "solid/play.svg"
+        icon: "regular/play.svg"
         action: { type: macro, value: "{{ctrl+f5}}" }
       - index: 10
         color: "#00E676"
         caption: "Debug"
-        icon: "solid/bug.svg"
+        icon: "regular/bug.svg"
         action: { type: macro, value: "{{f5}}" }
       - index: 11
         color: "#FF1744"
         caption: "Stop"
-        icon: "solid/stop.svg"
+        icon: "regular/stop.svg"
         action: { type: macro, value: "{{shift+f5}}" }
 
       # Debugging (Electric Blue: #0070F3)
       - index: 12
         color: "#0070F3"
         caption: "Step Over"
-        icon: "solid/forward-step.svg"
+        icon: "regular/forward-step.svg"
         action: { type: macro, value: "{{f8}}" }
       - index: 13
         color: "#0070F3"
         caption: "Step Into"
-        icon: "solid/arrow-turn-down-right.svg"
+        icon: "regular/arrow-turn-down-right.svg"
         action: { type: macro, value: "{{f7}}" }
       - index: 14
         color: "#0070F3"
         caption: "Step Out"
-        icon: "solid/arrow-turn-up.svg"
+        icon: "regular/arrow-turn-up.svg"
         action: { type: macro, value: "{{shift+f8}}" }
       - index: 15
         color: "#0070F3"
         caption: "Resume"
-        icon: "solid/forward.svg"
+        icon: "regular/forward.svg"
         action: { type: macro, value: "{{f5}}" }
 
       # Version Control (Vibrant Yellow: #FFD600)
       - index: 16
         color: "#FFD600"
         caption: "Commit"
-        icon: "solid/code-commit.svg"
+        icon: "regular/code-commit.svg"
         action: { type: macro, value: "{{ctrl+k}}" }
       - index: 17
         color: "#FFD600"
         caption: "Push"
-        icon: "solid/arrow-up.svg"
+        icon: "regular/arrow-up.svg"
         action: { type: macro, value: "{{ctrl+shift+k}}" }
       - index: 18
         color: "#FFD600"
         caption: "Pull"
-        icon: "solid/arrow-down.svg"
+        icon: "regular/arrow-down.svg"
         action: { type: macro, value: "{{ctrl+alt+w}}" }
       - index: 19
         color: "#FFD600"
         caption: "History"
-        icon: "solid/clock-rotate-left.svg"
+        icon: "regular/clock-rotate-left.svg"
         action: { type: macro, value: "{{alt+`}}" }
 
       # Code structure (Vibrant Magenta: #E040FB)
       - index: 20
         color: "#E040FB"
         caption: "File Structure"
-        icon: "solid/list-tree.svg"
+        icon: "regular/list-tree.svg"
         action: { type: macro, value: "{{ctrl+f11}}" }
       - index: 21
         color: "#E040FB"
         caption: "Hierarchy"
-        icon: "solid/sitemap.svg"
+        icon: "regular/sitemap.svg"
         action: { type: macro, value: "{{ctrl+e}}" }
       - index: 22
         color: "#E040FB"
         caption: "Terminal"
-        icon: "solid/terminal.svg"
+        icon: "regular/terminal.svg"
         action: { type: macro, value: "{{ctrl+alt+1}}" }
       - index: 23
         color: "#E040FB"
         caption: "Solution"
-        icon: "solid/folder-tree.svg"
+        icon: "regular/folder-tree.svg"
         action: { type: macro, value: "{{alt+1}}" }
 
       # Miscellaneous (White: #FFFFFF)
       - index: 24
         color: "#FFFFFF"
         caption: "Comment"
-        icon: "solid/comment.svg"
+        icon: "regular/comment.svg"
         action: { type: macro, value: "{{ctrl+/}}" }
       - index: 25
         color: "#FFFFFF"
         caption: "Inspect"
-        icon: "solid/shield-halved.svg"
+        icon: "regular/shield-halved.svg"
         action: { type: macro, value: "{{ctrl+alt+shift+i}}" }
       - index: 26
         color: "#FFFFFF"
         caption: "Implement"
-        icon: "solid/circle-nodes.svg"
+        icon: "regular/circle-nodes.svg"
         action: { type: macro, value: "{{ctrl+i}}" }
       - index: 27
         color: "#FFFFFF"
         caption: "Override"
-        icon: "solid/circle-arrow-down.svg"
+        icon: "regular/circle-arrow-down.svg"
         action: { type: macro, value: "{{ctrl+o}}" }
 
       # Navigation bookmarks (Electric Cyan: #00E5FF)
       - index: 28
         color: "#00E5FF"
         caption: "Toggle Bookmark"
-        icon: "solid/bookmark.svg"
+        icon: "regular/bookmark.svg"
         action: { type: macro, value: "{{ctrl+f11}}" }
       - index: 29
         color: "#00E5FF"
         caption: "Show Bookmarks"
-        icon: "solid/book-bookmark.svg"
+        icon: "regular/book-bookmark.svg"
         action: { type: macro, value: "{{shift+f11}}" }
       - index: 30
         color: "#FF007F" # Vibrant Rose/Pink for UI
         caption: "Rider UI"
-        icon: "solid/table-cells.svg"
+        icon: "regular/table-cells.svg"
         action: { type: macro, value: "{{ctrl+shift+f12}}" }
       - index: 31
         color: "#FF1744" # Vibrant Red for Tab Actions
         caption: "Close Tab"
-        icon: "solid/xmark.svg"
+        icon: "regular/xmark.svg"
         action: { type: macro, value: "{{ctrl+f4}}" }

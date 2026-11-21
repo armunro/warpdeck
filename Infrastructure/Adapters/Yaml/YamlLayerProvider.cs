@@ -1,3 +1,4 @@
+using System.IO;
 using OpenMacroBoard.SDK;
 using Warpdeck.Core.Domain;
 using Warpdeck.Infrastructure.Adapters.Windows;
@@ -10,16 +11,18 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
     private int _keyCount;
     private readonly IWindowService _windowService;
     private readonly IGraphicsAdapter? _graphicsAdapter;
+    private readonly IDeviceService? _deviceService;
     private readonly FileSystemWatcher _watcher;
     private List<Layer> _currentLayers = new();
 
     public event Action? LayersChanged;
 
-    public YamlLayerProvider(string configPath, IWindowService windowService, IGraphicsAdapter? graphicsAdapter = null)
+    public YamlLayerProvider(string configPath, IWindowService windowService, IGraphicsAdapter? graphicsAdapter = null, IDeviceService? deviceService = null)
     {
         _configPath = Path.GetFullPath(configPath);
         _windowService = windowService;
         _graphicsAdapter = graphicsAdapter;
+        _deviceService = deviceService;
 
         // Default key count for common Stream Decks if not yet connected
         // We will update it when we reload if we have a device, 
@@ -79,6 +82,11 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
     private IEnumerable<Layer> LoadLayers()
     {
         var config = ConfigLoader.Load(_configPath);
+        if (config.Brightness.HasValue && _deviceService != null)
+        {
+            _deviceService.SetBrightness(config.Brightness.Value);
+        }
+
         if (_graphicsAdapter != null)
         {
             var iconRootPath = config.IconRoot;
@@ -107,7 +115,7 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
                 );
             }
 
-            var layer = new Layer(layerConfig.Name, condition, layerConfig.Priority);
+            var layer = new Layer(layerConfig.Name, condition, layerConfig.Priority, layerConfig.ShowEmptyButtons);
             
             // Parse colors
             var (baseR, baseG, baseB) = ParseColorBytes(layerConfig.Color);
@@ -126,11 +134,20 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
                 {
                     layer.Themes[i] = layerConfig.Theme;
                 }
+                if (layerConfig.Font != null)
+                {
+                    layer.Fonts[i] = layerConfig.Font;
+                }
             }
 
             // Apply specific button overrides
             foreach (var buttonConfig in layerConfig.Buttons)
             {
+                layer.DefinedKeys.Add(buttonConfig.Index);
+                if (buttonConfig.Locked)
+                {
+                    layer.LockedKeys.Add(buttonConfig.Index);
+                }
                 var (btnR, btnG, btnB) = layer.Colors[buttonConfig.Index];
                 
                 if (buttonConfig.Color != null)
@@ -182,11 +199,20 @@ public class YamlLayerProvider : ILayerProvider, IDisposable
                     layer.Themes[buttonConfig.Index] = buttonConfig.Theme;
                 }
 
+                if (buttonConfig.Font != null)
+                {
+                    layer.Fonts[buttonConfig.Index] = buttonConfig.Font;
+                }
+
                 if (buttonConfig.Action != null)
                 {
                     if (buttonConfig.Action.Type.Equals("macro", StringComparison.OrdinalIgnoreCase))
                     {
                         layer.Actions[buttonConfig.Index] = new MacroAction(buttonConfig.Action.Value);
+                    }
+                    else if (buttonConfig.Action.Type.Equals("brightness", StringComparison.OrdinalIgnoreCase) && _deviceService != null)
+                    {
+                        layer.Actions[buttonConfig.Index] = new BrightnessAction(_deviceService, buttonConfig.Action.Value);
                     }
                 }
             }

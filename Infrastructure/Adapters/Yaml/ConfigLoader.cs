@@ -1,3 +1,4 @@
+using System.IO;
 using YamlDotNet.Serialization;
 using YamlDotNet.Serialization.NamingConventions;
 
@@ -7,32 +8,38 @@ public static class ConfigLoader
 {
     public const string DefaultSampleConfig = """
 iconRoot: "C:\\Tools\\fontawesome-pro-7.3.1-desktop\\svgs"
+brightness: 100
 layers:
   - name: Default
     priority: 0
     theme: "cyber"
+    showEmptyButtons: true
     color: "#000000"
     buttons:
-      # Window Management (Electric Blue: #0070F3)
+      # Window Management (Electric Blue: #0070F3) - Locked so window controls stay on all screens
       - index: 0
         color: "#0070F3"
         caption: "Snap Left"
         icon: "solid/arrow-left.svg"
+        locked: true
         action: { type: macro, value: "{{win+left}}" }
       - index: 1
         color: "#0070F3"
         caption: "Snap Right"
         icon: "solid/arrow-right.svg"
+        locked: true
         action: { type: macro, value: "{{win+right}}" }
       - index: 2
         color: "#0070F3"
         caption: "Maximize"
         icon: "solid/window-maximize.svg"
+        locked: true
         action: { type: macro, value: "{{win+up}}" }
       - index: 3
         color: "#0070F3"
         caption: "Minimize"
         icon: "solid/window-minimize.svg"
+        locked: true
         action: { type: macro, value: "{{win+down}}" }
 
       # Navigation / Desktop (Electric Purple: #7928CA)
@@ -211,5 +218,22 @@ layers:
         string yaml = reader.ReadToEnd();
         var config = deserializer.Deserialize<AppConfig>(yaml);
         return config ?? new AppConfig();
+    }
+
+    public static void Save(string path, AppConfig config)
+    {
+        var directory = Path.GetDirectoryName(path);
+        if (!string.IsNullOrEmpty(directory) && !Directory.Exists(directory))
+        {
+            Directory.CreateDirectory(directory);
+        }
+
+        var serializer = new SerializerBuilder()
+            .WithNamingConvention(CamelCaseNamingConvention.Instance)
+            .ConfigureDefaultValuesHandling(DefaultValuesHandling.OmitNull)
+            .Build();
+
+        var yaml = serializer.Serialize(config);
+        File.WriteAllText(path, yaml);
     }
 }

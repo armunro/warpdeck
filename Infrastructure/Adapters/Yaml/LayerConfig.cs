@@ -6,8 +6,10 @@ public class LayerConfig
     public int Priority { get; set; }
     public string Color { get; set; } = "#000000";
     public string? FontColor { get; set; }
+    public string? Font { get; set; }
     public string? Theme { get; set; }
     public string? IconRoot { get; set; }
+    public bool ShowEmptyButtons { get; set; } = true;
     public ConditionConfig? Condition { get; set; }
     public List<ButtonConfig> Buttons { get; set; } = new();
 }
