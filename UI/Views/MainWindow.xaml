@@ -1,0 +1,687 @@
+﻿<Window x:Class="Warpdeck.UI.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:Warpdeck.UI.ViewModels"
+        mc:Ignorable="d"
+        Title="Warpdeck Studio" 
+        Height="840" Width="1380"
+        MinHeight="700" MinWidth="1100"
+        Background="{StaticResource BgDark}"
+        Foreground="{StaticResource TextPrimary}"
+        WindowStartupLocation="CenterScreen"
+        PreviewKeyDown="MainWindow_PreviewKeyDown"
+        PreviewKeyUp="MainWindow_PreviewKeyUp">
+
+        <Window.InputBindings>
+            <KeyBinding Key="Z" Modifiers="Control" Command="{Binding UndoCommand}" />
+            <KeyBinding Key="Y" Modifiers="Control" Command="{Binding RedoCommand}" />
+            <KeyBinding Key="Z" Modifiers="Control+Shift" Command="{Binding RedoCommand}" />
+            <KeyBinding Key="Delete" Command="{Binding DeleteButtonCommand}" />
+        </Window.InputBindings>
+
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- TOP HEADER BAR -->
+        <Border Grid.Row="0" Background="{StaticResource BgSurface}" BorderBrush="{StaticResource BorderDark}" BorderThickness="0,0,0,1" Padding="16,10">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <!-- App Branding -->
+                <StackPanel Grid.Column="0" Orientation="Horizontal" VerticalAlignment="Center" Margin="0,0,24,0">
+                    <TextBlock Text="⚡" FontSize="20" Foreground="{StaticResource AccentYellow}" VerticalAlignment="Center" Margin="0,0,8,0"/>
+                    <TextBlock Text="WARPDECK" FontSize="18" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" VerticalAlignment="Center"/>
+                    <TextBlock Text="STUDIO" FontSize="11" FontWeight="SemiBold" Foreground="{StaticResource AccentBlue}" Background="#1A0070F3" Padding="6,2" Margin="8,0,0,0" VerticalAlignment="Center"/>
+                </StackPanel>
+
+                <!-- Device Status -->
+                <Border Grid.Column="1" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="4" Padding="10,4" VerticalAlignment="Center" Margin="0,0,16,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Ellipse Width="10" Height="10" Margin="0,0,8,0" VerticalAlignment="Center">
+                            <Ellipse.Style>
+                                <Style TargetType="Ellipse">
+                                    <Setter Property="Fill" Value="{StaticResource AccentRed}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDeviceConnected}" Value="True">
+                                            <Setter Property="Fill" Value="{StaticResource AccentGreen}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Ellipse.Style>
+                        </Ellipse>
+                        <TextBlock VerticalAlignment="Center" FontSize="12">
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Text" Value="Stream Deck: Disconnected" />
+                                    <Setter Property="Foreground" Value="{StaticResource TextSecondary}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDeviceConnected}" Value="True">
+                                            <Setter Property="Text" Value="Stream Deck: Connected" />
+                                            <Setter Property="Foreground" Value="{StaticResource TextPrimary}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </StackPanel>
+                </Border>
+
+                <!-- Stream Deck Brightness -->
+                <Border Grid.Column="2" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="4" Padding="10,4" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                        <TextBlock Text="☀️" FontSize="13" Foreground="{StaticResource AccentYellow}" VerticalAlignment="Center" Margin="0,0,6,0" ToolTip="Stream Deck Hardware Display Brightness" />
+                        <TextBlock Text="Brightness:" FontSize="12" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" Margin="0,0,8,0" />
+                        <Slider Width="90" Minimum="0" Maximum="100" SmallChange="5" LargeChange="10" 
+                                Value="{Binding Brightness, Mode=TwoWay}" 
+                                VerticalAlignment="Center" ToolTip="Adjust Stream Deck hardware display brightness (0 - 100%)" />
+                        <TextBlock Text="{Binding Brightness, StringFormat='{}{0}%'}" Width="36" FontSize="12" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="8,0,0,0" VerticalAlignment="Center" TextAlignment="Right"/>
+                    </StackPanel>
+                </Border>
+
+                <!-- Global Icon Root -->
+                <Grid Grid.Column="3" VerticalAlignment="Center" Margin="0,0,20,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBlock Grid.Column="0" Text="Icon Root:" VerticalAlignment="Center" Foreground="{StaticResource TextSecondary}" Margin="0,0,8,0" FontSize="12" />
+                    <TextBox Grid.Column="1" Text="{Binding IconRoot, UpdateSourceTrigger=PropertyChanged}" FontSize="12" Height="28" ToolTip="Global root directory for FontAwesome / SVG icons" />
+                    <Button Grid.Column="2" Content="Browse..." Command="{Binding BrowseIconRootCommand}" Style="{StaticResource SecondaryButton}" Height="28" Margin="6,0,0,0" FontSize="12" />
+                </Grid>
+
+                <!-- Action Controls -->
+                <StackPanel Grid.Column="4" Orientation="Horizontal" VerticalAlignment="Center">
+                    <Button Content="↩ Undo" Command="{Binding UndoCommand}" Style="{StaticResource SecondaryButton}" Height="32" Margin="0,0,8,0" FontSize="12" ToolTip="Undo last action (Ctrl+Z)"/>
+                    <Button Content="↪ Redo" Command="{Binding RedoCommand}" Style="{StaticResource SecondaryButton}" Height="32" Margin="0,0,8,0" FontSize="12" ToolTip="Redo last undone action (Ctrl+Y / Ctrl+Shift+Z)"/>
+                    <Button Content="🖼 Refresh Previews" Command="{Binding RefreshPreviewsCommand}" Style="{StaticResource SecondaryButton}" Height="32" Margin="0,0,8,0" FontSize="12" />
+                    <Button Content="🔄 Reload" Command="{Binding ReloadConfigCommand}" Style="{StaticResource SecondaryButton}" Height="32" Margin="0,0,8,0" FontSize="12" />
+                    <Button Content="💾 Save Config" Command="{Binding SaveConfigCommand}" Style="{StaticResource PrimaryButton}" Height="32" Padding="16,4" FontSize="13" />
+                </StackPanel>
+            </Grid>
+        </Border>
+
+        <!-- MAIN WORKSPACE -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <!-- Column 0: Layers Sidebar -->
+                <ColumnDefinition Width="280" MinWidth="220" MaxWidth="400" />
+                <!-- Grid Splitter 1 -->
+                <ColumnDefinition Width="5" />
+                <!-- Column 2: Layer & Matrix Editor -->
+                <ColumnDefinition Width="*" MinWidth="480" />
+                <!-- Grid Splitter 2 -->
+                <ColumnDefinition Width="5" />
+                <!-- Column 4: Button Inspector -->
+                <ColumnDefinition Width="380" MinWidth="300" MaxWidth="500" />
+            </Grid.ColumnDefinitions>
+
+            <!-- LEFT: LAYERS LIST -->
+            <Border Grid.Column="0" Background="{StaticResource BgSurface}" BorderBrush="{StaticResource BorderDark}" BorderThickness="0,0,1,0">
+                <Grid Margin="12">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Layers Header -->
+                    <Grid Grid.Row="0" Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Grid.Column="0" Text="LAYERS" FontWeight="Bold" FontSize="13" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" Content="➕ Add Layer" Command="{Binding AddLayerCommand}" Style="{StaticResource PrimaryButton}" Padding="8,4" FontSize="11"/>
+                    </Grid>
+
+                    <!-- Layer ListBox -->
+                    <ListBox Grid.Row="1" ItemsSource="{Binding Layers}" SelectedItem="{Binding SelectedLayer}" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                        <ListBox.ItemContainerStyle>
+                            <Style TargetType="ListBoxItem">
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                                <Setter Property="Padding" Value="0" />
+                                <Setter Property="Margin" Value="0,0,0,6" />
+                                <Setter Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate TargetType="ListBoxItem">
+                                            <Border x:Name="itemBorder" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="6" Padding="10,8">
+                                                <ContentPresenter />
+                                            </Border>
+                                            <ControlTemplate.Triggers>
+                                                <Trigger Property="IsSelected" Value="True">
+                                                    <Setter TargetName="itemBorder" Property="Background" Value="#252D3D" />
+                                                    <Setter TargetName="itemBorder" Property="BorderBrush" Value="{StaticResource AccentBlue}" />
+                                                </Trigger>
+                                                <Trigger Property="IsMouseOver" Value="True">
+                                                    <Setter TargetName="itemBorder" Property="BorderBrush" Value="{StaticResource BorderLight}" />
+                                                </Trigger>
+                                            </ControlTemplate.Triggers>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </ListBox.ItemContainerStyle>
+                        <ListBox.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+                                    <Grid Grid.Row="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding Name}" FontWeight="SemiBold" FontSize="14" Foreground="{StaticResource TextPrimary}" TextTrimming="CharacterEllipsis"/>
+                                        <Border Grid.Column="1" Background="#337928CA" BorderBrush="{StaticResource AccentPurple}" BorderThickness="1" CornerRadius="3" Padding="4,1" Margin="4,0,0,0">
+                                            <TextBlock Text="{Binding Theme}" FontSize="10" Foreground="#E040FB" FontWeight="SemiBold"/>
+                                        </Border>
+                                    </Grid>
+                                    <Grid Grid.Row="1" Margin="0,4,0,0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Grid.Column="0" Text="{Binding ConditionSummary}" FontSize="11" Foreground="{StaticResource TextSecondary}" TextTrimming="CharacterEllipsis"/>
+                                        <TextBlock Grid.Column="1" Text="{Binding Priority, StringFormat='P: {0}'}" FontSize="11" Foreground="{StaticResource AccentYellow}" FontWeight="Bold"/>
+                                    </Grid>
+                                </Grid>
+                            </DataTemplate>
+                        </ListBox.ItemTemplate>
+                    </ListBox>
+
+                    <!-- Layer Operations Toolbar -->
+                    <UniformGrid Grid.Row="2" Columns="4" Margin="0,10,0,0">
+                        <Button Content="▲ Up" Command="{Binding MoveLayerUpCommand}" Style="{StaticResource SecondaryButton}" Margin="0,0,3,0" FontSize="11"/>
+                        <Button Content="▼ Down" Command="{Binding MoveLayerDownCommand}" Style="{StaticResource SecondaryButton}" Margin="3,0,3,0" FontSize="11"/>
+                        <Button Content="📑 Copy" Command="{Binding DuplicateLayerCommand}" Style="{StaticResource SecondaryButton}" Margin="3,0,3,0" FontSize="11"/>
+                        <Button Content="🗑 Del" Command="{Binding RemoveLayerCommand}" Style="{StaticResource DangerButton}" Margin="3,0,0,0" FontSize="11"/>
+                    </UniformGrid>
+                </Grid>
+            </Border>
+
+            <!-- SPLITTER 1 -->
+            <GridSplitter Grid.Column="1" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource BgDark}" Cursor="SizeWE" />
+
+            <!-- CENTER: SELECTED LAYER & 32-KEY MATRIX -->
+            <Grid Grid.Column="2" Margin="16,12">
+                <Grid.RowDefinitions>
+                    <!-- Layer Properties Card -->
+                    <RowDefinition Height="Auto" />
+                    <!-- Visual Stream Deck Key Matrix -->
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- LAYER PROPERTIES CARD -->
+                <Border Grid.Row="0" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="8" Padding="14,10" Margin="0,0,0,14">
+                    <Grid DataContext="{Binding SelectedLayer}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Row 0: Basic Info -->
+                        <Grid Grid.Row="0" Margin="0,0,0,8">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="2*" />
+                                <ColumnDefinition Width="0.8*" />
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Layer Name" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="Priority" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding Priority, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Layer Theme" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <ComboBox SelectedItem="{Binding Theme}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableThemes}" Height="28"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3" Margin="0,0,10,0">
+                                <TextBlock Text="Layer Font" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <ComboBox Text="{Binding Font}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableFonts}" Height="28" IsEditable="True" ToolTip="Default font family for all button captions on this layer (e.g. Arial, Segoe UI, Consolas, Impact)"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="4">
+                                <TextBlock Text="BG Color" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                                    <Button Grid.Column="1" Content="🎨" Click="PickLayerColor_Click" Style="{StaticResource SecondaryButton}" Height="28" Width="28" Margin="4,0,0,0" ToolTip="Pick custom background color" FontSize="11"/>
+                                </Grid>
+                            </StackPanel>
+                        </Grid>
+
+                        <!-- Row 1: Condition Filters & Empty Buttons -->
+                        <Grid Grid.Row="1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1.2*" />
+                                <ColumnDefinition Width="1.1*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackPanel Grid.Column="0" Margin="0,0,10,0">
+                                <TextBlock Text="Condition: Process Name (e.g. rider64, notepad)" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding ConditionProcessName, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="1" Margin="0,0,10,0">
+                                <TextBlock Text="Condition: Window Title Regex (e.g. .*Visual Studio.*)" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding ConditionWindowTitle, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="2" Margin="0,0,10,0">
+                                <TextBlock Text="Layer Icon Root (Optional override)" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <TextBox Text="{Binding IconRoot, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                            </StackPanel>
+
+                            <StackPanel Grid.Column="3">
+                                <TextBlock Text="Empty Buttons" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <ComboBox SelectedItem="{Binding EmptyButtonDisplayMode}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableEmptyButtonModes}" Height="28" ToolTip="Choose whether empty/cleared buttons display the theme's empty button style or a black background"/>
+                            </StackPanel>
+                        </Grid>
+                    </Grid>
+                </Border>
+
+                <!-- 32-KEY MATRIX -->
+                <Border Grid.Row="1" Background="{StaticResource BgSurface}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="8" Padding="14">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Matrix Header -->
+                        <Grid Grid.Row="0" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <TextBlock Grid.Column="0" Text="STREAM DECK KEYPAD MATRIX (4x8 - 32 KEYS)" FontWeight="Bold" FontSize="12" Foreground="{StaticResource TextSecondary}"/>
+                            <TextBlock Grid.Column="1" Text="Click to edit • Drag to move/swap • Shift+Drag to copy" FontSize="11" Foreground="{StaticResource TextSecondary}" FontStyle="Italic"/>
+                        </Grid>
+
+                        <!-- Keypad Grid (Scales uniformly to fit available space while preserving device 8x4 proportions) -->
+                        <Viewbox Grid.Row="1" Stretch="Uniform" HorizontalAlignment="Center" VerticalAlignment="Center">
+                            <ItemsControl ItemsSource="{Binding SelectedLayer.Buttons}" Width="720" Height="360">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <UniformGrid Rows="4" Columns="8" />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate>
+                                        <Button Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.SelectButtonCommand}"
+                                                CommandParameter="{Binding}"
+                                                Margin="4" Cursor="Hand"
+                                                HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                                AllowDrop="True"
+                                                PreviewMouseLeftButtonDown="MatrixButton_PreviewMouseLeftButtonDown"
+                                                PreviewMouseMove="MatrixButton_PreviewMouseMove"
+                                                DragEnter="MatrixButton_DragEnter"
+                                                DragOver="MatrixButton_DragOver"
+                                                DragLeave="MatrixButton_DragLeave"
+                                                Drop="MatrixButton_Drop">
+                                            <Button.Template>
+                                                <ControlTemplate TargetType="Button">
+                                                    <Border x:Name="btnBorder" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1.5" CornerRadius="8" ClipToBounds="True">
+                                                        <Grid IsHitTestVisible="False">
+                                                            <!-- Rendered live preview image -->
+                                                            <Image Source="{Binding PreviewImage}" Stretch="Uniform" Margin="2" />
+
+                                                            <!-- Key Index Tag -->
+                                                            <Border HorizontalAlignment="Left" VerticalAlignment="Top" Background="#AA000000" CornerRadius="0,0,4,0" Padding="3,1">
+                                                                <TextBlock Text="{Binding Index}" FontSize="9" FontWeight="Bold" Foreground="{StaticResource TextSecondary}"/>
+                                                            </Border>
+
+                                                            <!-- Lock Badge Indicator -->
+                                                            <Border x:Name="lockBadge" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#CCFF6B00" CornerRadius="0,0,0,4" Padding="3,1" Visibility="Collapsed" ToolTip="Locked button (cannot be overridden by other layers)">
+                                                                <TextBlock Text="🔒" FontSize="8"/>
+                                                            </Border>
+
+                                                            <!-- Blocked by Locked Layer Indicator -->
+                                                            <Border x:Name="blockedBadge" HorizontalAlignment="Right" VerticalAlignment="Top" Background="#CCFF1744" CornerRadius="0,0,0,4" Padding="3,1" Visibility="Collapsed" ToolTip="{Binding BlockedMessage}">
+                                                                <TextBlock Text="⛔" FontSize="8"/>
+                                                            </Border>
+
+                                                            <!-- Drag & Drop Target Highlight -->
+                                                            <Border x:Name="dropTargetBorder" BorderBrush="{StaticResource AccentCyan}" BorderThickness="2" CornerRadius="8" Background="#3300E5FF" Visibility="Collapsed"/>
+
+                                                            <!-- Overlay indicator if selected -->
+                                                            <Border x:Name="selectionBorder" BorderBrush="{StaticResource AccentBlue}" BorderThickness="2" CornerRadius="8" Visibility="Collapsed"/>
+                                                        </Grid>
+                                                    </Border>
+                                                    <ControlTemplate.Triggers>
+                                                        <DataTrigger Binding="{Binding IsLocked}" Value="True">
+                                                            <Setter TargetName="lockBadge" Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsBlockedByLockedLayer}" Value="True">
+                                                            <Setter TargetName="blockedBadge" Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsDropTarget}" Value="True">
+                                                            <Setter TargetName="btnBorder" Property="BorderBrush" Value="{StaticResource AccentCyan}" />
+                                                            <Setter TargetName="dropTargetBorder" Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding IsSelected}" Value="True">
+                                                            <Setter TargetName="btnBorder" Property="BorderBrush" Value="{StaticResource AccentBlue}" />
+                                                            <Setter TargetName="selectionBorder" Property="Visibility" Value="Visible" />
+                                                        </DataTrigger>
+                                                        <Trigger Property="IsMouseOver" Value="True">
+                                                            <Setter TargetName="btnBorder" Property="BorderBrush" Value="{StaticResource AccentPurple}" />
+                                                        </Trigger>
+                                                    </ControlTemplate.Triggers>
+                                                </ControlTemplate>
+                                            </Button.Template>
+                                        </Button>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </Viewbox>
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- SPLITTER 2 -->
+            <GridSplitter Grid.Column="3" Width="5" HorizontalAlignment="Stretch" Background="{StaticResource BgDark}" Cursor="SizeWE" />
+
+            <!-- RIGHT: SELECTED BUTTON INSPECTOR -->
+            <Border Grid.Column="4" Background="{StaticResource BgSurface}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <Grid Margin="16" DataContext="{Binding SelectedButton}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Header & Key Index -->
+                        <Grid Grid.Row="0" Margin="0,0,0,16">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <!-- Big Preview Thumbnail -->
+                            <Border Grid.Column="0" Width="56" Height="56" Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="6" Margin="0,0,12,0">
+                                <Image Source="{Binding PreviewImage}" Stretch="Uniform" Margin="2"/>
+                            </Border>
+                            <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding Index, StringFormat='BUTTON #{0}'}" FontWeight="Bold" FontSize="16" Foreground="{StaticResource TextPrimary}"/>
+                                <TextBlock Text="{Binding DisplayTitle}" FontSize="12" Foreground="{StaticResource TextSecondary}" TextTrimming="CharacterEllipsis"/>
+                            </StackPanel>
+                            <Button Grid.Column="2" Content="🗑 Delete" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.DeleteButtonCommand}" Style="{StaticResource DangerButton}" FontSize="11" Padding="8,4" VerticalAlignment="Center" ToolTip="Delete / Clear this button (Delete key)"/>
+                        </Grid>
+
+                        <!-- Lock & Protection Status -->
+                        <GroupBox Grid.Row="1" Header="Button Lock &amp; Layer Protection" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                            <StackPanel>
+                                <CheckBox IsChecked="{Binding IsLocked, UpdateSourceTrigger=PropertyChanged}" Margin="0,0,0,4">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="🔒 Lock this button" FontWeight="Bold" Foreground="{StaticResource TextPrimary}" Margin="0,0,6,0"/>
+                                        <TextBlock Text="(Prevents all subsequent layers from overriding this slot)" FontSize="11" Foreground="{StaticResource TextSecondary}"/>
+                                    </StackPanel>
+                                </CheckBox>
+                                <TextBlock Text="When locked on this layer, active overlying layers cannot cover or replace this button." FontSize="10.5" Foreground="{StaticResource TextSecondary}" TextWrapping="Wrap" Margin="24,0,0,0"/>
+
+                                <!-- Warning banner if blocked by another layer's locked button -->
+                                <Border Background="#33FF1744" BorderBrush="#88FF1744" BorderThickness="1" CornerRadius="4" Padding="8" Margin="0,8,0,0">
+                                    <Border.Style>
+                                        <Style TargetType="Border">
+                                            <Setter Property="Visibility" Value="Collapsed"/>
+                                            <Style.Triggers>
+                                                <DataTrigger Binding="{Binding IsBlockedByLockedLayer}" Value="True">
+                                                    <Setter Property="Visibility" Value="Visible"/>
+                                                </DataTrigger>
+                                            </Style.Triggers>
+                                        </Style>
+                                    </Border.Style>
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="⛔" FontSize="12" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                        <TextBlock Text="{Binding BlockedMessage}" FontSize="11" Foreground="#FFFF8A80" TextWrapping="Wrap" FontWeight="SemiBold" VerticalAlignment="Center"/>
+                                    </StackPanel>
+                                </Border>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Caption & Icon -->
+                        <GroupBox Grid.Row="2" Header="Appearance" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                            <StackPanel>
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.4*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,6,0">
+                                        <TextBlock Text="Caption / Text" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                        <TextBox Text="{Binding Caption, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="6,0,0,0">
+                                        <TextBlock Text="Caption Font" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                        <ComboBox Text="{Binding Font}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableFonts}" Height="28" IsEditable="True" ToolTip="Font family override for this button (e.g. Arial, Segoe UI, Consolas, Impact)"/>
+                                    </StackPanel>
+                                </Grid>
+
+                                <TextBlock Text="Icon File / Relative SVG" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBox Grid.Column="0" Text="{Binding Icon, UpdateSourceTrigger=PropertyChanged}" Height="28" FontSize="11"/>
+                                    <Button Grid.Column="1" Content="Browse..." Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.BrowseButtonIconCommand}" Style="{StaticResource SecondaryButton}" Height="28" Margin="6,0,0,0" FontSize="11"/>
+                                </Grid>
+
+                                <Grid Margin="0,0,0,10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                                        <TextBlock Text="Theme Override" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                        <ComboBox Text="{Binding Theme}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableThemes}" Height="28" IsEditable="True"/>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Margin="4,0,4,0">
+                                        <TextBlock Text="Color (Hex)" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Color, UpdateSourceTrigger=PropertyChanged}" Height="28"/>
+                                            <Button Grid.Column="1" Content="🎨" Click="PickButtonColor_Click" Style="{StaticResource SecondaryButton}" Height="28" Width="28" Margin="4,0,0,0" ToolTip="Pick custom button color" FontSize="11"/>
+                                        </Grid>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" Margin="4,0,0,0">
+                                        <TextBlock Text="Font Color" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding FontColor, UpdateSourceTrigger=PropertyChanged}" Height="28" ToolTip="Custom font color (e.g. #FFFFFF, #00FF00)"/>
+                                            <Button Grid.Column="1" Content="🎨" Click="PickButtonFontColor_Click" Style="{StaticResource SecondaryButton}" Height="28" Width="28" Margin="4,0,0,0" ToolTip="Pick custom font color" FontSize="11"/>
+                                        </Grid>
+                                    </StackPanel>
+                                </Grid>
+
+                                <!-- Expanded Quick Color Palette -->
+                                <DockPanel Margin="0,0,0,4" LastChildFill="False">
+                                    <TextBlock DockPanel.Dock="Left" Text="Color Palette Presets:" FontSize="10" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+                                    <Button DockPanel.Dock="Right" Content="🎨 Custom Color..." Click="PickButtonColor_Click" Style="{StaticResource SecondaryButton}" Height="22" Padding="6,2" FontSize="10" ToolTip="Open custom color picker dialog"/>
+                                </DockPanel>
+                                <WrapPanel Margin="0,0,0,6">
+                                    <!-- Neutrals -->
+                                    <Button Content="#000000" Background="#000000" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#000000" ToolTip="Black (#000000)"/>
+                                    <Button Content="#2D3748" Background="#2D3748" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#2D3748" ToolTip="Slate (#2D3748)"/>
+                                    <Button Content="#718096" Background="#718096" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#718096" ToolTip="Cool Gray (#718096)"/>
+                                    <Button Content="#FFFFFF" Background="#FFFFFF" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#FFFFFF" ToolTip="White (#FFFFFF)"/>
+
+                                    <!-- Cyber / Vibrant Colors -->
+                                    <Button Content="#0070F3" Background="#0070F3" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#0070F3" ToolTip="Electric Blue (#0070F3)"/>
+                                    <Button Content="#00B0FF" Background="#00B0FF" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#00B0FF" ToolTip="Sky Blue (#00B0FF)"/>
+                                    <Button Content="#00E5FF" Background="#00E5FF" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#00E5FF" ToolTip="Electric Cyan (#00E5FF)"/>
+                                    <Button Content="#00E676" Background="#00E676" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#00E676" ToolTip="Neon Green (#00E676)"/>
+                                    <Button Content="#76FF03" Background="#76FF03" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#76FF03" ToolTip="Bright Lime (#76FF03)"/>
+                                    <Button Content="#FFD600" Background="#FFD600" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#FFD600" ToolTip="Vibrant Yellow (#FFD600)"/>
+                                    <Button Content="#FF9100" Background="#FF9100" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#FF9100" ToolTip="Amber (#FF9100)"/>
+                                    <Button Content="#FF6B00" Background="#FF6B00" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#FF6B00" ToolTip="Vibrant Orange (#FF6B00)"/>
+                                    <Button Content="#FF1744" Background="#FF1744" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#FF1744" ToolTip="Vibrant Crimson (#FF1744)"/>
+                                    <Button Content="#FF007F" Background="#FF007F" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#FF007F" ToolTip="Rose Pink (#FF007F)"/>
+                                    <Button Content="#E040FB" Background="#E040FB" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#E040FB" ToolTip="Vibrant Magenta (#E040FB)"/>
+                                    <Button Content="#7928CA" Background="#7928CA" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#7928CA" ToolTip="Electric Purple (#7928CA)"/>
+                                    <Button Content="#651FFF" Background="#651FFF" Foreground="White" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#651FFF" ToolTip="Deep Indigo (#651FFF)"/>
+                                    <Button Content="#00BFA5" Background="#00BFA5" Foreground="Black" Width="48" Height="20" Margin="2" FontSize="8.5" Click="ColorPreset_Click" Tag="#00BFA5" ToolTip="Teal / Mint (#00BFA5)"/>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                        <!-- Action Configuration -->
+                        <GroupBox Grid.Row="3" Header="Action &amp; Macro Trigger" Foreground="{StaticResource TextSecondary}" BorderBrush="{StaticResource BorderDark}" Margin="0,0,0,14" Padding="8">
+                            <StackPanel>
+                                <TextBlock Text="Action Type" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <ComboBox SelectedItem="{Binding ActionType}" ItemsSource="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AvailableActionTypes}" Height="28" Margin="0,0,0,10"/>
+
+                                <!-- Keystroke Recorder & Manual Macro Entry -->
+                                <TextBlock Text="Macro Value (Type manually or record keystrokes)" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <TextBox x:Name="MacroTextBox" Text="{Binding ActionValue, UpdateSourceTrigger=PropertyChanged}" Height="28" Margin="0,0,0,8" FontFamily="Consolas, Segoe UI"/>
+
+                                <!-- Keystroke Recorder Control Box -->
+                                <Border Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,0,0,10">
+                                    <StackPanel>
+                                        <Grid Margin="0,0,0,6">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <!-- Record / Stop Button -->
+                                            <Button Grid.Column="0" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ToggleRecordKeystrokesCommand}"
+                                                    Height="28" Margin="0,0,6,0" Cursor="Hand" FontWeight="SemiBold" FontSize="11">
+                                                <Button.Style>
+                                                    <Style TargetType="Button" BasedOn="{StaticResource PrimaryButton}">
+                                                        <Setter Property="Content" Value="● Record Keystrokes"/>
+                                                        <Style.Triggers>
+                                                            <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.IsRecordingKeystrokes}" Value="True">
+                                                                <Setter Property="Content" Value="■ Stop Recording"/>
+                                                                <Setter Property="Background" Value="#FF1744"/>
+                                                                <Setter Property="BorderBrush" Value="#FF5252"/>
+                                                            </DataTrigger>
+                                                        </Style.Triggers>
+                                                    </Style>
+                                                </Button.Style>
+                                            </Button>
+
+                                            <Button Grid.Column="1" Content="⌫ Backspace" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.BackspaceMacroCommand}" Style="{StaticResource SecondaryButton}" Height="28" Margin="0,0,6,0" Padding="8,2" FontSize="11" ToolTip="Remove last recorded macro block or character"/>
+                                            <Button Grid.Column="2" Content="Clear" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.ClearMacroCommand}" Style="{StaticResource SecondaryButton}" Height="28" Padding="8,2" FontSize="11" ToolTip="Clear entire macro text"/>
+                                        </Grid>
+
+                                        <DockPanel LastChildFill="True">
+                                            <CheckBox DockPanel.Dock="Right" Content="Append Keystrokes" IsChecked="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.AppendRecordedKeystrokes}" FontSize="11" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" ToolTip="When checked, newly recorded keystrokes are appended to existing macro value rather than replacing it"/>
+
+                                            <!-- Status indicator -->
+                                            <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                                                <Ellipse Width="8" Height="8" Margin="0,0,6,0" VerticalAlignment="Center">
+                                                    <Ellipse.Style>
+                                                        <Style TargetType="Ellipse">
+                                                            <Setter Property="Fill" Value="#555"/>
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.IsRecordingKeystrokes}" Value="True">
+                                                                    <Setter Property="Fill" Value="#FF1744"/>
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Ellipse.Style>
+                                                </Ellipse>
+                                                <TextBlock Text="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.RecordStatusText}" FontSize="11" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                            </StackPanel>
+                                        </DockPanel>
+
+                                        <!-- Live Recording Active Banner -->
+                                        <Border Background="#2A1744" BorderBrush="#88FF1744" BorderThickness="1" CornerRadius="4" Padding="6,5" Margin="0,8,0,0">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Visibility" Value="Collapsed"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.IsRecordingKeystrokes}" Value="True">
+                                                            <Setter Property="Visibility" Value="Visible"/>
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <StackPanel Orientation="Horizontal">
+                                                <TextBlock Text="🔴" FontSize="10" Margin="0,0,6,0" VerticalAlignment="Center"/>
+                                                <TextBlock Text="Recording... Press shortcut keys on keyboard (Esc or Stop to finish)." FontSize="10.5" Foreground="#FFFF8A80" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                </Border>
+
+                                <!-- Common Macro Quick-Inserts -->
+                                <TextBlock Text="Quick Macro Shortcuts:" FontSize="10" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                                <WrapPanel>
+                                    <Button Content="Copy" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{ctrl+c}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Paste" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{ctrl+v}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Undo" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{ctrl+z}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Snap Left" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+left}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Snap Right" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+right}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Max" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+up}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Min" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+down}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Alt+Tab" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{alt+tab}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Desktop" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+d}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Snippet" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+shift+s}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="Lock" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{win+l}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                    <Button Content="New Tab" Command="{Binding RelativeSource={RelativeSource AncestorType=Window}, Path=DataContext.InsertMacroCommand}" CommandParameter="{}{{{ctrl+t}}}" Style="{StaticResource SecondaryButton}" Margin="2" FontSize="10" Padding="6,2"/>
+                                </WrapPanel>
+                            </StackPanel>
+                        </GroupBox>
+
+                    </Grid>
+                </ScrollViewer>
+            </Border>
+        </Grid>
+
+        <!-- BOTTOM STATUS BAR -->
+        <Border Grid.Row="2" Background="{StaticResource BgSurface}" BorderBrush="{StaticResource BorderDark}" BorderThickness="0,1,0,0" Padding="12,4">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="{Binding StatusMessage}" FontSize="12" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+                <TextBlock Grid.Column="1" Text="Warpdeck v1.0 • WPF Edition" FontSize="11" Foreground="{StaticResource TextSecondary}" VerticalAlignment="Center"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

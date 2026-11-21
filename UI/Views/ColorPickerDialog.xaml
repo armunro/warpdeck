@@ -1,0 +1,189 @@
+﻿<Window x:Class="Warpdeck.UI.Views.ColorPickerDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Color Picker"
+        Height="470" Width="560"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Background="{StaticResource BgDark}"
+        Foreground="{StaticResource TextPrimary}">
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <!-- Header -->
+        <TextBlock Grid.Row="0" Text="Select Custom Color" FontSize="16" FontWeight="SemiBold" Foreground="{StaticResource TextPrimary}" Margin="0,0,0,12"/>
+
+        <!-- Main Content -->
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="230" />
+                <ColumnDefinition Width="14" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <!-- Left: SV Canvas + Hue Slider -->
+            <Grid Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="200" />
+                    <RowDefinition Height="10" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!-- 2D Saturation / Value Box -->
+                <Border Grid.Row="0" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="4" ClipToBounds="True">
+                    <Grid x:Name="SvBox" Background="Red" MouseLeftButtonDown="SvBox_MouseLeftButtonDown" MouseMove="SvBox_MouseMove" MouseLeftButtonUp="SvBox_MouseLeftButtonUp" Cursor="Cross">
+                        <!-- Horizontal White -> Transparent -->
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#00FFFFFF" Offset="1" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+                        <!-- Vertical Transparent -> Black -->
+                        <Rectangle>
+                            <Rectangle.Fill>
+                                <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                                    <GradientStop Color="#00000000" Offset="0" />
+                                    <GradientStop Color="#FF000000" Offset="1" />
+                                </LinearGradientBrush>
+                            </Rectangle.Fill>
+                        </Rectangle>
+
+                        <!-- Crosshair Indicator -->
+                        <Canvas IsHitTestVisible="False">
+                            <Ellipse x:Name="Crosshair" Width="12" Height="12" Stroke="White" StrokeThickness="2" Fill="Transparent" Margin="-6,-6,0,0">
+                                <Ellipse.Effect>
+                                    <DropShadowEffect BlurRadius="2" ShadowDepth="1" Color="Black" Opacity="0.8"/>
+                                </Ellipse.Effect>
+                            </Ellipse>
+                        </Canvas>
+                    </Grid>
+                </Border>
+
+                <!-- Hue Slider -->
+                <Grid Grid.Row="2">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock Grid.Row="0" Text="Hue" FontSize="11" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,3"/>
+                    <Grid Grid.Row="1" Height="22">
+                        <Border BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="3" ClipToBounds="True">
+                            <Rectangle>
+                                <Rectangle.Fill>
+                                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                        <GradientStop Color="#FFFF0000" Offset="0.00" />
+                                        <GradientStop Color="#FFFFFF00" Offset="0.17" />
+                                        <GradientStop Color="#FF00FF00" Offset="0.33" />
+                                        <GradientStop Color="#FF00FFFF" Offset="0.50" />
+                                        <GradientStop Color="#FF0000FF" Offset="0.67" />
+                                        <GradientStop Color="#FFFF00FF" Offset="0.83" />
+                                        <GradientStop Color="#FFFF0000" Offset="1.00" />
+                                    </LinearGradientBrush>
+                                </Rectangle.Fill>
+                            </Rectangle>
+                        </Border>
+                        <Slider x:Name="HueSlider" Minimum="0" Maximum="360" Value="0" ValueChanged="HueSlider_ValueChanged" Opacity="0.8" VerticalAlignment="Center" Margin="-2,0,-2,0"/>
+                    </Grid>
+                </Grid>
+            </Grid>
+
+            <!-- Right: Color Inputs, Preview & Swatches -->
+            <ScrollViewer Grid.Column="2" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                <StackPanel Margin="0,0,4,0">
+                    <!-- Preview and Hex -->
+                    <Grid Margin="0,0,0,10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="1.4*" />
+                        </Grid.ColumnDefinitions>
+
+                        <!-- Original Preview -->
+                        <StackPanel Grid.Column="0" Margin="0,0,4,0">
+                            <TextBlock Text="Original" FontSize="10" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,2"/>
+                            <Border x:Name="OriginalPreviewBorder" Height="32" Background="#000000" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="4"/>
+                        </StackPanel>
+
+                        <!-- New Preview -->
+                        <StackPanel Grid.Column="1" Margin="4,0,4,0">
+                            <TextBlock Text="New" FontSize="10" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,2"/>
+                            <Border x:Name="NewPreviewBorder" Height="32" Background="#0070F3" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="4"/>
+                        </StackPanel>
+
+                        <!-- Hex Code -->
+                        <StackPanel Grid.Column="2" Margin="4,0,0,0">
+                            <TextBlock Text="Hex Code" FontSize="10" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,2"/>
+                            <TextBox x:Name="HexTextBox" Height="32" Text="#0070F3" FontWeight="SemiBold" FontSize="13" TextChanged="HexTextBox_TextChanged"/>
+                        </StackPanel>
+                    </Grid>
+
+                    <!-- RGB Controls -->
+                    <Border Background="{StaticResource BgCard}" BorderBrush="{StaticResource BorderDark}" BorderThickness="1" CornerRadius="6" Padding="8" Margin="0,0,0,10">
+                        <StackPanel>
+                            <!-- Red -->
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="42" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="R" FontWeight="SemiBold" Foreground="#FF5252" VerticalAlignment="Center"/>
+                                <Slider Grid.Column="1" x:Name="RedSlider" Minimum="0" Maximum="255" ValueChanged="RgbSlider_ValueChanged" VerticalAlignment="Center" Margin="6,0,6,0"/>
+                                <TextBox Grid.Column="2" x:Name="RedTextBox" Height="24" Text="0" TextAlignment="Center" FontSize="11" TextChanged="RgbTextBox_TextChanged"/>
+                            </Grid>
+
+                            <!-- Green -->
+                            <Grid Margin="0,0,0,6">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="42" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="G" FontWeight="SemiBold" Foreground="#69F0AE" VerticalAlignment="Center"/>
+                                <Slider Grid.Column="1" x:Name="GreenSlider" Minimum="0" Maximum="255" ValueChanged="RgbSlider_ValueChanged" VerticalAlignment="Center" Margin="6,0,6,0"/>
+                                <TextBox Grid.Column="2" x:Name="GreenTextBox" Height="24" Text="112" TextAlignment="Center" FontSize="11" TextChanged="RgbTextBox_TextChanged"/>
+                            </Grid>
+
+                            <!-- Blue -->
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="18" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="42" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="B" FontWeight="SemiBold" Foreground="#448AFF" VerticalAlignment="Center"/>
+                                <Slider Grid.Column="1" x:Name="BlueSlider" Minimum="0" Maximum="255" ValueChanged="RgbSlider_ValueChanged" VerticalAlignment="Center" Margin="6,0,6,0"/>
+                                <TextBox Grid.Column="2" x:Name="BlueTextBox" Height="24" Text="243" TextAlignment="Center" FontSize="11" TextChanged="RgbTextBox_TextChanged"/>
+                            </Grid>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Expanded Palette Swatches -->
+                    <TextBlock Text="Palette Presets:" FontSize="10" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                    <WrapPanel x:Name="PresetsWrapPanel" Margin="0,0,0,8"/>
+
+                    <!-- Recent Custom Colors -->
+                    <TextBlock Text="Recent Colors:" FontSize="10" Foreground="{StaticResource TextSecondary}" Margin="0,0,0,4"/>
+                    <WrapPanel x:Name="RecentWrapPanel" Margin="0,0,0,4"/>
+                </StackPanel>
+            </ScrollViewer>
+        </Grid>
+
+        <!-- Actions -->
+        <Border Grid.Row="2" BorderBrush="{StaticResource BorderDark}" BorderThickness="0,1,0,0" Padding="0,12,0,0" Margin="0,8,0,0">
+            <DockPanel LastChildFill="False">
+                <Button DockPanel.Dock="Right" Content="Select Color" Style="{StaticResource PrimaryButton}" Height="30" Width="100" Margin="8,0,0,0" Click="Select_Click"/>
+                <Button DockPanel.Dock="Right" Content="Cancel" Style="{StaticResource SecondaryButton}" Height="30" Width="80" Click="Cancel_Click"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>
